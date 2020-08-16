@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MagisterkaApp.Repo.Repositories
 {
-    public class MeasureRepository : IRepository<Measure, Guid>
+    public class MeasureRepository : IMeasureRepository
     {
         private IMeasureLiteDbContext measureContext;
 
@@ -16,14 +16,14 @@ namespace MagisterkaApp.Repo.Repositories
         {
             this.measureContext = db;
         }
-        public Task Add(Measure entity)
+        public async Task AddMeasure(Measure entity)
         {
-            throw new NotImplementedException();
+            await this.measureContext.AddMeasure(entity);
         }
 
-        public Task Delete(Guid type)
+        public async Task DeleteMeasure(Guid measureId)
         {
-            throw new NotImplementedException();
+            await this.measureContext.DeleteMeasure(measureId);
         }
 
         public async Task<List<Measure>> GetAllAsync()

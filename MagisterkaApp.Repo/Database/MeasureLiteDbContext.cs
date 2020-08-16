@@ -13,7 +13,7 @@ namespace MagisterkaApp.Repo.Database
 
         public MeasureLiteDbContext()
         {
-            LiteDatabase = new LiteDatabase("");
+            LiteDatabase = new LiteDatabase(@"F:\_My_ProgaLibrary\Own-Projects\WPF_UniformityFieldApp\database.db");
         }
 
         public async Task<List<Measure>> GetMeasures()

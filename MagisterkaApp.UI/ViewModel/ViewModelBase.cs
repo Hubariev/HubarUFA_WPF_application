@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace MagisterkaApp.UI
+namespace MagisterkaApp.UI.ViewModel
 {
     public abstract class ViewModelBase: INotifyPropertyChanged
     {
