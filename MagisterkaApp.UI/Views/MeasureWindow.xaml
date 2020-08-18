@@ -55,9 +55,15 @@
                 </Grid>
             </Border>
             <DockPanel Width="100" Margin="5">
-                <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}"
-                        />
+                <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}"/>
             </DockPanel>
+            <StatusBarItem Margin="5 0 0 0" >
+                <Hyperlink Command="{Binding FrequencyStepsOpenCommand}">
+                    <InlineUIContainer>
+                        <TextBlock Text="Open Steps" />
+                    </InlineUIContainer>
+                </Hyperlink>
+            </StatusBarItem>
         </StackPanel>
 
         <!--                          RightPart                               -->

@@ -1,6 +1,7 @@
 ﻿using MagisterkaApp.Domain;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -15,9 +16,9 @@ namespace MagisterkaApp.Calculator
          1. Change way to read columns and area between start line and line where columns exactly starts:
          frEx: if(Ch1 or Ch2 or bla bla V/m) then 2 lines below will be columns
              */
-        public static List<FrequencyStep> ReadMeasureSteps(List<string> pathMeasuredPoints, Guid measureId)
+        public static ObservableCollection<FrequencyStep> ReadMeasureSteps(List<string> pathMeasuredPoints, Guid measureId)
         {
-            var frequenceSteps = new List<FrequencyStep>();
+            var frequenceSteps = new ObservableCollection<FrequencyStep>();
             int pointId = 1;
 
             foreach (var pathName in pathMeasuredPoints)

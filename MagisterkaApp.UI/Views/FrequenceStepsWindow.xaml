@@ -1,0 +1,102 @@
+﻿<Window x:Class="MagisterkaApp.UI.Views.FrequenceStepsWindow"
+          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:misc="clr-namespace:MagisterkaApp.UI.Miscellaneous"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:cmd="http://www.galasoft.ch/mvvmlight"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="600" Width="1300">
+    <Window.Resources>
+        <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions> 
+            <ColumnDefinition Width="1.25*"/>
+            <ColumnDefinition Width="0.75*" />
+          
+        </Grid.ColumnDefinitions>
+
+        <StackPanel x:Name="LeftPart" Grid.Column="1">
+            <Border BorderThickness="1" Margin="50" CornerRadius="10" BorderBrush="LightBlue">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Dane do kroku częstotliwości:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Częstotliwość:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Obliczony poziom mocy:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola elektrycznego:" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Wybierz rodzaj komory:" />
+
+                    <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfMeasure, Mode=TwoWay}"/>
+                    <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
+                    <TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.FieldStrength, Mode=TwoWay}"/>
+
+                    <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Path=MeasureDto.HSeptum, Converter={misc:EnumToCollectionConverter},Mode=OneTime}"
+                          SelectedValuePath="Value" DisplayMemberPath="Description" SelectedValue="{Binding Path=MeasureDto.HSeptum}"/>
+
+
+                    <DockPanel Grid.Row="5" Grid.Column="0" Margin="5">
+                        <Button Padding="10,0,10,0" Content="Add" Command="{Binding AddMeasureCommand}"/>
+                    </DockPanel>
+                </Grid>
+            </Border>
+            <DockPanel Width="100" Margin="5">
+                <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}"/>
+            </DockPanel>
+            <StatusBarItem Margin="5 0 0 0" >
+                <Hyperlink Command="{Binding FrequencyStepsOpenCommand}">
+                    <InlineUIContainer>
+                        <TextBlock Text="Open Steps" />
+                    </InlineUIContainer>
+                </Hyperlink>
+            </StatusBarItem>
+        </StackPanel>
+
+        <!--                          RightPart                               -->
+        <!--                          RightPart                               -->
+        <!--                          RightPart                               -->
+      
+
+        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencySteps}" Grid.Column="0" x:Name="listViewMeasures" SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}" Style="{StaticResource ListViewMeasureStyle}">
+
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <cmd:EventToCommand Command="{Binding CategoryBeenSelected, Mode=OneWay}"
+                                                MustToggleIsEnabledValue="True" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Częstotliwość" DisplayMemberBinding="{Binding Frequency}" Width="100"/>
+                    <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevelResult}" Width="100" />
+                    <GridViewColumn Header="Komunikaty"  Width="100" >
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <ListBox ItemsSource="{Binding Notifications}" Width="200">
+                                    <!--<TextBlock Text="{Binding Text}"></TextBlock>-->
+                                </ListBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+    </Grid>
+</Window>

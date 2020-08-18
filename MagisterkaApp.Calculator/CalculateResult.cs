@@ -4,15 +4,16 @@ using MagisterkaApp.Domain.Notifications;
 using MagisterkaApp.Domain.SeedWork;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 
 namespace MagisterkaApp.Calculator
 {
     public static class CalculateResult
     {
-        public static List<FrequencyStep> GetResult(List<FrequencyStep> frequencySteps, double fieldstrength)
+        public static ObservableCollection<FrequencyStep> GetResult(ObservableCollection<FrequencyStep> frequencySteps, double fieldstrength)
         {
-            var calculatedFrequencySteps = new List<FrequencyStep>();
+            var calculatedFrequencySteps = new ObservableCollection<FrequencyStep>();
             foreach (var frequencyStep in frequencySteps)
             {
                 var pointsCount = frequencyStep.Points.Count;

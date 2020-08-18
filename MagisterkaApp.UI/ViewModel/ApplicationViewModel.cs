@@ -67,7 +67,18 @@ namespace MagisterkaApp.UI.ViewModel
                     this.measureRepository.DeleteMeasure(SelectedMeasure.Id);
                     this.Measures.Remove(SelectedMeasure);
                 }));
-        #endregion
+
+        private RelayCommand frequencyStepsOpenCommand;
+        public ICommand FrequencyStepsOpenCommand =>
+            frequencyStepsOpenCommand ??
+            (frequencyStepsOpenCommand = new RelayCommand(
+                () =>
+                {
+                    var catOpts = new Views.FrequenceStepsWindow(selectedMeasure);
+                    catOpts.ShowDialog();
+                }
+                ));
+    #endregion
 
         public Measure NewMeasure
         {

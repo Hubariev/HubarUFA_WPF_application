@@ -16,6 +16,7 @@ namespace MagisterkaApp.UI.Startup
             return Container.Resolve<Views.MeasureWindow>();
         }
 
+
         protected override void InitializeShell()
         {
             Application.Current.MainWindow.Show();
@@ -27,6 +28,8 @@ namespace MagisterkaApp.UI.Startup
             Container.RegisterType(typeof(IMeasureRepository), typeof(MeasureRepository));
             Container.RegisterType(typeof(IMeasureLiteDbContext), typeof(MeasureLiteDbContext));
             Container.RegisterType(typeof(IFrequenceStepLiteDbContext), typeof(FrequenceStepLiteDbContext));
+            Container.RegisterType(typeof(IFrequenceStepsRepository), typeof(FrequenceStepsRepository));
         }
+      
     }
 }

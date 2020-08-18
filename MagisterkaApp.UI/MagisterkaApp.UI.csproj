@@ -219,7 +219,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Startup\Bootstrapper.cs" />
+    <Compile Include="ViewModel\FrequenceStepsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="Views\FrequenceStepsWindow.xaml.cs">
+      <DependentUpon>FrequenceStepsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MeasureWindow.xaml.cs">
       <DependentUpon>MeasureWindow.xaml</DependentUpon>
     </Compile>
@@ -229,6 +233,10 @@
     </Compile>
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
     <Page Include="Styles\Others.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\FrequenceStepsWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
