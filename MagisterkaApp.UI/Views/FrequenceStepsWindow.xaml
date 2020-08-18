@@ -85,10 +85,10 @@
                 <GridView>
                     <GridViewColumn Header="Częstotliwość" DisplayMemberBinding="{Binding Frequency}" Width="100"/>
                     <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevelResult}" Width="100" />
-                    <GridViewColumn Header="Komunikaty"  Width="100" >
+                    <GridViewColumn Header="Komunikaty"  Width="600" >
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ListBox ItemsSource="{Binding Notifications}" Width="200">
+                                <ListBox ItemsSource="{Binding Notifications}" Width="600" DisplayMemberPath="Text">
                                     <!--<TextBlock Text="{Binding Text}"></TextBlock>-->
                                 </ListBox>
                             </DataTemplate>
