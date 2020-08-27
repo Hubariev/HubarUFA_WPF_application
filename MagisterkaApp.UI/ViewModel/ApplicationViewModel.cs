@@ -1,4 +1,5 @@
-﻿using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
 using MagisterkaApp.Domain;
 using MagisterkaApp.Domain.Enums;
 using MagisterkaApp.Repo.Abstractions;
@@ -13,6 +14,7 @@ namespace MagisterkaApp.UI.ViewModel
     public class ApplicationViewModel: ViewModelBase
     {
         private readonly IMeasureRepository measureRepository;
+        private readonly IFrequenceStepsRepository frequenceStepsRepository;
         public ObservableCollection<Measure> Measures { get; set; }
         public Measure selectedMeasure;
 
@@ -21,9 +23,10 @@ namespace MagisterkaApp.UI.ViewModel
 
         
 
-        public ApplicationViewModel(IMeasureRepository measureRepository)
+        public ApplicationViewModel(IMeasureRepository measureRepository, IFrequenceStepsRepository frequenceStepsRepository)
         {
             this.measureRepository = measureRepository;
+            this.frequenceStepsRepository = frequenceStepsRepository;
             Measures = new ObservableCollection<Measure>();
             GetMeasures();
         }
@@ -34,10 +37,10 @@ namespace MagisterkaApp.UI.ViewModel
             this.Measures = new ObservableCollection<Measure>(measures);
         }
 
-        protected override void RegisterCollections()
-        {
-            Measures = new ObservableCollection<Measure>();
-        }
+        //protected override void RegisterCollections()
+        //{
+        //    Measures = new ObservableCollection<Measure>();
+        //}
 
 
         #region Commands
@@ -66,6 +69,7 @@ namespace MagisterkaApp.UI.ViewModel
                 {
                     this.measureRepository.DeleteMeasure(SelectedMeasure.Id);
                     this.Measures.Remove(SelectedMeasure);
+                    this.frequenceStepsRepository.DeleteByMeasureId(SelectedMeasure.Id);
                 }));
 
         private RelayCommand frequencyStepsOpenCommand;
@@ -74,7 +78,7 @@ namespace MagisterkaApp.UI.ViewModel
             (frequencyStepsOpenCommand = new RelayCommand(
                 () =>
                 {
-                    var catOpts = new Views.FrequenceStepsWindow(selectedMeasure);
+                    var catOpts = new Views.FrequenceStepsWindow(selectedMeasure, this.frequenceStepsRepository);
                     catOpts.ShowDialog();
                 }
                 ));
@@ -86,7 +90,7 @@ namespace MagisterkaApp.UI.ViewModel
             set
             {
                 newMeasure = value;
-                OnPropertyChanged("NewMeasure");
+                RaisePropertyChanged("NewMeasure");
             }
         }
 
@@ -96,7 +100,7 @@ namespace MagisterkaApp.UI.ViewModel
             set
             {
                 selectedMeasure = value;
-                OnPropertyChanged("SelectedMeasure");
+                RaisePropertyChanged("SelectedMeasure");
             }
         }
     }

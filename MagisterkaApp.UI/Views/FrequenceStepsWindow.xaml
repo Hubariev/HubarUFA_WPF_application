@@ -14,8 +14,8 @@
 
     <Grid>
         <Grid.ColumnDefinitions> 
-            <ColumnDefinition Width="1.25*"/>
-            <ColumnDefinition Width="0.75*" />
+            <ColumnDefinition Width="1*"/>
+            <ColumnDefinition Width="0.8*" />
           
         </Grid.ColumnDefinitions>
 
@@ -39,20 +39,32 @@
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Dane do kroku częstotliwości:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Częstotliwość:" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Obliczony poziom mocy:" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola elektrycznego:" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Wybierz rodzaj komory:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Is hidden" />
+                   
 
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfMeasure, Mode=TwoWay}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.FieldStrength, Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.Frequency}"/>
+                    <TextBlock Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.PowerLevelResult}"/>
+                    <CheckBox Grid.Row="3" Grid.Column="1" Margin="3" IsChecked="{Binding FrequencyStepInfo.IsHidden}">Is Hidden</CheckBox>
+                    <Expander Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="KOMUNIKAT">
+                        <TextBlock Margin="3" Background="{Binding FrequencyStepInfo.Notification.backgroundColor}" Text="{Binding FrequencyStepInfo.Notification.Text}"></TextBlock>
+                    </Expander>
 
-                    <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Path=MeasureDto.HSeptum, Converter={misc:EnumToCollectionConverter},Mode=OneTime}"
-                          SelectedValuePath="Value" DisplayMemberPath="Description" SelectedValue="{Binding Path=MeasureDto.HSeptum}"/>
+                    <Expander Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Header="PUNKTY" Tag="{Binding FrequencyStepInfo.Notification}">
+                        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsView"
+                                  Style="{StaticResource ListViewMeasureStyle}">
 
-
-                    <DockPanel Grid.Row="5" Grid.Column="0" Margin="5">
-                        <Button Padding="10,0,10,0" Content="Add" Command="{Binding AddMeasureCommand}"/>
-                    </DockPanel>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}"/>
+                                    <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding PrimaryEy}" Width="90" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryEx}" Width="85" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryEz}" Width="85" />
+                                    <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel}" Width="85" />
+                                    <GridViewColumn Header="TEMdom" DisplayMemberBinding="{Binding IsTEMdominant}" Width="85" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Expander>
                 </Grid>
             </Border>
             <DockPanel Width="100" Margin="5">
@@ -70,32 +82,40 @@
         <!--                          RightPart                               -->
         <!--                          RightPart                               -->
         <!--                          RightPart                               -->
-      
 
-        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencySteps}" Grid.Column="0" x:Name="listViewMeasures" SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}" Style="{StaticResource ListViewMeasureStyle}">
+
+        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencySteps}" Grid.Column="0" x:Name="listViewFrequencySteps"
+                  SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}" Style="{StaticResource ListViewMeasureStyle}">
+            
+            <!--<i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <i:InvokeCommandAction Command="{Binding StepBeenSelectedCommand, Mode=OneWay}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>-->
+
+
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <cmd:EventToCommand Command="{Binding CategoryBeenSelected, Mode=OneWay}"
-                                                MustToggleIsEnabledValue="True" />
-                </i:EventTrigger>
+                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding ElementName=listViewFrequencySteps,
+                        Path=SelectedItem}" />
+                </i:EventTrigger> 
             </i:Interaction.Triggers>
 
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Częstotliwość" DisplayMemberBinding="{Binding Frequency}" Width="100"/>
-                    <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevelResult}" Width="100" />
-                    <GridViewColumn Header="Komunikaty"  Width="600" >
+                    <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevelResult}" Width="150" />
+                    <GridViewColumn Header="Komunikaty"  Width="600">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <ListBox ItemsSource="{Binding Notifications}" Width="600" DisplayMemberPath="Text">
-                                    <!--<TextBlock Text="{Binding Text}"></TextBlock>-->
-                                </ListBox>
+                                <TextBlock Text="{Binding Notification.Text}" Background="{Binding Notification.backgroundColor}" Width="600"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
+          
         </ListView>
 
     </Grid>

@@ -9,5 +9,9 @@ namespace MagisterkaApp.Repo.Database
     public interface IFrequenceStepLiteDbContext
     {
         Task<List<FrequencyStep>> GetFrequencyStepsByMeasureId(Guid MeasureId);
+
+        Task AddFrequencySteps(List<FrequencyStep> frequencySteps);
+
+        Task DeleteByMeasureId(Guid MeasureId);
     }
 }

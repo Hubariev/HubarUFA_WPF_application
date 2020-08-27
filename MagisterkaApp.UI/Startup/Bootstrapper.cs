@@ -1,9 +1,7 @@
-﻿using MagisterkaApp.Domain;
-using MagisterkaApp.Repo.Abstractions;
+﻿using MagisterkaApp.Repo.Abstractions;
 using MagisterkaApp.Repo.Database;
 using MagisterkaApp.Repo.Repositories;
 using Prism.Unity;
-using System;
 using System.Windows;
 using Unity;
 

@@ -4,22 +4,27 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace MagisterkaApp.Calculator
 {
     public static class ReadFile
     {
-
         /*
          ToDoList:
          1. Change way to read columns and area between start line and line where columns exactly starts:
          frEx: if(Ch1 or Ch2 or bla bla V/m) then 2 lines below will be columns
              */
-        public static ObservableCollection<FrequencyStep> ReadMeasureSteps(List<string> pathMeasuredPoints, Guid measureId)
+        public static ObservableCollection<FrequencyStep> ReadMonitoringFile(List<string> pathMeasuredPoints, Guid measureId)
         {
             var frequenceSteps = new ObservableCollection<FrequencyStep>();
             int pointId = 1;
+            const int columnDifference = 1;
+            #region positions
+            int frequencePosition = 0;
+            int primaryPosition = 0;
+            int secondaryOnePosition = 0;
+            int secondaryTwoPosition = 0;
+            #endregion
 
             foreach (var pathName in pathMeasuredPoints)
             {               
@@ -32,6 +37,35 @@ namespace MagisterkaApp.Calculator
 
                     while ((line = file.ReadLine()) != null)
                     {
+                        if(line.ToUpper().Contains("PRIMAR") || line.ToUpper().Contains("VERTICAL") || line.ToUpper().Contains("PIONOWO"))
+                        {
+                            var primaryLine = line.Replace("\t", " ");
+                            primaryLine = primaryLine.Replace(":", "");
+                            string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
+                            resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
+                            primaryPosition = Convert.ToInt16(resultPrimaryLine[1]) + columnDifference;
+                        }
+
+                        if ((line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("TRANSWERSE") || line.ToUpper().Contains("POPRZECZ")) 
+                            && secondaryOnePosition == 0)
+                        {
+                            var primaryLine = line.Replace("\t", " ");
+                            primaryLine = primaryLine.Replace(":", "");
+                            string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
+                            resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
+                            secondaryOnePosition = Convert.ToInt16(resultPrimaryLine[1]) + columnDifference;
+                        }
+
+                        if (line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("LONGITUDINAL") || line.ToUpper().Contains("WZD"))
+                        {
+                            var primaryLine = line.Replace("\t", " ");
+                            primaryLine = primaryLine.Replace(":", "");
+                            string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
+                            resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
+                            secondaryTwoPosition = Convert.ToInt16(resultPrimaryLine[1]) + columnDifference;
+                        }
+
+
                         if (counter == 0)
                         {
                             filtredLine = line.Replace("\t", " ");
@@ -39,14 +73,10 @@ namespace MagisterkaApp.Calculator
                             resultLine = filtredLine.Split(new char[] { ' ' }).ToArray();
                             resultLine = resultLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
 
-                            //Console.WriteLine(line.ToString());
-                            //Console.WriteLine(filtredLine.ToString());
-
-                            var frequency = double.Parse(resultLine[0]);
-                            var primaryEy = double.Parse(resultLine[4]);
-                            var secondaryEx = double.Parse(resultLine[3]);
-                            var secondaryEz = double.Parse(resultLine[5]);
-                            var powerLevel = double.Parse(resultLine[6]);
+                            var frequency = double.Parse(resultLine[frequencePosition]);
+                            var primary = double.Parse(resultLine[primaryPosition]);
+                            var secondaryOne = double.Parse(resultLine[secondaryOnePosition]);
+                            var secondarySecond = double.Parse(resultLine[secondaryTwoPosition]);
 
                             FrequencyStep step;
 
@@ -59,11 +89,10 @@ namespace MagisterkaApp.Calculator
                                 step = new FrequencyStep(measureId, frequency);
                             }
                             
-                            step.AddPoint(pointId, primaryEy, secondaryEx, secondaryEz, powerLevel);
+                            step.AddPoint(pointId, primary, secondaryOne, secondarySecond);
                                                        
                             if(pointId == 1)
                                 frequenceSteps.Add(step);
-
                         }
                         if (counter < 3 && counter != 0)
                         {
@@ -72,8 +101,7 @@ namespace MagisterkaApp.Calculator
                         if (line.Contains("Ch1"))
                         {
                             counter = 2;
-                        }
-                       
+                        }                       
                     }
                     file.Close();
                 }
@@ -81,51 +109,59 @@ namespace MagisterkaApp.Calculator
             }
             return frequenceSteps;          
         }
+
+        public static ObservableCollection<FrequencyStep> ReadCalibrationFile(List<string> calibrationPathes,
+            ObservableCollection<FrequencyStep> frequencySteps)
+        {
+            int pointId = 1;
+
+            #region positions
+            int frequencePosition = 0;
+            int powerPosition = 1;
+            #endregion
+
+            for(int i = 0; i < calibrationPathes.Count; i++)
+            {
+                using (StreamReader file = new StreamReader(calibrationPathes[i]))
+                {
+                    int counter = 1;
+                    string line;
+                    string filtredLine;
+                    string[] resultLine = new string[] { };
+
+                    int frequencyStepsCounter = 0;
+
+                    while ((line = file.ReadLine()) != null || (line = file.ReadLine()).Length != 0)
+                    {                        
+                        if (counter == 0)
+                        {
+                            filtredLine = line.Replace(".", ",");
+                            resultLine = filtredLine.Split(new char[] { ' ' }).ToArray();
+
+                            if (resultLine.Length < 2)
+                                break ;
+
+                            var frequency = double.Parse(resultLine[frequencePosition]);
+                            var power = double.Parse(resultLine[powerPosition]);
+
+                            if (frequencySteps[frequencyStepsCounter].Frequency == frequency)
+                                frequencySteps[frequencyStepsCounter].Points[i].AddPowerResult(power);
+                            else
+                                throw new Exception("Error with Reading calibration file.");
+
+                            frequencyStepsCounter++;
+                        }
+                        if (line.Contains("INPUT"))
+                        {
+                            counter = 0;
+                        }
+                        
+                    }
+                    file.Close();
+                }
+                pointId++;
+            }
+            return frequencySteps;
+        }
     }
 }
-
-//public static Point ReadMeasurePoint(string fileName, int id)
-//{
-//    List<double> Frequence;
-//    List<double> PrimaryEy;
-//    List<double> SecondaryEx;
-//    List<double> SecondaryEz;
-//    List<double> PowerLevels;
-//    Point point = new Point(id);
-
-//    using (StreamReader file = new StreamReader(fileName))
-//    {
-//        int counter = 3;
-//        string line;
-//        string filtredLine;
-//        string[] resultLine = new string[] { };
-
-//        while ((line = file.ReadLine()) != null)
-//        {
-//            if (counter == 0)
-//            {
-//                filtredLine = line.Replace("\t", " ");
-//                filtredLine = filtredLine.Replace(".", ",");
-//                resultLine = filtredLine.Split(new char[] { ' ' }).ToArray();
-//                resultLine = resultLine.Where(element => !string.IsNullOrWhiteSpace(element))
-//                       .ToArray();
-//                //Console.WriteLine(line.ToString());
-//                //Console.WriteLine(filtredLine.ToString());
-
-//                point.AddMeasure(double.Parse(resultLine[0]), double.Parse(resultLine[4]), double.Parse(resultLine[3]),
-//                    double.Parse(resultLine[5]), double.Parse(resultLine[6]));
-
-//            }
-//            if (counter < 3 && counter != 0)
-//            {
-//                counter--;
-//            }
-//            if (line.Contains("Ch1"))
-//            {
-//                counter = 2;
-//            }
-//        }
-//        file.Close();
-//    }
-//    return point;
-//}

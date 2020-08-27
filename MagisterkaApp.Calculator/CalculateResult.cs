@@ -22,7 +22,6 @@ namespace MagisterkaApp.Calculator
                 //{
                 double averagePower = 0;
                 double squarePower = 0;
-                bool isStepTEMdominant = false;
 
                 double[] powersAfterCorrection = new double[pointsCount];
                 double[] squaresOfPowers = new double[pointsCount];
@@ -35,8 +34,7 @@ namespace MagisterkaApp.Calculator
                     averagePower += correctedPower;
                     powersAfterCorrection[j] = correctedPower;
 
-                    isStepTEMdominant = CheckTEMdominant(frequencyStep.Points[j]);
-                    frequencyStep.Points[j].IsTEMdominant = isStepTEMdominant;
+                    frequencyStep.Points[j].IsTEMdominant = CheckTEMdominant(frequencyStep.Points[j]);
                 }
                 averagePower = averagePower / pointsCount;
                 #endregion
@@ -53,9 +51,6 @@ namespace MagisterkaApp.Calculator
 
 
                 #region CheckTermsOfDeviation
-
-                if (!isStepTEMdominant)
-                    frequencyStep.SetNotification(NormNotification.ErrorTEMdominant);
 
                 if (deviation <= NormProperties.FirstRequirement)
                 {
@@ -111,9 +106,14 @@ namespace MagisterkaApp.Calculator
             return correctionResult;
         }
 
-        private static bool CheckTEMdominant(Point point)
+        private static TEMdominant CheckTEMdominant(Point point)
         {
-            return (2 * point.SecondaryEx > point.PrimaryEy) && (2 * point.SecondaryEz > point.PrimaryEy);
+            if ((2 * point.SecondaryEx > point.PrimaryEy) && (2 * point.SecondaryEz > point.PrimaryEy))
+            {
+                return TEMdominant.TEMdominant;
+            }
+            else
+                return TEMdominant.NotTEMdominant;
         }
     }
 }

@@ -145,13 +145,13 @@
 
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Default" Width="80">
+                    <!--<GridViewColumn Header="Default" Width="80">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
                                 <RadioButton GroupName="Category" IsChecked="{Binding IsDefault}" Command="{Binding DataContext.DefaultCategoryChangedCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Window}}}" CommandParameter="{Binding}"/>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
-                    </GridViewColumn>
+                    </GridViewColumn>-->
                     <GridViewColumn Header="Name"
                                             DisplayMemberBinding="{Binding NameOfMeasure}" Width="70"/>
                     <GridViewColumn Header="Operator"
@@ -163,7 +163,9 @@
                     <GridViewColumn Header="Number of Points"
                                             DisplayMemberBinding="{Binding NumberOfPoints}" Width="100" />
                     <GridViewColumn Header="Date"
-                                            DisplayMemberBinding="{Binding DateOfMeasure}" Width="170" />
+                                            DisplayMemberBinding="{Binding DateOfMeasure}" Width="100" />
+                    <GridViewColumn Header="Id"
+                                            DisplayMemberBinding="{Binding Id}" Width="110" />
                 </GridView>
             </ListView.View>
         </ListView>

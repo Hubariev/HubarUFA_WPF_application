@@ -26,8 +26,6 @@ namespace MagisterkaApp.Domain
                     return Brushes.DarkOrange;                  
                 case NormNotification.ErrorFrequence:
                     return Brushes.Red;
-                case NormNotification.ErrorTEMdominant:
-                    return Brushes.Violet;
                 default:
                     return Brushes.Gray;
             }

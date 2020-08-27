@@ -1,4 +1,5 @@
 ﻿using MagisterkaApp.Domain;
+using MagisterkaApp.Repo.Abstractions;
 using MagisterkaApp.UI.ViewModel;
 using System;
 using System.Windows;
@@ -10,10 +11,10 @@ namespace MagisterkaApp.UI.Views
     /// </summary>
     public partial class FrequenceStepsWindow : Window
     {
-        public FrequenceStepsWindow(Measure measure)
+        public FrequenceStepsWindow(Measure measure, IFrequenceStepsRepository frequenctStepsRepository)
         {
             InitializeComponent();
-            DataContext = new FrequenceStepsViewModel(measure);
+            DataContext = new FrequenceStepsViewModel(measure, frequenctStepsRepository);
         }
     }
 }

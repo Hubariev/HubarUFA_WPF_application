@@ -4,9 +4,9 @@ using System.Runtime.CompilerServices;
 
 namespace MagisterkaApp.UI.ViewModel
 {
-    public abstract class ViewModelBase: INotifyPropertyChanged
+    public abstract class ViewModelBasee: INotifyPropertyChanged
     {
-        protected ViewModelBase()
+        protected ViewModelBasee()
         {
             RegisterCommands();
             RegisterCollections();

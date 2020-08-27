@@ -7,25 +7,26 @@ namespace MagisterkaApp.Domain
     //ToDo: calculateMethod
     public class FrequencyStep
     {
-        public Guid MeasureId { get; }
-        public double Frequency { get; }
+        public Guid MeasureId { get; set; }
+        public double Frequency { get; set; }
         public double PowerLevelResult { get; set; }
-        public List<Point> Points { get; }
-        public List<Notification> Notifications { get; set; }
+        public List<Point> Points { get; set; }
+        public Notification Notification { get; set; }
+        public bool IsHidden { get; set; }
 
+        public FrequencyStep() { }
         public FrequencyStep(Guid measureId, double frequence)
         {
             this.MeasureId = measureId;
             this.Frequency = frequence;
             this.Points = new List<Point>();
-            this.Notifications = new List<Notification>();
         }
 
-        public void AddPoint(int id, double primaryEy, double secondaryEx, double secondaryEz, double powerLevel)
+        public void AddPoint(int id, double primaryEy, double secondaryEx, double secondaryEz)
         {
-            this.Points.Add(new Point(id, primaryEy, secondaryEx, secondaryEz, powerLevel));
+            this.Points.Add(new Point(id, primaryEy, secondaryEx, secondaryEz));
         }
 
-        public void SetNotification(string text) => this.Notifications.Add(new Notification(text));
+        public void SetNotification(string text) => this.Notification = new Notification(text);
     }
 }
