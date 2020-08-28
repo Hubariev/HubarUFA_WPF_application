@@ -19,12 +19,7 @@ namespace MagisterkaApp.Calculator
             var frequenceSteps = new ObservableCollection<FrequencyStep>();
             int pointId = 1;
             const int columnDifference = 1;
-            #region positions
-            int frequencePosition = 0;
-            int primaryPosition = 0;
-            int secondaryOnePosition = 0;
-            int secondaryTwoPosition = 0;
-            #endregion
+  
 
             foreach (var pathName in pathMeasuredPoints)
             {               
@@ -34,6 +29,13 @@ namespace MagisterkaApp.Calculator
                     string line;
                     string filtredLine;
                     string[] resultLine = new string[] { };
+
+                    #region positions
+                    int frequencePosition = 0;
+                    int primaryPosition = 0;
+                    int secondaryOnePosition = 0;
+                    int secondaryTwoPosition = 0;
+                    #endregion
 
                     while ((line = file.ReadLine()) != null)
                     {

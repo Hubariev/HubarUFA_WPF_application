@@ -9,7 +9,7 @@ namespace MagisterkaApp.Domain
 {
     public class Measure: INotifyPropertyChanged
     {
-        public Guid Id { get; }
+        public Guid Id { get; private set; }
         private string nameOfMeasure;
         private string nameOfOperator;
         private DateTime dateOfMeasure;

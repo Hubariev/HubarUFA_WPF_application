@@ -29,17 +29,18 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Wprowadź dane do pomiaru:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Wprowadź nazwę pomiaru:" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Wprowadź nazwę operatora:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Dane do pomiaru:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa pomiaru:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa operatora:" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola elektrycznego:" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Wybierz rodzaj komory:" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Rodzaj komory:" />
 
                     <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfMeasure, Mode=TwoWay}"/>
                     <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
@@ -50,20 +51,25 @@
 
 
                     <DockPanel Grid.Row="5" Grid.Column="0" Margin="5">
-                        <Button Padding="10,0,10,0" Content="Add" Command="{Binding AddMeasureCommand}"/>
+                        <Button Padding="10,0,10,0" Content="Add" Command="{Binding AddMeasureCommand}" />
                     </DockPanel>
+                    
+                    <DockPanel Grid.Row="5" Grid.Column="1" Margin="5">
+                        <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}" 
+                        CommandParameter="{Binding ElementName=listViewMeasures, Path=SelectedItem}"/>
+                    </DockPanel>
+
+                    <StatusBarItem Grid.Row="6" Grid.Column="0" Margin="5 0 0 0" Background="AliceBlue" >
+                        <Hyperlink Command="{Binding FrequencyStepsOpenCommand}" TextDecorations="None">
+                            <InlineUIContainer>
+                                <TextBlock Text="Open Steps" />
+                            </InlineUIContainer>
+                        </Hyperlink>
+                    </StatusBarItem>
                 </Grid>
             </Border>
-            <DockPanel Width="100" Margin="5">
-                <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}"/>
-            </DockPanel>
-            <StatusBarItem Margin="5 0 0 0" >
-                <Hyperlink Command="{Binding FrequencyStepsOpenCommand}">
-                    <InlineUIContainer>
-                        <TextBlock Text="Open Steps" />
-                    </InlineUIContainer>
-                </Hyperlink>
-            </StatusBarItem>
+           
+            
         </StackPanel>
 
         <!--                          RightPart                               -->
@@ -134,12 +140,15 @@
             </ItemsControl>
         </ScrollViewer>-->
 
-        <ListView Margin="10,10,0,27" ItemsSource="{Binding Measures}" Grid.Column="1" x:Name="listViewMeasures" SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}" Style="{StaticResource ListViewMeasureStyle}">
+        <ListView Margin="10,10,0,27" ItemsSource="{Binding Measures}" Grid.Column="1" x:Name="listViewMeasures" 
+                  SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}" Style="{StaticResource ListViewMeasureStyle}">
+
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <cmd:EventToCommand Command="{Binding CategoryBeenSelected, Mode=OneWay}"
-                                                MustToggleIsEnabledValue="True" />
+                    <i:InvokeCommandAction Command="{Binding SelectionChangedMeasureCommand}"
+                                           CommandParameter="{Binding ElementName=listViewMeasures,
+                        Path=SelectedItem}" />
                 </i:EventTrigger>
             </i:Interaction.Triggers>
 

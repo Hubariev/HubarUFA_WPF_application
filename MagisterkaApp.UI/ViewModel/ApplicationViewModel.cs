@@ -11,17 +11,17 @@ using System.Windows.Input;
 
 namespace MagisterkaApp.UI.ViewModel
 {
-    public class ApplicationViewModel: ViewModelBase
+    public class ApplicationViewModel : ViewModelBase
     {
         private readonly IMeasureRepository measureRepository;
         private readonly IFrequenceStepsRepository frequenceStepsRepository;
         public ObservableCollection<Measure> Measures { get; set; }
-        public Measure selectedMeasure;
+        public Measure selectedMeasure { get; set; }
 
         private Measure newMeasure;
         public MeasureDto MeasureDto { get; set; } = new MeasureDto();
 
-        
+
 
         public ApplicationViewModel(IMeasureRepository measureRepository, IFrequenceStepsRepository frequenceStepsRepository)
         {
@@ -29,7 +29,11 @@ namespace MagisterkaApp.UI.ViewModel
             this.frequenceStepsRepository = frequenceStepsRepository;
             Measures = new ObservableCollection<Measure>();
             GetMeasures();
+
+            SelectionChangedMeasureCommand = new RelayCommand<Measure>(SelectionMeasureChanged);
         }
+
+
 
         private async Task GetMeasures()
         {
@@ -44,6 +48,24 @@ namespace MagisterkaApp.UI.ViewModel
 
 
         #region Commands
+
+        public RelayCommand<Measure> SelectionChangedMeasureCommand { get; set; }
+        private void SelectionMeasureChanged(Measure measure)
+        {
+            if (measure != null)
+            {
+                MeasureDto = new MeasureDto()
+                {
+                    NameOfMeasure = measure.NameOfMeasure,
+                    NameOfOperator = measure.NameOfOperator,
+                    FieldStrength = measure.FieldStrength.ToString(),
+                    HSeptum = measure.HSeptum
+                };
+            }
+            else
+                throw new Exception();
+        }
+
         private RelayCommand addMeasureCommand;
         public ICommand AddMeasureCommand =>
             addMeasureCommand ??
@@ -58,18 +80,18 @@ namespace MagisterkaApp.UI.ViewModel
 
                     this.measureRepository.AddMeasure(measure);
                     this.Measures.Add(measure);
-                })               
+                })
         );
 
-        private RelayCommand deleteMeasureCommand;
+        private RelayCommand<Measure> deleteMeasureCommand;
         public ICommand DeleteMeasureCommand =>
             deleteMeasureCommand ??
-            (deleteMeasureCommand = new RelayCommand(
-                () =>
+            (deleteMeasureCommand = new RelayCommand<Measure>(
+                (measure) =>
                 {
-                    this.measureRepository.DeleteMeasure(SelectedMeasure.Id);
-                    this.Measures.Remove(SelectedMeasure);
-                    this.frequenceStepsRepository.DeleteByMeasureId(SelectedMeasure.Id);
+                    this.measureRepository.DeleteMeasure(measure.Id);
+                    this.Measures.Remove(measure);
+                    this.frequenceStepsRepository.DeleteByMeasureId(measure.Id);
                 }));
 
         private RelayCommand frequencyStepsOpenCommand;
@@ -82,7 +104,7 @@ namespace MagisterkaApp.UI.ViewModel
                     catOpts.ShowDialog();
                 }
                 ));
-    #endregion
+        #endregion
 
         public Measure NewMeasure
         {
@@ -90,7 +112,7 @@ namespace MagisterkaApp.UI.ViewModel
             set
             {
                 newMeasure = value;
-                RaisePropertyChanged("NewMeasure");
+                OnPropertyChanged("NewMeasure");
             }
         }
 
@@ -100,7 +122,7 @@ namespace MagisterkaApp.UI.ViewModel
             set
             {
                 selectedMeasure = value;
-                RaisePropertyChanged("SelectedMeasure");
+                OnPropertyChanged("SelectedMeasure");
             }
         }
     }

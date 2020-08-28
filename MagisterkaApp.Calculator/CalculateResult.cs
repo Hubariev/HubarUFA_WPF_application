@@ -108,7 +108,7 @@ namespace MagisterkaApp.Calculator
 
         private static TEMdominant CheckTEMdominant(Point point)
         {
-            if ((2 * point.SecondaryEx > point.PrimaryEy) && (2 * point.SecondaryEz > point.PrimaryEy))
+            if ((2 * point.SecondaryEx < point.PrimaryEy) && (2 * point.SecondaryEz < point.PrimaryEy))
             {
                 return TEMdominant.TEMdominant;
             }

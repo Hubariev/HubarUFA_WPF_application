@@ -2,10 +2,13 @@
 using GalaSoft.MvvmLight.Command;
 using MagisterkaApp.Calculator;
 using MagisterkaApp.Domain;
+using MagisterkaApp.Domain.Enums;
 using MagisterkaApp.Repo.Abstractions;
+using MagisterkaApp.UI.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Drawing;
 using System.Windows.Input;
 
 namespace MagisterkaApp.UI.ViewModel
@@ -19,7 +22,7 @@ namespace MagisterkaApp.UI.ViewModel
         public Measure measure { get; set; }
 
         public FrequencyStep selectedFrequencyStep { get; set; } 
-        public FrequencyStep frequencyStepInfo { get; set; } = new FrequencyStep() {Frequency = 80, PowerLevelResult =50 };
+        public FrequencyStep frequencyStepInfo { get; set; } = new FrequencyStep();
 
 
 
@@ -39,6 +42,38 @@ namespace MagisterkaApp.UI.ViewModel
             SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
         }
 
+        private RelayCommand saveResultCommand;
+        public ICommand SaveResultCommand =>
+           saveResultCommand ??
+           (saveResultCommand = new RelayCommand(
+               () =>
+               {
+                   var filtredFrequencySteps = new List<FrequencyStep>();
+
+                   double counter = this.FrequencySteps.Count * 0.05;
+                   foreach (var step in this.FrequencySteps)
+                   {
+                       if(step.Notification.backgroundColor.ToString() == "#FFFF0000" && counter > 0)
+                       {
+                           filtredFrequencySteps.Add(step);
+                           counter--;
+                       }
+                       else if(step.Notification.backgroundColor.ToString() != "#FFFF0000")
+                       {
+                           filtredFrequencySteps.Add(step);
+                       }
+                   }
+
+                   
+
+
+
+                   SaveResult.WriteResult(filtredFrequencySteps, measure.NameOfMeasure,
+                       measure.FieldStrength, nameof(measure.HSeptum));
+               })
+       );
+
+
         private void SelectionChanged(FrequencyStep selectedFrequencyStep)
         {
             FrequencyStepInfo = selectedFrequencyStep;
@@ -50,7 +85,7 @@ namespace MagisterkaApp.UI.ViewModel
             set
             {
                 selectedFrequencyStep = value;
-                RaisePropertyChanged("SelectedFrequencyStep");
+                OnPropertyChanged("SelectedFrequencyStep");
             }
         }
 
@@ -60,7 +95,7 @@ namespace MagisterkaApp.UI.ViewModel
             set
             {
                 frequencyStepInfo = value;
-                RaisePropertyChanged("FrequencyStepInfo");
+                OnPropertyChanged("FrequencyStepInfo");
             }
         }
 
@@ -69,7 +104,7 @@ namespace MagisterkaApp.UI.ViewModel
             var readFrequencySteps = new ObservableCollection<FrequencyStep>();
             var frequenceSteps = this.frequenceStepsRepository.GetFrequencyStepsByMeasureId(measureId);
 
-            if (frequenceSteps.Status == System.Threading.Tasks.TaskStatus.Faulted)
+            if (frequenceSteps.Status == System.Threading.Tasks.TaskStatus.Faulted || frequenceSteps.Result.Count == 0)
             {
                 readFrequencySteps = ReadFile.ReadMonitoringFile(pathMeasuredPoints, measureId);
             }
@@ -86,7 +121,7 @@ namespace MagisterkaApp.UI.ViewModel
         {
             var readFrequencySteps = new ObservableCollection<FrequencyStep>();
             var frequenceSteps = this.frequenceStepsRepository.GetFrequencyStepsByMeasureId(measureId);
-            if (frequenceSteps.Status == System.Threading.Tasks.TaskStatus.Faulted)
+            if (frequenceSteps.Status == System.Threading.Tasks.TaskStatus.Faulted || frequenceSteps.Result.Count == 0)
             {
                 readFrequencySteps = ReadFile.ReadCalibrationFile(pathMeasuredPoints, frequencySteps);
                 this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(readFrequencySteps));

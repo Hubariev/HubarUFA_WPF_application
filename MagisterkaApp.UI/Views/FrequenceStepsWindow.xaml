@@ -49,7 +49,7 @@
                         <TextBlock Margin="3" Background="{Binding FrequencyStepInfo.Notification.backgroundColor}" Text="{Binding FrequencyStepInfo.Notification.Text}"></TextBlock>
                     </Expander>
 
-                    <Expander Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Header="PUNKTY" Tag="{Binding FrequencyStepInfo.Notification}">
+                    <Expander Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Header="DANE WEJŚCIOWE" Tag="{Binding FrequencyStepInfo.Notification}">
                         <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsView"
                                   Style="{StaticResource ListViewMeasureStyle}">
 
@@ -68,15 +68,9 @@
                 </Grid>
             </Border>
             <DockPanel Width="100" Margin="5">
-                <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}"/>
+                <Button Padding="10,0,10,0" Content="Save Result" Command="{Binding SaveResultCommand}"/>
             </DockPanel>
-            <StatusBarItem Margin="5 0 0 0" >
-                <Hyperlink Command="{Binding FrequencyStepsOpenCommand}">
-                    <InlineUIContainer>
-                        <TextBlock Text="Open Steps" />
-                    </InlineUIContainer>
-                </Hyperlink>
-            </StatusBarItem>
+            
         </StackPanel>
 
         <!--                          RightPart                               -->
@@ -97,7 +91,8 @@
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}" CommandParameter="{Binding ElementName=listViewFrequencySteps,
+                    <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
+                                           CommandParameter="{Binding ElementName=listViewFrequencySteps,
                         Path=SelectedItem}" />
                 </i:EventTrigger> 
             </i:Interaction.Triggers>
