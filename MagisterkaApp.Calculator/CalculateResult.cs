@@ -55,7 +55,7 @@ namespace MagisterkaApp.Calculator
                 if (deviation <= NormProperties.FirstRequirement)
                 {
                     frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
-                    frequencyStep.SetNotification(NormNotification.Correct);
+                    frequencyStep.SetDeviationNotification(NormNotification.Correct);
                 }
                 else
                 {
@@ -77,19 +77,19 @@ namespace MagisterkaApp.Calculator
                     {
                         //write numberOfPoint
                         frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
-                        frequencyStep.SetNotification(NormNotification.ErrorFirstRequirement);
+                        frequencyStep.SetDeviationNotification(NormNotification.ErrorFirstRequirement);
                     }
                     else
                     {
                         if (deviation <= NormProperties.SecondRequirement)
                         {
                             frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
-                            frequencyStep.SetNotification(NormNotification.ErrorSecondRequirement);
+                            frequencyStep.SetDeviationNotification(NormNotification.ErrorSecondRequirement);
                         }
                         else
                         {
                             frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
-                            frequencyStep.SetNotification(NormNotification.ErrorFrequence);
+                            frequencyStep.SetDeviationNotification(NormNotification.ErrorFrequence);
                         }
                     }
                 }
@@ -109,11 +109,11 @@ namespace MagisterkaApp.Calculator
         private static TEMdominant CheckTEMdominant(Point point)
         {
             if ((2 * point.SecondaryEx < point.PrimaryEy) && (2 * point.SecondaryEz < point.PrimaryEy))
-            {
-                return TEMdominant.TEMdominant;
-            }
+                return TEMdominant.TEMdominantSmaller_Minus6dB;
+            else if((0.79 * point.SecondaryEx < point.PrimaryEy) && (0.79 * point.SecondaryEz < point.PrimaryEy))
+                return TEMdominant.TEMdominantSmaller_Minus2dB;
             else
-                return TEMdominant.NotTEMdominant;
+                return TEMdominant.TEMdominantHigher_Minus2dB;
         }
     }
 }

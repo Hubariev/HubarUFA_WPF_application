@@ -11,7 +11,9 @@ namespace MagisterkaApp.Domain
         public double Frequency { get; set; }
         public double PowerLevelResult { get; set; }
         public List<Point> Points { get; set; }
-        public Notification Notification { get; set; }
+        public Notification DeviationNotification { get; set; }
+        public Notification TEMNotification { get; set; }
+
         public bool IsHidden { get; set; }
 
         public FrequencyStep() { }
@@ -27,6 +29,7 @@ namespace MagisterkaApp.Domain
             this.Points.Add(new Point(id, primaryEy, secondaryEx, secondaryEz));
         }
 
-        public void SetNotification(string text) => this.Notification = new Notification(text);
+        public void SetDeviationNotification(string text) => this.DeviationNotification = new Notification(text);
+        public void SetTEMNotification(string text) => this.TEMNotification = new Notification(text);
     }
 }

@@ -1,9 +1,7 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using MagisterkaApp.Domain;
 using MagisterkaApp.Domain.Enums;
 using MagisterkaApp.Repo.Abstractions;
-using MagisterkaApp.UI.ViewModel;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
@@ -20,8 +18,6 @@ namespace MagisterkaApp.UI.ViewModel
 
         private Measure newMeasure;
         public MeasureDto MeasureDto { get; set; } = new MeasureDto();
-
-
 
         public ApplicationViewModel(IMeasureRepository measureRepository, IFrequenceStepsRepository frequenceStepsRepository)
         {
@@ -41,12 +37,6 @@ namespace MagisterkaApp.UI.ViewModel
             this.Measures = new ObservableCollection<Measure>(measures);
         }
 
-        //protected override void RegisterCollections()
-        //{
-        //    Measures = new ObservableCollection<Measure>();
-        //}
-
-
         #region Commands
 
         public RelayCommand<Measure> SelectionChangedMeasureCommand { get; set; }
@@ -58,7 +48,7 @@ namespace MagisterkaApp.UI.ViewModel
                 {
                     NameOfMeasure = measure.NameOfMeasure,
                     NameOfOperator = measure.NameOfOperator,
-                    FieldStrength = measure.FieldStrength.ToString(),
+                    CorrrectedfieldStrength = measure.CorrrectedfieldStrength.ToString(),
                     HSeptum = measure.HSeptum
                 };
             }
@@ -75,7 +65,7 @@ namespace MagisterkaApp.UI.ViewModel
                     var measure = new Measure(
                         MeasureDto.NameOfMeasure,
                         MeasureDto.NameOfOperator,
-                        Convert.ToDouble(MeasureDto.FieldStrength),
+                        Convert.ToDouble(MeasureDto.CorrrectedfieldStrength),
                         MeasureDto.HSeptum);
 
                     this.measureRepository.AddMeasure(measure);
@@ -130,7 +120,7 @@ namespace MagisterkaApp.UI.ViewModel
     {
         public string NameOfMeasure { get; set; }
         public string NameOfOperator { get; set; }
-        public string FieldStrength { get; set; }
+        public string CorrrectedfieldStrength { get; set; }
         public TypeOfGTEM HSeptum { get; set; }
     }
 }

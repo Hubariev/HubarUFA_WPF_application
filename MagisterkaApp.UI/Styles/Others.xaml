@@ -13,21 +13,99 @@
     <Style x:Key="TextBlockMeasureStyle" TargetType="{x:Type TextBlock}">
         <Setter Property="HorizontalAlignment" Value="Left"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="#d2d0d0"/>
         <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontFamily" Value="Proxima Nova"/>
         <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
-        <Setter Property="FontSize" Value="14"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="16"/>
     </Style>
 
-    <Style x:Key="ListViewMeasureStyle" TargetType="{x:Type ListView}">
+
+    <Style x:Key="BorderFormStyle" TargetType="{x:Type Border}">
+        <Setter Property="Margin" Value="3" />
+        <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
+        <Setter Property="CornerRadius" Value="12"/>
+        <Setter Property="BorderBrush" Value="DarkGreen"/>
+        <Setter Property="BorderThickness" Value="3"/>
+        <Setter Property="Background" Value="White"/>
+    </Style>
+
+    <!--                    TextBox                          -->
+    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+        <Setter Property="Margin" Value="3"/>
+
+    </Style>
+
+
+    <!--                    Button                          -->
+    <Style x:Key="BorderButtonStyle" TargetType="{x:Type Border}">
+        <Setter Property="Background" Value="#141010"/>
+        <Setter Property="BorderBrush" Value="DarkGreen"/>
+        <Setter Property="BorderThickness" Value="2"/>
+        <Setter Property="CornerRadius" Value="20"/>
+        <Setter Property="Width" Value="150"/>
+        <Setter Property="Height" Value="35"/>
+        <Setter Property="Margin" Value="3"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true" >
+                <Setter Property="BorderBrush" Value="LightGreen"/>
+                <Setter Property="Cursor" Value="Hand"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <Style TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Background" Value="#141010"/>
+        <Setter Property="Foreground" Value="#d2d0d0"/>
+        <Setter Property="FontFamily" Value="Proxima Nova"/>
+        <Setter Property="Margin" Value="10,2,10,2"/>
+        <Setter Property="FontSize" Value="16"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#141010"/>
+   
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!--                    ListView                       -->
+
+    <Style TargetType="ListView">
         <Setter Property="Foreground" Value="Black"/>
         <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
         <Setter Property="FontSize" Value="12"/>
+
+    </Style>
+    
+    <!--                    ListViewItem                        -->
+    <Style TargetType="{x:Type ListViewItem}">
+        <Setter Property="Cursor" Value="Hand"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="true" >
+                <Setter Property="Foreground" Value="Black"/>
+            </Trigger>
+
+            <Trigger Property="IsSelected" Value="true" >
+                <Setter Property="Foreground" Value="Black"/>
+                <Setter Property="Background" Value="LightGreen"/>
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
-    <Style x:Key="ListViewHeaderMeasureStyle" TargetType="{x:Type GridViewColumnHeader}">
-        <Setter Property="HorizontalAlignment" Value="Left" />
-        <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
-        <Setter Property="TextBlock.FontSize" Value="12"/>
-    </Style>
 </ResourceDictionary>

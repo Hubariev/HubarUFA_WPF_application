@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace Practise
 {
@@ -6,13 +7,18 @@ namespace Practise
     {
         static void Main(string[] args)
         {
-            Console.WriteLine(DateTime.Now);
-
-            string word = "wzduz";
-
-            var t = word.Contains("wzd");
+            var t = MyEnum.Name1.GetDescription();
 
             Console.WriteLine(t);
         }
+    }
+    public enum MyEnum
+    {
+        [Description("Ololo Name1")]
+        Name1,
+        [Description("Pizdets")]
+        HereIsAnother,
+        [Description("Bobo")]
+        LastOne
     }
 }

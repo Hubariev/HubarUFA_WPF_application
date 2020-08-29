@@ -13,14 +13,14 @@
     </Window.Resources>
 
     <Grid>
-        <Grid.ColumnDefinitions> 
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="0.8*" />
-          
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1.2*"/>
+            <ColumnDefinition Width="0.6*" />
+
         </Grid.ColumnDefinitions>
 
         <StackPanel x:Name="LeftPart" Grid.Column="1">
-            <Border BorderThickness="1" Margin="50" CornerRadius="10" BorderBrush="LightBlue">
+            <Border BorderThickness="1" Margin="20" CornerRadius="10" BorderBrush="LightBlue">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -40,18 +40,18 @@
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Częstotliwość:" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Obliczony poziom mocy:" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Is hidden" />
-                   
+
 
                     <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.Frequency}"/>
                     <TextBlock Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.PowerLevelResult}"/>
                     <CheckBox Grid.Row="3" Grid.Column="1" Margin="3" IsChecked="{Binding FrequencyStepInfo.IsHidden}">Is Hidden</CheckBox>
                     <Expander Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="KOMUNIKAT">
-                        <TextBlock Margin="3" Background="{Binding FrequencyStepInfo.Notification.backgroundColor}" Text="{Binding FrequencyStepInfo.Notification.Text}"></TextBlock>
+                        <TextBlock Margin="3" Background="{Binding FrequencyStepInfo.DeviationNotification.backgroundColor}" Text="{Binding FrequencyStepInfo.DeviationNotification.Text}"></TextBlock>
                     </Expander>
 
                     <Expander Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Header="DANE WEJŚCIOWE" Tag="{Binding FrequencyStepInfo.Notification}">
                         <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsView"
-                                  Style="{StaticResource ListViewMeasureStyle}">
+                                  >
 
                             <ListView.View>
                                 <GridView>
@@ -60,7 +60,6 @@
                                     <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryEx}" Width="85" />
                                     <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryEz}" Width="85" />
                                     <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel}" Width="85" />
-                                    <GridViewColumn Header="TEMdom" DisplayMemberBinding="{Binding IsTEMdominant}" Width="85" />
                                 </GridView>
                             </ListView.View>
                         </ListView>
@@ -70,7 +69,7 @@
             <DockPanel Width="100" Margin="5">
                 <Button Padding="10,0,10,0" Content="Save Result" Command="{Binding SaveResultCommand}"/>
             </DockPanel>
-            
+
         </StackPanel>
 
         <!--                          RightPart                               -->
@@ -79,22 +78,14 @@
 
 
         <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencySteps}" Grid.Column="0" x:Name="listViewFrequencySteps"
-                  SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}" Style="{StaticResource ListViewMeasureStyle}">
-            
-            <!--<i:Interaction.Triggers>
-                <i:EventTrigger EventName="SelectionChanged">
-                    <i:InvokeCommandAction Command="{Binding StepBeenSelectedCommand, Mode=OneWay}"/>
-                </i:EventTrigger>
-            </i:Interaction.Triggers>-->
-
-
+                  Background="Wheat" SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}">
 
             <i:Interaction.Triggers>
                 <i:EventTrigger EventName="SelectionChanged">
                     <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"
                                            CommandParameter="{Binding ElementName=listViewFrequencySteps,
                         Path=SelectedItem}" />
-                </i:EventTrigger> 
+                </i:EventTrigger>
             </i:Interaction.Triggers>
 
             <ListView.View>
@@ -104,13 +95,15 @@
                     <GridViewColumn Header="Komunikaty"  Width="600">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Notification.Text}" Background="{Binding Notification.backgroundColor}" Width="600"/>
+                                <Border BorderThickness="1" CornerRadius="10" BorderBrush="Black" Background="{Binding DeviationNotification.backgroundColor}">
+                                    <TextBlock TextAlignment="Center" Text="{Binding DeviationNotification.Text}"  Width="600"/>
+                                </Border>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
                     </GridViewColumn>
                 </GridView>
             </ListView.View>
-          
+
         </ListView>
 
     </Grid>

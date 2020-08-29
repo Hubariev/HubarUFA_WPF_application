@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1300">
+        Title="MainWindow" Height="600" Width="1300" Background="#141010">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
     </Window.Resources>
@@ -19,7 +19,7 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel x:Name="LeftPart" Grid.Column="0">
-            <Border BorderThickness="1" Margin="50" CornerRadius="10" BorderBrush="LightBlue">
+            <Border BorderThickness="2" Margin="20" CornerRadius="10" BorderBrush="DarkGreen">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -32,32 +32,48 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
+                        <ColumnDefinition Width="1.2*"/>
+                        <ColumnDefinition Width="1.6*"/>
                     </Grid.ColumnDefinitions>
 
                     <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Dane do pomiaru:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa pomiaru:" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa operatora:" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola elektrycznego:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwisko operatora:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola el. :" />
                     <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Rodzaj komory:" />
 
-                    <TextBox Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfMeasure, Mode=TwoWay}"/>
-                    <TextBox Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
-                    <TextBox Grid.Row="3" Grid.Column="1" Margin="3" Text="{Binding MeasureDto.FieldStrength, Mode=TwoWay}"/>
 
-                    <ComboBox Grid.Row="4" Grid.Column="1" Margin="3" ItemsSource="{Binding Path=MeasureDto.HSeptum, Converter={misc:EnumToCollectionConverter},Mode=OneTime}"
+
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                        <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.NameOfMeasure, Mode=TwoWay}"/>
+                    </Border>
+                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                        <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
+                    </Border>
+
+                    <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                        <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.CorrrectedfieldStrength, Mode=TwoWay}"/>
+                    </Border>
+                    <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                        <ComboBox  BorderThickness="0" Margin="3" ItemsSource="{Binding Path=MeasureDto.HSeptum, Converter={misc:EnumToCollectionConverter},Mode=OneTime}"
                           SelectedValuePath="Value" DisplayMemberPath="Description" SelectedValue="{Binding Path=MeasureDto.HSeptum}"/>
+                    </Border>
 
 
-                    <DockPanel Grid.Row="5" Grid.Column="0" Margin="5">
-                        <Button Padding="10,0,10,0" Content="Add" Command="{Binding AddMeasureCommand}" />
-                    </DockPanel>
-                    
-                    <DockPanel Grid.Row="5" Grid.Column="1" Margin="5">
+
+
+
+
+
+                    <Border Grid.Row="5" Grid.Column="0" Style="{StaticResource BorderButtonStyle}">
+                        <Button 
+                                Content="Add"  Command="{Binding AddMeasureCommand}" />
+                    </Border>
+
+                    <Border Grid.Row="5" Grid.Column="1" Margin="5" Style="{StaticResource BorderButtonStyle}">
                         <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}" 
                         CommandParameter="{Binding ElementName=listViewMeasures, Path=SelectedItem}"/>
-                    </DockPanel>
+                    </Border>
 
                     <StatusBarItem Grid.Row="6" Grid.Column="0" Margin="5 0 0 0" Background="AliceBlue" >
                         <Hyperlink Command="{Binding FrequencyStepsOpenCommand}" TextDecorations="None">
@@ -141,7 +157,7 @@
         </ScrollViewer>-->
 
         <ListView Margin="10,10,0,27" ItemsSource="{Binding Measures}" Grid.Column="1" x:Name="listViewMeasures" 
-                  SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}" Style="{StaticResource ListViewMeasureStyle}">
+                  Foreground="#d2d0d0" Background="#141010" SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}">
 
 
             <i:Interaction.Triggers>
@@ -168,11 +184,11 @@
                     <GridViewColumn Header="HSeptum"
                                             DisplayMemberBinding="{Binding HSeptum}" Width="100" />
                     <GridViewColumn Header="Field strength"
-                                            DisplayMemberBinding="{Binding FieldStrength}" Width="90" />
+                                            DisplayMemberBinding="{Binding CorrrectedfieldStrength}" Width="90" />
                     <GridViewColumn Header="Number of Points"
                                             DisplayMemberBinding="{Binding NumberOfPoints}" Width="100" />
                     <GridViewColumn Header="Date"
-                                            DisplayMemberBinding="{Binding DateOfMeasure}" Width="100" />
+                                            DisplayMemberBinding="{Binding DateOfMeasure}" Width="150" />
                     <GridViewColumn Header="Id"
                                             DisplayMemberBinding="{Binding Id}" Width="110" />
                 </GridView>

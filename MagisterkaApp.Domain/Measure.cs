@@ -13,7 +13,7 @@ namespace MagisterkaApp.Domain
         private string nameOfMeasure;
         private string nameOfOperator;
         private DateTime dateOfMeasure;
-        private double fieldStrength;
+        private double corrrectedfieldStrength;
         private TypeOfGTEM hSeptum;
         private NumberOfPoints numberOfPoints { get; set; }
 
@@ -24,7 +24,7 @@ namespace MagisterkaApp.Domain
             this.Id = Guid.NewGuid();
             this.nameOfMeasure = nameOfMeasure;
             this.nameOfOperator = nameOfOperator;
-            this.fieldStrength = fieldStrength;
+            this.corrrectedfieldStrength = fieldStrength;
             this.HSeptum = hSeptum;
             this.dateOfMeasure = GetDateOfMeasure();
             this.numberOfPoints = GetNumberOfPoints(HSeptum);
@@ -50,12 +50,12 @@ namespace MagisterkaApp.Domain
             }
         }
 
-        public double FieldStrength
+        public double CorrrectedfieldStrength
         {
-            get { return fieldStrength; }
+            get { return corrrectedfieldStrength; }
             set
             {
-                fieldStrength = value;
+                corrrectedfieldStrength = value;
                 OnPropertyChanged("FieldStrength");
             }
         }

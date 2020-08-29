@@ -19,13 +19,23 @@ namespace MagisterkaApp.Domain
             switch (normNotification)
             {
                 case NormNotification.Correct:
-                    return Brushes.White;
+                    return Brushes.PaleGreen;
                 case NormNotification.ErrorFirstRequirement:
                     return Brushes.Yellow;
                 case NormNotification.ErrorSecondRequirement:
                     return Brushes.DarkOrange;                  
                 case NormNotification.ErrorFrequence:
                     return Brushes.Red;
+
+                case TEMdominantNotification.Correct:
+                    return Brushes.PaleGreen;
+                case TEMdominantNotification.ConfirmFirstRequirement:
+                    return Brushes.Yellow;
+                case TEMdominantNotification.ConfirmSecondRequirement:
+                    return Brushes.DarkOrange;
+                case TEMdominantNotification.ErrorDominant:
+                    return Brushes.Red;
+
                 default:
                     return Brushes.Gray;
             }

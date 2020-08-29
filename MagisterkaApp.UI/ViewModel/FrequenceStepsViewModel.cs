@@ -37,7 +37,7 @@ namespace MagisterkaApp.UI.ViewModel
 
             var readFrequencies = GetFrequencyStepsMonitoring(this.monitoringPathes, measure.Id);
             readFrequencies = GetFrequencyStepsCalibrating(this.calibrationPathes, readFrequencies, measure.Id);
-            this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.FieldStrength);
+            this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.CorrrectedfieldStrength);
 
             SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
         }
@@ -53,23 +53,20 @@ namespace MagisterkaApp.UI.ViewModel
                    double counter = this.FrequencySteps.Count * 0.05;
                    foreach (var step in this.FrequencySteps)
                    {
-                       if(step.Notification.backgroundColor.ToString() == "#FFFF0000" && counter > 0)
+                       if(step.DeviationNotification.backgroundColor.ToString() == "#FFFF8C00" && counter > 0)
                        {
                            filtredFrequencySteps.Add(step);
                            counter--;
                        }
-                       else if(step.Notification.backgroundColor.ToString() != "#FFFF0000")
+                       else if(step.DeviationNotification.backgroundColor.ToString() != "#FFFF8C00" && 
+                               step.DeviationNotification.backgroundColor.ToString() != "#FFFF0000")
                        {
                            filtredFrequencySteps.Add(step);
                        }
                    }
 
-                   
-
-
-
                    SaveResult.WriteResult(filtredFrequencySteps, measure.NameOfMeasure,
-                       measure.FieldStrength, nameof(measure.HSeptum));
+                       measure.CorrrectedfieldStrength, nameof(measure.HSeptum));
                })
        );
 
@@ -151,7 +148,7 @@ namespace MagisterkaApp.UI.ViewModel
                         FrequencyStepInfo.Frequency = SelectedFrequencyStep.Frequency;
                         FrequencyStepInfo.PowerLevelResult = SelectedFrequencyStep.PowerLevelResult;
                         FrequencyStepInfo.Points = SelectedFrequencyStep.Points;
-                        FrequencyStepInfo.Notification = SelectedFrequencyStep.Notification;
+                        FrequencyStepInfo.DeviationNotification = SelectedFrequencyStep.DeviationNotification;
                         FrequencyStepInfo.IsHidden = SelectedFrequencyStep.IsHidden;
                     }                 
                     ));
