@@ -10,6 +10,15 @@ namespace Practise
             var t = MyEnum.Name1.GetDescription();
 
             Console.WriteLine(t);
+
+            double primary = 5;
+            double powerResult = 39.72;
+            double correctedPower = 36.1865;
+
+            var powerDifference = 0.1 * (powerResult - correctedPower);
+            var powResult = Math.Pow(10, powerDifference);
+
+            Console.WriteLine(primary * Math.Sqrt(powResult)); 
         }
     }
     public enum MyEnum

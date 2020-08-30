@@ -37,6 +37,12 @@ namespace MagisterkaApp.Calculator
                     int secondaryTwoPosition = 0;
                     #endregion
 
+                    #region namesOfFieldStrength
+                    string primaryName = "primary";
+                    string secondaryOneName = "secondaryOne";
+                    string secondaryTwoName = "secondaryTwo";
+                    #endregion
+
                     while ((line = file.ReadLine()) != null)
                     {
                         if(line.ToUpper().Contains("PRIMAR") || line.ToUpper().Contains("VERTICAL") || line.ToUpper().Contains("PIONOWO"))
@@ -46,6 +52,7 @@ namespace MagisterkaApp.Calculator
                             string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
                             resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
                             primaryPosition = Convert.ToInt16(resultPrimaryLine[1]) + columnDifference;
+                            primaryName = resultPrimaryLine[2];
                         }
 
                         if ((line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("TRANSWERSE") || line.ToUpper().Contains("POPRZECZ")) 
@@ -56,6 +63,7 @@ namespace MagisterkaApp.Calculator
                             string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
                             resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
                             secondaryOnePosition = Convert.ToInt16(resultPrimaryLine[1]) + columnDifference;
+                            secondaryOneName = resultPrimaryLine[2];
                         }
 
                         if (line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("LONGITUDINAL") || line.ToUpper().Contains("WZD"))
@@ -65,6 +73,7 @@ namespace MagisterkaApp.Calculator
                             string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
                             resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
                             secondaryTwoPosition = Convert.ToInt16(resultPrimaryLine[1]) + columnDifference;
+                            secondaryTwoName = resultPrimaryLine[2];
                         }
 
 
@@ -90,8 +99,8 @@ namespace MagisterkaApp.Calculator
                             {
                                 step = new FrequencyStep(measureId, frequency);
                             }
-                            
-                            step.AddPoint(pointId, primary, secondaryOne, secondarySecond);
+                            //Names
+                            step.AddPoint(pointId, primary, secondaryOne, secondarySecond, primaryName, secondaryOneName ,secondaryTwoName);
                                                        
                             if(pointId == 1)
                                 frequenceSteps.Add(step);
@@ -147,7 +156,7 @@ namespace MagisterkaApp.Calculator
                             var power = double.Parse(resultLine[powerPosition]);
 
                             if (frequencySteps[frequencyStepsCounter].Frequency == frequency)
-                                frequencySteps[frequencyStepsCounter].Points[i].AddPowerResult(power);
+                                frequencySteps[frequencyStepsCounter].Points[i].AddPowerLevel(power);
                             else
                                 throw new Exception("Error with Reading calibration file.");
 

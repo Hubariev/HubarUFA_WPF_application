@@ -29,12 +29,19 @@ namespace MagisterkaApp.Calculator
                 #region averagePowerAlgorithm
                 for (int j = 0; j < pointsCount; j++)
                 {
-                    var correctedPower = PowerCorrectionToPrimaryEy(frequencyStep.Points[j].PrimaryEy, fieldstrength,
-                                                                     frequencyStep.Points[j].PowerLevel);
+                    var correctedPower = PowerCorrectionToPrimaryEy(frequencyStep.Points[j].Primary.Input, fieldstrength,
+                                                                     frequencyStep.Points[j].PowerLevel.Input);
                     averagePower += correctedPower;
                     powersAfterCorrection[j] = correctedPower;
 
                     frequencyStep.Points[j].IsTEMdominant = CheckTEMdominant(frequencyStep.Points[j]);
+                    frequencyStep.Points[j].Primary.Corrected = fieldstrength;
+                    frequencyStep.Points[j].SecondaryOne.Corrected = GetCorrectedSecondary(fieldstrength, frequencyStep.Points[j].Primary.Input,
+                                                                                           frequencyStep.Points[j].SecondaryOne.Input);
+                    frequencyStep.Points[j].SecondaryTwo.Corrected = GetCorrectedSecondary(fieldstrength, frequencyStep.Points[j].Primary.Input,
+                                                                                           frequencyStep.Points[j].SecondaryTwo.Input);
+                    frequencyStep.Points[j].PowerLevel.Corrected = correctedPower;
+
                 }
                 averagePower = averagePower / pointsCount;
                 #endregion
@@ -71,7 +78,17 @@ namespace MagisterkaApp.Calculator
 
                     deviation = Math.Sqrt(squarePower / (count75Percent - 1));
 
-                    //var errorPoint = Array.IndexOf(squaresOfPowers, squaresOfPowersList[pointsCount - 1]);
+                    List<int> pointErrorPositions = new List<int>();
+
+                    if((pointsCount - count75Percent) > 1)
+                    {
+                        pointErrorPositions.Add(Array.IndexOf(squaresOfPowers, squaresOfPowersList[count75Percent]));
+                        pointErrorPositions.Add(Array.IndexOf(squaresOfPowers, squaresOfPowersList[count75Percent + 1]));
+                    }
+                    else
+                        pointErrorPositions.Add(Array.IndexOf(squaresOfPowers, squaresOfPowersList[pointsCount - 1]));
+
+
 
                     if (deviation <= NormProperties.FirstRequirement)
                     {
@@ -93,11 +110,43 @@ namespace MagisterkaApp.Calculator
                         }
                     }
                 }
+
+                //
+                for(int t = 0; t < pointsCount; t++)
+                {
+                    frequencyStep.Points[t].Primary.Test = GetPrimaryTest(fieldstrength, powersAfterCorrection[t],
+                        frequencyStep.PowerLevelResult);
+
+                    frequencyStep.Points[t].SecondaryOne.Test = GetTestSecondary(fieldstrength, frequencyStep.Points[t].Primary.Test,
+                        frequencyStep.Points[t].SecondaryOne.Corrected);
+                    frequencyStep.Points[t].SecondaryTwo.Test = GetTestSecondary(fieldstrength, frequencyStep.Points[t].Primary.Test,
+                  frequencyStep.Points[t].SecondaryTwo.Corrected);
+
+                    frequencyStep.Points[t].PowerLevel.Test = frequencyStep.PowerLevelResult;
+                }
+
                 #endregion
                 //}
                 calculatedFrequencySteps.Add(frequencyStep);
             }
             return calculatedFrequencySteps;
+        }
+
+        private static double GetPrimaryTest(double primary, double correctedPower, double resultPower)
+        {
+            var powerDifference = 0.1 * (resultPower - correctedPower);
+            var powResult = Math.Pow(10, powerDifference);
+
+            return primary * Math.Sqrt(powResult);
+        }
+        private static double GetTestSecondary(double fieldStrength, double primary, double secondary)
+        {
+            return (primary / fieldStrength) * secondary;
+        }
+
+        private static double GetCorrectedSecondary(double fieldStrength, double primary, double secondary)
+        {
+            return (fieldStrength / primary) * secondary;
         }
 
         private static double PowerCorrectionToPrimaryEy(double primaryEy, double fieldStrength, double powerLevel)
@@ -108,9 +157,9 @@ namespace MagisterkaApp.Calculator
 
         private static TEMdominant CheckTEMdominant(Point point)
         {
-            if ((2 * point.SecondaryEx < point.PrimaryEy) && (2 * point.SecondaryEz < point.PrimaryEy))
+            if ((2 * point.SecondaryOne.Input < point.Primary.Input) && (2 * point.SecondaryTwo.Input < point.Primary.Input))
                 return TEMdominant.TEMdominantSmaller_Minus6dB;
-            else if((0.79 * point.SecondaryEx < point.PrimaryEy) && (0.79 * point.SecondaryEz < point.PrimaryEy))
+            else if((0.79 * point.SecondaryOne.Input < point.Primary.Input) && (0.79 * point.SecondaryTwo.Input < point.Primary.Input))
                 return TEMdominant.TEMdominantSmaller_Minus2dB;
             else
                 return TEMdominant.TEMdominantHigher_Minus2dB;

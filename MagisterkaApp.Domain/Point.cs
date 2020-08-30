@@ -5,25 +5,27 @@ namespace MagisterkaApp.Domain
     public class Point
     {
         public int Id { get; }
-        public double PrimaryEy { get; }
-        public double SecondaryEx { get; }        
-        public double SecondaryEz { get; }
-        public double PowerLevel { get; set; }
+        public FieldStrength Primary { get; }
+        public FieldStrength SecondaryOne { get; }        
+        public FieldStrength SecondaryTwo { get; }
+        public PowerLevel PowerLevel { get; set; }
+        public BackgroundColor PointBackgroundColor { get; set; }
         public bool IsConsidered { get; set; }
         public TEMdominant IsTEMdominant { get; set; }
 
 
-        public Point(int id, double primaryEy, double secondaryEx, double secondaryEz)
+        public Point(int id, double primaryInput, double secondaryOneInput, double secondaryTwoInput,
+                     string primaryName, string secondaryOneName, string secondaryTwoName)
         {
             this.Id = id;
-            this.PrimaryEy = primaryEy; 
-            this.SecondaryEx = secondaryEx; 
-            this.SecondaryEz = secondaryEz; 
+            this.Primary = new FieldStrength(primaryInput, primaryName); 
+            this.SecondaryOne = new FieldStrength(secondaryOneInput, secondaryOneName); 
+            this.SecondaryTwo = new FieldStrength(secondaryTwoInput, secondaryTwoName); 
         }
 
-        public void AddPowerResult(double powerLevel)
+        public void AddPowerLevel(double powerLevel)
         {
-            this.PowerLevel = powerLevel;
+            this.PowerLevel = new PowerLevel(powerLevel);
         }
     }
 }

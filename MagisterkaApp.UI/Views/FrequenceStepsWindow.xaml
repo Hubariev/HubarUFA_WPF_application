@@ -30,6 +30,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -45,21 +46,48 @@
                     <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.Frequency}"/>
                     <TextBlock Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.PowerLevelResult}"/>
                     <CheckBox Grid.Row="3" Grid.Column="1" Margin="3" IsChecked="{Binding FrequencyStepInfo.IsHidden}">Is Hidden</CheckBox>
-                    <Expander Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Header="KOMUNIKAT">
-                        <TextBlock Margin="3" Background="{Binding FrequencyStepInfo.DeviationNotification.backgroundColor}" Text="{Binding FrequencyStepInfo.DeviationNotification.Text}"></TextBlock>
-                    </Expander>
+
+                    <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="3" Background="{Binding FrequencyStepInfo.DeviationNotification.backgroundColor}" Text="{Binding FrequencyStepInfo.DeviationNotification.Text}"></TextBlock>
+
 
                     <Expander Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Header="DANE WEJŚCIOWE" Tag="{Binding FrequencyStepInfo.Notification}">
-                        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsView"
+                        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsViewInput"
                                   >
 
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}"/>
-                                    <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding PrimaryEy}" Width="90" />
-                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryEx}" Width="85" />
-                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryEz}" Width="85" />
-                                    <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel}" Width="85" />
+                                    <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding Primary.Input}" Width="90" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryOne.Input}" Width="85" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryTwo.Input}" Width="85" />
+                                    <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel.Input}" Width="85" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Expander>
+
+                    <Expander Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Header="DANE SKOREGOWANE" Tag="{Binding FrequencyStepInfo.Notification}">
+                        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsViewCorrected">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}"/>
+                                    <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding Primary.Corrected}" Width="90" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryOne.Corrected}" Width="85" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryTwo.Corrected}" Width="85" />
+                                    <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel.Corrected}" Width="85" />
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Expander>
+                    <Expander Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="2" Header="DANE TEST" Tag="{Binding FrequencyStepInfo.Notification}">
+                        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsViewTest">
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}"/>
+                                    <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding Primary.Test}" Width="90" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryOne.Test}" Width="85" />
+                                    <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryTwo.Test}" Width="85" />
+                                    <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel.Test}" Width="85" />
                                 </GridView>
                             </ListView.View>
                         </ListView>

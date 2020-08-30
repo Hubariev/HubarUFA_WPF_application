@@ -24,9 +24,11 @@ namespace MagisterkaApp.Domain
             this.Points = new List<Point>();
         }
 
-        public void AddPoint(int id, double primaryEy, double secondaryEx, double secondaryEz)
+        public void AddPoint(int id, double primaryInput, double secondaryOneInput, double secondaryTwoInput,
+            string primaryName, string secondaryOneName, string secondaryTwoName)
         {
-            this.Points.Add(new Point(id, primaryEy, secondaryEx, secondaryEz));
+            this.Points.Add(new Point(id, primaryInput, secondaryOneInput, secondaryTwoInput,
+                                 primaryName, secondaryOneName, secondaryTwoName));
         }
 
         public void SetDeviationNotification(string text) => this.DeviationNotification = new Notification(text);

@@ -32,29 +32,30 @@
                         <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1.2*"/>
-                        <ColumnDefinition Width="1.6*"/>
+                        <ColumnDefinition Width="203*"/>
+                        <ColumnDefinition Width="195*"/>
+                        <ColumnDefinition Width="77*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Dane do pomiaru:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa pomiaru:" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwisko operatora:" />
-                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola el. :" />
-                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Rodzaj komory:" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="170,5,91.8,3.8" Text="Dane do pomiaru:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,8.2,0,7" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa pomiaru:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Margin="5,8,0,7.2" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwisko operatora:" />
+                    <TextBlock Grid.Row="3" Grid.Column="0" Margin="5,7.8,0,7.4" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola el. :" />
+                    <TextBlock Grid.Row="4" Grid.Column="0" Margin="5,11.6,0,10" Style="{StaticResource TextBlockMeasureStyle}" Text="Rodzaj komory:" />
 
 
 
-                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                    <Border Grid.Row="1" Grid.Column="1" Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" Margin="2.8,3.2,3.4,3">
                         <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.NameOfMeasure, Mode=TwoWay}"/>
                     </Border>
-                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                    <Border Grid.Row="2" Grid.Column="1" Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" Margin="2.8,3,3.4,3.2">
                         <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
                     </Border>
 
-                    <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                    <Border Grid.Row="3" Grid.Column="1" Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" Margin="2.8,2.8,3.4,3.4">
                         <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.CorrrectedfieldStrength, Mode=TwoWay}"/>
                     </Border>
-                    <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderFormStyle}">
+                    <Border Grid.Row="4" Grid.Column="1" Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" Margin="2.8,2.6,3.4,3">
                         <ComboBox  BorderThickness="0" Margin="3" ItemsSource="{Binding Path=MeasureDto.HSeptum, Converter={misc:EnumToCollectionConverter},Mode=OneTime}"
                           SelectedValuePath="Value" DisplayMemberPath="Description" SelectedValue="{Binding Path=MeasureDto.HSeptum}"/>
                     </Border>
@@ -65,17 +66,17 @@
 
 
 
-                    <Border Grid.Row="5" Grid.Column="0" Style="{StaticResource BorderButtonStyle}">
+                    <Border Grid.Row="5" Grid.Column="0" Style="{StaticResource BorderButtonStyle}" Margin="27,5,26.2,4.8">
                         <Button 
                                 Content="Add"  Command="{Binding AddMeasureCommand}" />
                     </Border>
 
-                    <Border Grid.Row="5" Grid.Column="1" Margin="5" Style="{StaticResource BorderButtonStyle}">
+                    <Border Grid.Row="5" Grid.Column="1" Margin="60.8,5,60.4,4.8" Style="{StaticResource BorderButtonStyle}" Grid.ColumnSpan="2">
                         <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}" 
                         CommandParameter="{Binding ElementName=listViewMeasures, Path=SelectedItem}"/>
                     </Border>
 
-                    <StatusBarItem Grid.Row="6" Grid.Column="0" Margin="5 0 0 0" Background="AliceBlue" >
+                    <StatusBarItem Grid.Row="6" Grid.Column="0" Margin="5,0.2,0.2,0.2" Background="AliceBlue" >
                         <Hyperlink Command="{Binding FrequencyStepsOpenCommand}" TextDecorations="None">
                             <InlineUIContainer>
                                 <TextBlock Text="Open Steps" />
