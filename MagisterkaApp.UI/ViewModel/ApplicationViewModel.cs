@@ -48,7 +48,8 @@ namespace MagisterkaApp.UI.ViewModel
                 {
                     NameOfMeasure = measure.NameOfMeasure,
                     NameOfOperator = measure.NameOfOperator,
-                    CorrrectedfieldStrength = measure.CorrrectedfieldStrength.ToString(),
+                    ResearchfieldStrength = measure.ResearchfieldStrength.ToString(),
+                    VerificationfieldStrength = measure.VerificationfieldStrength.ToString(),
                     HSeptum = measure.HSeptum
                 };
             }
@@ -65,7 +66,8 @@ namespace MagisterkaApp.UI.ViewModel
                     var measure = new Measure(
                         MeasureDto.NameOfMeasure,
                         MeasureDto.NameOfOperator,
-                        Convert.ToDouble(MeasureDto.CorrrectedfieldStrength),
+                        Convert.ToDouble(MeasureDto.ResearchfieldStrength),
+                        Convert.ToDouble(MeasureDto.VerificationfieldStrength),
                         MeasureDto.HSeptum);
 
                     this.measureRepository.AddMeasure(measure);
@@ -120,7 +122,8 @@ namespace MagisterkaApp.UI.ViewModel
     {
         public string NameOfMeasure { get; set; }
         public string NameOfOperator { get; set; }
-        public string CorrrectedfieldStrength { get; set; }
+        public string ResearchfieldStrength { get; set; }
+        public string VerificationfieldStrength { get; set; }
         public TypeOfGTEM HSeptum { get; set; }
     }
 }

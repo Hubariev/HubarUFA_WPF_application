@@ -218,8 +218,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Miscellaneous\EnumToStringConverter.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModel\FrequenceStepsViewModel.cs" />
+    <Compile Include="ViewModel\TEMdominantViewModel.cs" />
     <Compile Include="ViewModel\ViewModelBase.cs" />
     <Compile Include="Views\FrequenceStepsWindow.xaml.cs">
       <DependentUpon>FrequenceStepsWindow.xaml</DependentUpon>
@@ -232,6 +234,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="ViewModel\ApplicationViewModel.cs" />
+    <Compile Include="Views\TEMdominantWindow.xaml.cs">
+      <DependentUpon>TEMdominantWindow.xaml</DependentUpon>
+    </Compile>
     <Page Include="Styles\Others.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -241,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MeasureWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TEMdominantWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

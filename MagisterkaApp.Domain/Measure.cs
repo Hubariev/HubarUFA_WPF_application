@@ -13,18 +13,20 @@ namespace MagisterkaApp.Domain
         private string nameOfMeasure;
         private string nameOfOperator;
         private DateTime dateOfMeasure;
-        private double corrrectedfieldStrength;
+        private double researchfieldStrength;
+        private double verificationfieldStrength;
         private TypeOfGTEM hSeptum;
         private NumberOfPoints numberOfPoints { get; set; }
 
 
         public Measure() { } //parametrless constructor for LiteDB
-        public Measure(string nameOfMeasure, string nameOfOperator, double fieldStrength, TypeOfGTEM hSeptum)
+        public Measure(string nameOfMeasure, string nameOfOperator, double researchfieldStrength, double verificationfieldStrength, TypeOfGTEM hSeptum)
         {
             this.Id = Guid.NewGuid();
             this.nameOfMeasure = nameOfMeasure;
             this.nameOfOperator = nameOfOperator;
-            this.corrrectedfieldStrength = fieldStrength;
+            this.researchfieldStrength = researchfieldStrength;
+            this.verificationfieldStrength = verificationfieldStrength;
             this.HSeptum = hSeptum;
             this.dateOfMeasure = GetDateOfMeasure();
             this.numberOfPoints = GetNumberOfPoints(HSeptum);
@@ -50,13 +52,23 @@ namespace MagisterkaApp.Domain
             }
         }
 
-        public double CorrrectedfieldStrength
+        public double ResearchfieldStrength
         {
-            get { return corrrectedfieldStrength; }
+            get { return researchfieldStrength; }
             set
             {
-                corrrectedfieldStrength = value;
-                OnPropertyChanged("FieldStrength");
+                researchfieldStrength = value;
+                OnPropertyChanged("ResearchfieldStrength");
+            }
+        }
+
+        public double VerificationfieldStrength
+        {
+            get { return verificationfieldStrength; }
+            set
+            {
+                verificationfieldStrength = value;
+                OnPropertyChanged("VerificationfieldStrength");
             }
         }
 

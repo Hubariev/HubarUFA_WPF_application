@@ -1,0 +1,96 @@
+
+
+
+		Measurement Report - Test of immunity
+
+
+Date & time        : 8/18/2020   1:11 PM
+Operator           : YHu
+EUT                : Punkl_6
+Reference          : 
+
+Comment
+
+
+Monitoring system
+
+   Channel 1       : Isotrope
+   Unit            : V/m
+   Instrument      : LSProbe 1.2
+   Data file       : 
+   Limits          : no evaluation
+
+   Channel 2       : Ey_pionowo
+   Unit            : V/m
+   Instrument      : LSProbe 1.2
+   Data file       : 
+   Limits          : no evaluation
+
+   Channel 3       : Ez_wzduz
+   Unit            : V/m
+   Instrument      : LSProbe 1.2
+   Data file       : 
+   Limits          : no evaluation
+
+   Channel 4       : Ex_poprzecznie
+   Unit            : V/m
+   Instrument      : LSProbe 1.2
+   Data file       : 
+   Limits          : no evaluation
+
+   Channel 5       : Probe temp
+   Unit            : Sensor Temp °C
+   Instrument      : LSProbe 1.2
+   Data file       : 
+   Limits          : no evaluation
+
+   Channel 6       : Dir_Coupler_For
+   Unit            : dBm
+   Instrument      : NSG4070-45 9.6kBaud
+   Data file       : NSG4070_CH1.DAT
+   Limits          : no evaluation
+
+Frequencies
+   Start           : 80.000000 MHz
+   Stop            : 1000.000000 MHz
+   Step            : 1.000000 %
+
+Reference input
+   Fix value       : 5.0 V/m
+   Offset          : 0.0 V/m
+   Dwell time      : 0.5 s
+
+Control system
+   Loop            : closed
+   Ctrl. conditions
+     Tolerance     : 0.50 dB
+
+Settings of signal generation
+   Device          : NSG4070-45 9.6kBaud
+   RF ON/OFF       : ON
+   MOD ON/OFF      : OFF
+
+   Range  1        :      0.010000 ...  1000.000000 MHz
+
+Settings of signal coupling
+   Device          : GTEM1500
+
+   Part 1          :     80.000000 ...  1000.000000 MHz
+
+
+Error list and notes of part(s)  1
+
+ Stop:  1000.000000 MHz
+        
+
+
+
+
+
+
+                              date           signature
+
+
+
+Report is based on:
+ Punkt_6.MSD, last modified on 8/18/2020 at 1:21 PM

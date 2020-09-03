@@ -1,14 +1,10 @@
-﻿using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
+﻿using GalaSoft.MvvmLight.Command;
 using MagisterkaApp.Calculator;
 using MagisterkaApp.Domain;
-using MagisterkaApp.Domain.Enums;
 using MagisterkaApp.Repo.Abstractions;
-using MagisterkaApp.UI.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Windows.Input;
 
 namespace MagisterkaApp.UI.ViewModel
@@ -24,9 +20,12 @@ namespace MagisterkaApp.UI.ViewModel
         public FrequencyStep selectedFrequencyStep { get; set; } 
         public FrequencyStep frequencyStepInfo { get; set; } = new FrequencyStep();
 
+        public string Result5proc { get; set; }
 
 
-        public ObservableCollection<FrequencyStep> FrequencySteps { get; set; }
+
+        public ObservableCollection<FrequencyStep> FrequencySteps { get; set; }// will be going to TEmdom
+        public ObservableCollection<FrequencyStep> FiltredFrequencySteps { get; set; }//will be on View
 
         public FrequenceStepsViewModel(Measure measure, IFrequenceStepsRepository frequenceStepsRepository)
         {
@@ -37,9 +36,33 @@ namespace MagisterkaApp.UI.ViewModel
 
             var readFrequencies = GetFrequencyStepsMonitoring(this.monitoringPathes, measure.Id);
             readFrequencies = GetFrequencyStepsCalibrating(this.calibrationPathes, readFrequencies, measure.Id);
-            this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.CorrrectedfieldStrength);
+            this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
 
-            SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
+            SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged); 
+            Check5proc();
+        }
+
+
+        public void Check5proc()
+        {
+            var countOfOrange = Math.Round(0.05 * this.FrequencySteps.Count);
+
+            var counter = 0;
+
+            for (int t = 0; t < this.FrequencySteps.Count; t++)
+            {
+                if (this.FrequencySteps[t].DeviationNotification.backgroundColor.ToString() == "#FFFF8C00")
+                {
+                    counter++;
+                }
+            }
+
+            if (counter > countOfOrange)
+                this.Result5proc = $"Warunek TEM dominant NIE jest spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
+                    $"-6[dB] do -2[dB]: {countOfOrange}. Faktyczna liczba: {counter}";
+            else
+                this.Result5proc = $"Warunek TEM dominant JEST spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
+                 $"-6[dB] do -2[dB]: {countOfOrange}. Faktyczna liczba: {counter}";
         }
 
         private RelayCommand saveResultCommand;
@@ -66,7 +89,7 @@ namespace MagisterkaApp.UI.ViewModel
                    }
 
                    SaveResult.WriteResult(filtredFrequencySteps, measure.NameOfMeasure,
-                       measure.CorrrectedfieldStrength, nameof(measure.HSeptum));
+                       measure.ResearchfieldStrength, nameof(measure.HSeptum));
                })
        );
 
@@ -153,11 +176,23 @@ namespace MagisterkaApp.UI.ViewModel
                     }                 
                     ));
 
+        private RelayCommand temDominantOpenCommand;
+        public ICommand TEMdominantOpenCommand =>
+            temDominantOpenCommand ??
+            (temDominantOpenCommand = new RelayCommand(
+                () =>
+                {
+                    var catOpts = new Views.TEMdominantWindow(this.FrequencySteps);
+                    catOpts.ShowDialog();
+                }
+                ));
+
         #endregion
 
-        public ObservableCollection<FrequencyStep> CalculateFrequencySteps(ObservableCollection<FrequencyStep> frequencySteps, double fieldstrength)
+        public ObservableCollection<FrequencyStep> CalculateFrequencySteps(ObservableCollection<FrequencyStep> frequencySteps, double researchfieldStrength,
+            double verificationfieldStrength)
         {
-            var calucatedFrequencySteps = CalculateResult.GetResult(frequencySteps, fieldstrength);
+            var calucatedFrequencySteps = CalculateResult.GetResult(frequencySteps, researchfieldStrength, verificationfieldStrength);
             this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(calucatedFrequencySteps));
             return calucatedFrequencySteps;
         }
