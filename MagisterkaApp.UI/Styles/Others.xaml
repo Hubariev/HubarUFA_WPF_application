@@ -18,7 +18,7 @@
         <Setter Property="FontFamily" Value="Proxima Nova"/>
         <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontSize" Value="16"/>
+        <Setter Property="FontSize" Value="14"/>
     </Style>
 
 
@@ -49,7 +49,8 @@
         <Setter Property="BorderThickness" Value="2"/>
         <Setter Property="CornerRadius" Value="20"/>
         <Setter Property="Height" Value="35"/>
-        <Setter Property="Margin" Value="3"/>
+        <Setter Property="Width" Value="180"/>
+        <Setter Property="Margin" Value="5"/>
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="true" >

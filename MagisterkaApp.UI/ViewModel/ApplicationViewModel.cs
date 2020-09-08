@@ -5,6 +5,7 @@ using MagisterkaApp.Repo.Abstractions;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MagisterkaApp.UI.ViewModel
@@ -19,6 +20,17 @@ namespace MagisterkaApp.UI.ViewModel
         private Measure newMeasure;
         public MeasureDto MeasureDto { get; set; } = new MeasureDto();
 
+        private Boolean iSAddFileEnabled;
+        public Boolean ISAddFileEnabled 
+        {
+            get { return iSAddFileEnabled; }
+            set
+            {
+                iSAddFileEnabled = value; 
+                OnPropertyChanged("ISAddFileEnabled"); 
+            }
+        }
+
         public ApplicationViewModel(IMeasureRepository measureRepository, IFrequenceStepsRepository frequenceStepsRepository)
         {
             this.measureRepository = measureRepository;
@@ -26,7 +38,7 @@ namespace MagisterkaApp.UI.ViewModel
             Measures = new ObservableCollection<Measure>();
             GetMeasures();
 
-            SelectionChangedMeasureCommand = new RelayCommand<Measure>(SelectionMeasureChanged);
+            //SelectionChangedMeasureCommand = new RelayCommand<Measure>(SelectionMeasureChanged);
         }
 
 
@@ -39,23 +51,23 @@ namespace MagisterkaApp.UI.ViewModel
 
         #region Commands
 
-        public RelayCommand<Measure> SelectionChangedMeasureCommand { get; set; }
-        private void SelectionMeasureChanged(Measure measure)
-        {
-            if (measure != null)
-            {
-                MeasureDto = new MeasureDto()
-                {
-                    NameOfMeasure = measure.NameOfMeasure,
-                    NameOfOperator = measure.NameOfOperator,
-                    ResearchfieldStrength = measure.ResearchfieldStrength.ToString(),
-                    VerificationfieldStrength = measure.VerificationfieldStrength.ToString(),
-                    HSeptum = measure.HSeptum
-                };
-            }
-            else
-                throw new Exception();
-        }
+        //public RelayCommand<Measure> SelectionChangedMeasureCommand { get; set; }
+        //private void SelectionMeasureChanged(Measure measure)
+        //{
+        //    if (measure != null)
+        //    {
+        //        MeasureDto = new MeasureDto()
+        //        {
+        //            NameOfMeasure = measure.NameOfMeasure,
+        //            NameOfOperator = measure.NameOfOperator,
+        //            ResearchfieldStrength = measure.ResearchfieldStrength.ToString(),
+        //            VerificationfieldStrength = measure.VerificationfieldStrength.ToString(),
+        //            HSeptum = measure.HSeptum
+        //        };
+        //    }
+        //    else
+        //        throw new Exception();
+        //}
 
         private RelayCommand addMeasureCommand;
         public ICommand AddMeasureCommand =>
@@ -72,8 +84,27 @@ namespace MagisterkaApp.UI.ViewModel
 
                     this.measureRepository.AddMeasure(measure);
                     this.Measures.Add(measure);
+                    ISAddFileEnabled = true;
+
+                    //MessageBoxResult result = MessageBox.Show("Do you want to close this window?",
+                    //                        "Confirmation",
+                    //                        Mw,
+                    //                        MessageBoxImage.Information);
+
+                    //(new System.Threading.Thread(CloseIt)).Start();
+                    //MessageBox.Show("HI");
+
                 })
         );
+
+        //public void CloseIt()
+        //{
+        //    System.Threading.Thread.Sleep(2000);
+        //    Microsoft.VisualBasic.Interaction.AppActivate(
+        //         System.Diagnostics.Process.GetCurrentProcess().Id);
+        //    System.Windows.Forms.SendKeys.SendWait(" ");
+        //}
+
 
         private RelayCommand<Measure> deleteMeasureCommand;
         public ICommand DeleteMeasureCommand =>

@@ -11,6 +11,10 @@ namespace MagisterkaApp.Domain
         public double Corrected { get; set; }
         public double Test { get; set; }
 
+        public FieldStrength()
+        {
+
+        }
         public FieldStrength(double input, string name)
         {
             this.Name = name;

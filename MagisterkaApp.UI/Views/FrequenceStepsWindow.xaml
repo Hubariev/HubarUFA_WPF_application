@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1300">
+        Title="MainWindow" Height="700" Width="1300" VerticalAlignment="Center" BorderBrush="DarkGreen" BorderThickness="3">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
     </Window.Resources>
@@ -105,9 +105,11 @@
                     </Expander>
                 </Grid>
             </Border>
-            <DockPanel Width="100" Margin="5">
+
+
+            <Border  Style="{StaticResource BorderButtonStyle}">
                 <Button Padding="10,0,10,0" Content="Save Result" Command="{Binding SaveResultCommand}"/>
-            </DockPanel>
+            </Border>
 
             <StatusBarItem  Background="AliceBlue" >
                 <Hyperlink Command="{Binding TEMdominantOpenCommand}" TextDecorations="None">

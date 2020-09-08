@@ -37,7 +37,7 @@ namespace MagisterkaApp.UI.ViewModel
             var readFrequencies = GetFrequencyStepsMonitoring(this.monitoringPathes, measure.Id);
             readFrequencies = GetFrequencyStepsCalibrating(this.calibrationPathes, readFrequencies, measure.Id);
             this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
-
+            this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(this.FrequencySteps));
             SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged); 
             Check5proc();
         }
@@ -143,8 +143,7 @@ namespace MagisterkaApp.UI.ViewModel
             var frequenceSteps = this.frequenceStepsRepository.GetFrequencyStepsByMeasureId(measureId);
             if (frequenceSteps.Status == System.Threading.Tasks.TaskStatus.Faulted || frequenceSteps.Result.Count == 0)
             {
-                readFrequencySteps = ReadFile.ReadCalibrationFile(pathMeasuredPoints, frequencySteps);
-                this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(readFrequencySteps));
+                readFrequencySteps = ReadFile.ReadCalibrationFile(pathMeasuredPoints, frequencySteps);              
             }
             else
             {

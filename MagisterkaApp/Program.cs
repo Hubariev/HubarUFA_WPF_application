@@ -37,7 +37,7 @@ namespace MagisterkaApp
             //filePathes.Add(fileName4);
             //filePathes.Add(fileName5);
 
-            var measure = new Measure("measure1","Tolik", 3, TypeOfGTEM.GTEM_0_5);
+            var measure = new Measure("measure1","Tolik", 3,3, TypeOfGTEM.GTEM_0_5);
             Measures.Add(measure);
             var readSteps = ReadFile.ReadMonitoringFile(monitoringPathes, measure.Id);
             readSteps = ReadFile.ReadCalibrationFile(calibrationPathes, readSteps);
