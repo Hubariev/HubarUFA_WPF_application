@@ -27,7 +27,8 @@ namespace MagisterkaApp.UI.ViewModel
         public ObservableCollection<FrequencyStep> FrequencySteps { get; set; }// will be going to TEmdom
         public ObservableCollection<FrequencyStep> FiltredFrequencySteps { get; set; }//will be on View
 
-        public FrequenceStepsViewModel(Measure measure, IFrequenceStepsRepository frequenceStepsRepository)
+        public FrequenceStepsViewModel(Measure measure, IFrequenceStepsRepository frequenceStepsRepository, 
+                                       List<string> monitoringPaathes, List<string> calibraationPathes)
         {
             this.frequenceStepsRepository = frequenceStepsRepository;
             this.FrequencySteps = new ObservableCollection<FrequencyStep>();

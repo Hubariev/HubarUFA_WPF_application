@@ -1,5 +1,6 @@
 ﻿using MagisterkaApp.UI.ViewModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace MagisterkaApp.UI.Views
 {
@@ -12,6 +13,13 @@ namespace MagisterkaApp.UI.Views
         {
             InitializeComponent();
             DataContext = viewModel;
+        }
+
+        private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show(((GridViewColumnHeader)e.OriginalSource).Column.Header.ToString());
+            var dataContext = DataContext as ApplicationViewModel;
+            
         }
     }
 }

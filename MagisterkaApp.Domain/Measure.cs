@@ -1,4 +1,5 @@
 ﻿using MagisterkaApp.Domain.Enums;
+using MagisterkaApp.Domain.SeedWork;
 using System;
 using System.ComponentModel;
 using System.Globalization;
@@ -29,7 +30,7 @@ namespace MagisterkaApp.Domain
             this.verificationfieldStrength = verificationfieldStrength;
             this.HSeptum = hSeptum;
             this.dateOfMeasure = GetDateOfMeasure();
-            this.numberOfPoints = GetNumberOfPoints(HSeptum);
+            this.numberOfPoints = MeasureExtensions.GetNumberOfPoints(HSeptum);  
         }
 
         public string NameOfMeasure
@@ -106,14 +107,6 @@ namespace MagisterkaApp.Domain
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
-        }
-
-        private NumberOfPoints GetNumberOfPoints(TypeOfGTEM typeOfGTEM)
-        {
-            if (typeOfGTEM == TypeOfGTEM.GTEM_0_5)
-                return NumberOfPoints.Five;
-            else
-                return NumberOfPoints.Six;
         }
 
         private DateTime GetDateOfMeasure()

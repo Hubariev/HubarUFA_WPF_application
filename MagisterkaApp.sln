@@ -15,7 +15,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagisterkaApp.Calculator", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Practise", "Practise\Practise.csproj", "{92314E98-9773-41B7-B617-479D45A82D00}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagisterkaApp.Repo", "MagisterkaApp.Repo\MagisterkaApp.Repo.csproj", "{7EE9815C-6E9E-431C-9CC5-DBDEAC6D798D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagisterkaApp.Repo", "MagisterkaApp.Repo\MagisterkaApp.Repo.csproj", "{7EE9815C-6E9E-431C-9CC5-DBDEAC6D798D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

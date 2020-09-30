@@ -218,7 +218,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Miscellaneous\AutoClosingMessageBox.cs" />
     <Compile Include="Miscellaneous\EnumToStringConverter.cs" />
+    <Compile Include="Miscellaneous\ExtensionMethods.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModel\FrequenceStepsViewModel.cs" />
     <Compile Include="ViewModel\TEMdominantViewModel.cs" />
@@ -299,6 +301,14 @@
       <Name>MagisterkaApp.Repo</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Images\uklad6points.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\uklad5points.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\noimage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1400" Background="#141010" HorizontalAlignment="Center" VerticalAlignment="Center">
+        Title="MainWindow" Height="800" Width="1400" Background="#141010" BorderBrush="DarkGreen" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
         <!--<primary11:FieldStrength x:Key="FieldStrength"/>-->
@@ -20,8 +20,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="0.95*"/>
-            <RowDefinition Height="0.1*"/>
-            <RowDefinition Height="0.05*"/>
+            <RowDefinition Height="0.27*"/>
+            <RowDefinition Height="0.04*"/>
         </Grid.RowDefinitions>
 
         <StackPanel x:Name="LeftPart" Grid.Row="0" Grid.Column="0">
@@ -31,11 +31,16 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
             </Grid>
-            
+
             <Border Grid.Row="0" BorderThickness="3" Margin="15" CornerRadius="10" BorderBrush="DarkGreen">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -50,7 +55,7 @@
                         <ColumnDefinition Width="77*"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="50,3,0,3" Text="1. Dodaj pomiar:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="50,3,0,3" Text="Dodaj dane pomiar:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,8.2,0,7" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa pomiaru:" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="5,8,0,7.2" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwisko operatora:" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="5,7.8,0,7.4" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola elektrycznego w badaniu (test) :" />
@@ -76,24 +81,51 @@
 
                     <Border Grid.Row="5" Grid.Column="1" Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2">
                         <ComboBox  BorderThickness="0" Margin="3" ItemsSource="{Binding Path=MeasureDto.HSeptum, Converter={misc:EnumToCollectionConverter},Mode=OneTime}"
-                          SelectedValuePath="Value" DisplayMemberPath="Description" SelectedValue="{Binding Path=MeasureDto.HSeptum}"/>
+                          SelectedValuePath="Value" DisplayMemberPath="Description" SelectedValue="{Binding Path=MeasureDto.HSeptum}">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding GTEMChangeCommand}">
+
+                                    </i:InvokeCommandAction>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </Border>
+                    <TextBlock  Grid.Row="6" Grid.ColumnSpan="2" Margin="3"></TextBlock>
+
+                    <TextBlock Grid.Row="7" Grid.ColumnSpan="2" Margin="50,3,0,3" Text="Dodaj punkty pomiarowe ." 
+                               Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
+
+                    <TextBlock Grid.Row="8" Grid.ColumnSpan="2" Text="{Binding NumberOfPoint, StringFormat= a. Dodaj {0} plików monitorujących.}" 
+                               Style="{StaticResource TextBlockMeasureStyle}"/>
+
+                    <Border Grid.Row="9" Grid.ColumnSpan="2"  Style="{StaticResource BorderFormStyle}" Width="380" HorizontalAlignment="Left" >
+                        <TextBox IsEnabled="true" Style="{StaticResource TextBoxStyle}" Text="{Binding FilePathForMeasure.MonitoringPath, Mode=TwoWay}"/>
+                    </Border>
+                    <Border Grid.Row="9" Grid.Column="1" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Right" Grid.ColumnSpan="2" Margin="0,4.8,6,5">
+                        <Button  Content="Browse"  Command="{Binding BrowseMonFileCommand}" />
+                    </Border>
+                    <TextBlock Grid.Row="10" Grid.ColumnSpan="2" Text="{Binding NumberOfPoint, StringFormat= b. Dodaj {0} plików kalibracyjnych. }" 
+                               Style="{StaticResource TextBlockMeasureStyle}"/>
+
+                    <Border Grid.Row="11"  Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" Width="380" HorizontalAlignment="Left">
+                        <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding FilePathForMeasure.CalibrationPath, Mode=TwoWay}"/>
+                    </Border>
+                    <Border Grid.Row="11" Grid.Column="1" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Right" Margin="0,4.2,7.421,5.6" Grid.ColumnSpan="2">
+                        <Button Content="Browse"  Command="{Binding BrowseCalFileCommand}" />
                     </Border>
 
-                    <Border Grid.Row="6" Grid.Column="0" Style="{StaticResource BorderButtonStyle}">
+                    <Border Grid.Row="12" Grid.Column="0" Style="{StaticResource BorderButtonStyle}">
                         <Button Content="Add"  Command="{Binding AddMeasureCommand}" />
                     </Border>
-
-                    <Border Grid.Row="6" Grid.Column="1" Style="{StaticResource BorderButtonStyle}" Grid.ColumnSpan="2">
-                        <Button Padding="10,0,10,0" Content="Delete" Command="{Binding DeleteMeasureCommand}" 
+                    <Border Grid.Row="12" Grid.Column="1" Style="{StaticResource BorderButtonStyle}" Grid.ColumnSpan="2">
+                        <Button Padding="10,0,10,0" Content="Clear" Command="{Binding DeleteMeasureCommand}" 
                         CommandParameter="{Binding ElementName=listViewMeasures, Path=SelectedItem}"/>
                     </Border>
-
-                   
-       
                 </Grid>
             </Border>
 
-            <Border Grid.Row="1" BorderThickness="3" Margin="15" CornerRadius="10" BorderBrush="DarkGreen">
+            <!--<Border Grid.Row="1" BorderThickness="3" Margin="15" CornerRadius="10" BorderBrush="DarkGreen">
                 <Grid IsEnabled="{Binding ISAddFileEnabled}">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="auto"/>
@@ -106,41 +138,45 @@
                     </Grid.RowDefinitions>
 
                     <TextBlock Grid.Row="0" Text="2. Dodaj punkty pomiarowe po dodaniu pomiaru." Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" Text=" a. Dodaj plik monitorujący:" Style="{StaticResource TextBlockMeasureStyle}"/>
-                    <Border Grid.Row="2"  Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" >
-                        <TextBox IsEnabled="False" Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
+                    <TextBlock Grid.Row="1" Text="{Binding NumberOfPoint, StringFormat= a. Dodaj plik monitorujący dla punktu: {0}}" Style="{StaticResource TextBlockMeasureStyle}"/>
+                    
+                    <Border Grid.Row="2"  Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" Width="380" HorizontalAlignment="Left" >
+                        <TextBox IsEnabled="true" Style="{StaticResource TextBoxStyle}" Text="{Binding FilePathForMeasure.MonitoringPath, Mode=TwoWay}"/>
                     </Border>
-                    <Border Grid.Row="3" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Right">
+                    -->
+            <!--<Border Grid.Row="3" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Right">
                         <Button Content="Add"  Command="{Binding AddFilePathCommand}" />
-                    </Border>
-                    <Border Grid.Row="3" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Center">
-                        <Button  Content="Browse"  Command="{Binding AddFilePathCommand}" />
+                    </Border>-->
+            <!--
+                    <Border Grid.Row="2" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Right">
+                        <Button  Content="Browse"  Command="{Binding BrowseMonFileCommand}" />
                     </Border>
 
-                    <TextBlock Grid.Row="4" Text=" b. Dodaj plik kalibracyjny:" Style="{StaticResource TextBlockMeasureStyle}"/>
-                    <Border Grid.Row="5"  Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" >
-                        <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding MeasureDto.NameOfOperator, Mode=TwoWay}"/>
-                    </Border>
-                    <Border Grid.Row="6" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Right">
-                        <Button Content="Add"  Command="{Binding AddFilePathCommand}" />
+                    <TextBlock Grid.Row="4" Text="{Binding NumberOfPoint, StringFormat= b. Dodaj plik kalibracyjny dla punktu: {0}}" Style="{StaticResource TextBlockMeasureStyle}"/>
+                    <Border Grid.Row="5"  Style="{StaticResource BorderFormStyle}" Grid.ColumnSpan="2" Width="380" HorizontalAlignment="Left">
+                        <TextBox Style="{StaticResource TextBoxStyle}" Text="{Binding FilePathForMeasure.CalibrationPath, Mode=TwoWay}"/>
                     </Border>
                     <Border Grid.Row="6" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Center">
-                        <Button Content="Browse"  Command="{Binding AddFilePathCommand}" />
+                        <Button Content="Add"  Command="{Binding AddFilePathCommand}" />
+                    </Border>
+                    <Border Grid.Row="5" Style="{StaticResource BorderButtonStyle}" HorizontalAlignment="Right">
+                        <Button Content="Browse"  Command="{Binding BrowseCalFileCommand}" />
                     </Border>
 
 
                 </Grid>
-            </Border>
+            </Border>-->
 
 
         </StackPanel>
-        
+
 
         <!--                          RightPart                               -->
         <!--                          RightPart                               -->
-        <!--                          RightPart                               -->    
+        <!--                          RightPart                               -->
         <ListView Margin="15" ItemsSource="{Binding Measures}" Grid.Column="1" x:Name="listViewMeasures" 
-                  Foreground="#d2d0d0" BorderThickness="3" BorderBrush="DarkGreen" Background="#141010" SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}">
+                  Foreground="#d2d0d0" BorderThickness="3" BorderBrush="DarkGreen" Background="#141010"
+                  SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" >
 
 
             <i:Interaction.Triggers>
@@ -177,9 +213,16 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Border HorizontalAlignment="Right" Grid.Row="1" Grid.Column="2"  Margin="0, 12, 50, 12" Style="{StaticResource BorderButtonStyle}">
+        <Border HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1" Margin="15,0,0,0" BorderBrush="DarkGreen" 
+                BorderThickness="3">
+            <Image Source="{Binding PathForImage}"/>
+
+        </Border>
+        <Border HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Row="1" Grid.Column="1"  Margin="0, 12, 15, 12" Style="{StaticResource BorderButtonStyle}">
             <Button Padding="10,0,10,0" Content="Open Steps" Command="{Binding FrequencyStepsOpenCommand}"/>
         </Border>
+
+
 
     </Grid>
 </Window>
