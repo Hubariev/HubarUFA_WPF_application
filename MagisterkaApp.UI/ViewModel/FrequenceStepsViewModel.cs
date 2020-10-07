@@ -32,11 +32,11 @@ namespace MagisterkaApp.UI.ViewModel
         {
             this.frequenceStepsRepository = frequenceStepsRepository;
             this.FrequencySteps = new ObservableCollection<FrequencyStep>();
-            GetData();
+            //GetData();
             this.measure = measure;
 
-            var readFrequencies = GetFrequencyStepsMonitoring(this.monitoringPathes, measure.Id);
-            readFrequencies = GetFrequencyStepsCalibrating(this.calibrationPathes, readFrequencies, measure.Id);
+            var readFrequencies = GetFrequencyStepsMonitoring(monitoringPaathes, measure.Id);
+            readFrequencies = GetFrequencyStepsCalibrating(calibraationPathes, readFrequencies, measure.Id);
             this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
             this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(this.FrequencySteps));
             SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged); 
