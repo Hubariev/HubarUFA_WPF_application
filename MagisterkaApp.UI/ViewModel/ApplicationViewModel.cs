@@ -19,11 +19,12 @@ namespace MagisterkaApp.UI.ViewModel
         private readonly IMeasureRepository measureRepository;
         private readonly IFrequenceStepsRepository frequenceStepsRepository;
         public ObservableCollection<Measure> Measures { get; set; }
+        public ObservableCollection<Measure> FiltredMeasures { get; set; }
         public Measure selectedMeasure { get; set; }
 
         private Measure newMeasure;
-        public MeasureDto MeasureDto { get; set; } = new MeasureDto();
-        public FilterMeasureDto FilterMeasureDto { get; set; } = new FilterMeasureDto();
+        public MeasureDto measureDto { get; set; } = new MeasureDto();
+        public FilterMeasureDto filterMeasureDto { get; set; } = new FilterMeasureDto();
 
         public FilePathForMeasure filePathForMeasure { get; set; } = new FilePathForMeasure()
         {
@@ -58,7 +59,9 @@ namespace MagisterkaApp.UI.ViewModel
             this.measureRepository = measureRepository;
             this.frequenceStepsRepository = frequenceStepsRepository;
             Measures = new ObservableCollection<Measure>();
+            FiltredMeasures = new ObservableCollection<Measure>();
             GetMeasures();
+
 
         }
 
@@ -71,6 +74,26 @@ namespace MagisterkaApp.UI.ViewModel
             {
                 monitoringPathesFiltred = value;
                 OnPropertyChanged("MonitoringPathesFiltred");
+            }
+        }
+
+        public FilterMeasureDto FilterMeasureDto
+        {
+            get { return filterMeasureDto; }
+            set
+            {
+                filterMeasureDto = value;
+                OnPropertyChanged("FilterMeasureDto");
+            }
+        }
+
+        public MeasureDto MeasureDto
+        {
+            get { return measureDto; }
+            set
+            {
+                measureDto = value;
+                OnPropertyChanged("MeasureDto");
             }
         }
 
@@ -139,6 +162,7 @@ namespace MagisterkaApp.UI.ViewModel
         {
             var measures = await this.measureRepository.GetAllAsync();
             this.Measures = new ObservableCollection<Measure>(measures);
+            this.FiltredMeasures.AddRange(this.Measures);
         }
 
         public FilePathForMeasure FilePathForMeasure
@@ -169,9 +193,10 @@ namespace MagisterkaApp.UI.ViewModel
 
                     this.measureRepository.AddMeasure(measure);
                     this.Measures.Add(measure);
+                    this.FiltredMeasures.Add(measure);
 
 
-                    //AutoClosingMessageBox.Show("DODANO", "", 1200);
+                    AutoClosingMessageBox.Show("Pomiar został dodany", "", 1200);
 
                     //MessageBoxResult result = MessageBox.Show("Dodaj punkty pomiarowe do pomiaru.",
                     //                        "Confirmation",
@@ -214,40 +239,52 @@ namespace MagisterkaApp.UI.ViewModel
             (browseMonFileCommand = new RelayCommand(
                 () =>
                 {
-                    var t = MeasureDto;
-                    Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
-                    dlg.Multiselect = true;
-                    dlg.DefaultExt = ".MSD";
-                    dlg.Filter = "MSD Files (*.MSD)|*.MSD";
-                    dlg.ShowDialog();
-                    string[] pathesMonFiles = dlg.FileNames;
-
-                    var countOfPoint = MeasureDto.HSeptum == TypeOfGTEM.GTEM_0_5 ? 5 : 6;
-
-                    this.MonitoringPathes = new List<string>(countOfPoint);
-                    this.MonitoringPathesFiltred = new List<string>(countOfPoint);
-
-                    foreach (var path in pathesMonFiles)
+                    if (MeasureDto.HSeptum == TypeOfGTEM.None)
                     {
-                        var filtredPath = path.Remove(0, path.LastIndexOf('\\') + 1);
-                        this.MonitoringPathesFiltred.Add(filtredPath);
-                    }
-
-                    if (pathesMonFiles.Length == countOfPoint)
-                    {
-                        this.MonitoringPathes.AddRange(pathesMonFiles);
-                        var calMessage = CalibrationPathes != null ? "Dodano" : "Dodaj punkty";
-                        this.FilePathForMeasure = new FilePathForMeasure() { MonitoringPath = "Dodano", CalibrationPath = calMessage };
-                        AutoClosingMessageBox.Show($"Wszystkie punkty Monitorujące zostali dodane.", "", 1200);
+                        MessageBoxResult result = MessageBox.Show($"Proszę wybrać rodzaj komory.",
+                                                   "Niepoprawna ilość punktów",
+                                                   MessageBoxButton.OK,
+                                                   MessageBoxImage.Warning);
                     }
                     else
                     {
-                        MessageBoxResult result = MessageBox.Show($"Nieodpowiednia ilość punktów.Dodaj: {NumberOfPoint} punktów!",
-                                           "Niepoprawna ilość punktów",
-                                           MessageBoxButton.OK,
-                                           MessageBoxImage.Error);
+                        Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+                        dlg.Multiselect = true;
+                        dlg.DefaultExt = ".MSD";
+                        dlg.Filter = "MSD Files (*.MSD)|*.MSD";
+                        dlg.ShowDialog();
+                        string[] pathesMonFiles = dlg.FileNames;
+
+                        var countOfPoint = MeasureDto.HSeptum == TypeOfGTEM.GTEM_0_5 ? 5 : 6;
+
+
+                        this.MonitoringPathes = new List<string>(countOfPoint);
+                        this.MonitoringPathesFiltred = new List<string>(countOfPoint);
+
+                        foreach (var path in pathesMonFiles)
+                        {
+                            var filtredPath = path.Remove(0, path.LastIndexOf('\\') + 1);
+                            this.MonitoringPathesFiltred.Add(filtredPath);
+                        }
+
+                        if (pathesMonFiles.Length == countOfPoint)
+                        {
+                            this.MonitoringPathes.AddRange(pathesMonFiles);
+                            var calMessage = CalibrationPathes != null ? "Dodano" : "Dodaj punkty";
+                            this.FilePathForMeasure = new FilePathForMeasure() { MonitoringPath = "Dodano", CalibrationPath = calMessage };
+                            AutoClosingMessageBox.Show($"Wszystkie punkty Monitorujące zostali dodane.", "", 1200);
+                        }
+                        else
+                        {
+                            MessageBoxResult result = MessageBox.Show($"Nieodpowiednia ilość punktów.Dodaj: {NumberOfPoint} punktów!",
+                                               "Niepoprawna ilość punktów",
+                                               MessageBoxButton.OK,
+                                               MessageBoxImage.Error);
+                        }
                     }
+                    
+
 
 
 
@@ -316,6 +353,7 @@ namespace MagisterkaApp.UI.ViewModel
                 {
                     this.measureRepository.DeleteMeasure(measure.Id);
                     this.Measures.Remove(measure);
+                    this.FiltredMeasures.Remove(measure);
                     this.frequenceStepsRepository.DeleteByMeasureId(measure.Id);
                 }));
 
@@ -331,15 +369,49 @@ namespace MagisterkaApp.UI.ViewModel
                 }
                 ));
 
-        private RelayCommand resetFilterMeasure;
-        public ICommand ResetFilterMeasure =>
-            resetFilterMeasure ??
-            (resetFilterMeasure = new RelayCommand(
+        private RelayCommand resetFilterMeasureCommand;
+        public ICommand ResetFilterMeasureCommand =>
+            resetFilterMeasureCommand ??
+            (resetFilterMeasureCommand = new RelayCommand(
+                () =>
+                {
+                    this.FilterMeasureDto = new FilterMeasureDto();
+                    this.FiltredMeasures.Clear();
+                    this.FiltredMeasures.AddRange(this.Measures);
+
+                })
+        );
+
+
+
+        private RelayCommand cleareMeasureCommand;
+        public ICommand CleareMeasureCommand =>
+            cleareMeasureCommand ??
+            (cleareMeasureCommand = new RelayCommand(
+                () =>
+                {
+                    this.MeasureDto = new MeasureDto();
+                    this.CalibrationPathesFiltred = new List<string>();
+                    this.MonitoringPathesFiltred = new List<string>();
+                    this.FilePathForMeasure = new FilePathForMeasure()
+                    {
+                        MonitoringPath = "Dodaj punkty",
+                        CalibrationPath = "Dodaj punkty"
+                    };
+
+                })
+        );
+
+        private RelayCommand searchMeasuresCommand;
+        public ICommand SearchMeasuresCommand =>
+            searchMeasuresCommand ??
+            (searchMeasuresCommand = new RelayCommand(
                 () =>
                 {
                     var filtredMeasure = FilterMeasureDto;
-                    this.Measures = this.Measures.GetFiltredMeasures(filtredMeasure);       
-
+                    var filtredMeasures = this.Measures.GetFiltredMeasures(filtredMeasure);
+                    this.FiltredMeasures.Clear();
+                    this.FiltredMeasures.AddRange(filtredMeasures);
                 })
         );
 
@@ -375,8 +447,8 @@ namespace MagisterkaApp.UI.ViewModel
 
         public FilterMeasureDto()
         {
-            DateFrom = DateTime.Now;
-            DateTo = DateTime.Now;
+            this.DateFrom = DateTime.MinValue.AddYears(DateTime.Now.Year - 1).AddMonths(DateTime.Now.Month - 1);
+            this.DateTo = DateTime.MinValue.AddYears(DateTime.Now.Year - 1).AddMonths(DateTime.Now.Month - 1);
         }
     }
 

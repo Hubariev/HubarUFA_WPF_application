@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagisterkaApp", "Magisterka
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagisterkaApp.Domain", "MagisterkaApp.Domain\MagisterkaApp.Domain.csproj", "{33B25540-A3EA-4C2C-9309-FA00C650E67C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagisterkaApp.Services", "MagisterkaApp.Services\MagisterkaApp.Services.csproj", "{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagisterkaApp.UI", "MagisterkaApp.UI\MagisterkaApp.UI.csproj", "{0EBED77E-09BB-442C-8765-B6BB8B8FBE55}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagisterkaApp.Calculator", "MagisterkaApp.Calculator\MagisterkaApp.Calculator.csproj", "{F4DF5580-0230-4B53-B092-99FE4515B991}"
@@ -16,6 +14,8 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Practise", "Practise\Practise.csproj", "{92314E98-9773-41B7-B617-479D45A82D00}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagisterkaApp.Repo", "MagisterkaApp.Repo\MagisterkaApp.Repo.csproj", "{7EE9815C-6E9E-431C-9CC5-DBDEAC6D798D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagisterkaApp.Tests", "MagisterkaApp.Tests\MagisterkaApp.Tests.csproj", "{19AB7508-B321-4E47-8516-EF520181D654}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,14 +41,6 @@ Global
 		{33B25540-A3EA-4C2C-9309-FA00C650E67C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{33B25540-A3EA-4C2C-9309-FA00C650E67C}.Release|x64.ActiveCfg = Release|Any CPU
 		{33B25540-A3EA-4C2C-9309-FA00C650E67C}.Release|x64.Build.0 = Release|Any CPU
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Debug|x64.ActiveCfg = Debug|x64
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Debug|x64.Build.0 = Debug|x64
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Release|x64.ActiveCfg = Release|x64
-		{086B7B97-8FA4-45F2-8E4A-598D7F00EEDD}.Release|x64.Build.0 = Release|x64
 		{0EBED77E-09BB-442C-8765-B6BB8B8FBE55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0EBED77E-09BB-442C-8765-B6BB8B8FBE55}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0EBED77E-09BB-442C-8765-B6BB8B8FBE55}.Debug|x64.ActiveCfg = Debug|x64
@@ -81,6 +73,14 @@ Global
 		{7EE9815C-6E9E-431C-9CC5-DBDEAC6D798D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{7EE9815C-6E9E-431C-9CC5-DBDEAC6D798D}.Release|x64.ActiveCfg = Release|Any CPU
 		{7EE9815C-6E9E-431C-9CC5-DBDEAC6D798D}.Release|x64.Build.0 = Release|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Debug|x64.Build.0 = Debug|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Release|x64.ActiveCfg = Release|Any CPU
+		{19AB7508-B321-4E47-8516-EF520181D654}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

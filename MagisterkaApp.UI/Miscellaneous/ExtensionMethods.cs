@@ -51,16 +51,31 @@ namespace MagisterkaApp.UI.Miscellaneous
 
                 if (!String.IsNullOrEmpty(filterMeasureDto.FilterNameOfMeasure))
                 {
-                    measureChoosed = measure.NameOfMeasure.Contains(filterMeasureDto.FilterNameOfMeasure);
+                    measureChoosed = measure.NameOfMeasure.ToUpper().Contains(filterMeasureDto.FilterNameOfMeasure.ToUpper());
                 }
 
-                //if (String.IsNullOrEmpty(filterMeasureDto.FilterNameOfMeasure))
-                //{
+                if (!String.IsNullOrEmpty(filterMeasureDto.FilterSurname) && measureChoosed != false)
+                {
+                    measureChoosed = measure.NameOfOperator.ToUpper().Contains(filterMeasureDto.FilterSurname.ToUpper());
+                }
 
-                //}
+                var defaultDate = DateTime.MinValue.AddYears(DateTime.Now.Year - 1).AddMonths(DateTime.Now.Month - 1);
+
+                if (filterMeasureDto.DateFrom != defaultDate && filterMeasureDto.DateTo != defaultDate && measureChoosed != false)
+                {
+                    measureChoosed = measure.DateOfMeasure > filterMeasureDto.DateFrom
+                                  && measure.DateOfMeasure < filterMeasureDto.DateTo;
+                }
+
+                if (measureChoosed)
+                {
+                    filtredMeasures.Add(measure);
+                }
             }
 
-            return obsMeasures;
+            return filtredMeasures;
         }
     }
 }
+
+

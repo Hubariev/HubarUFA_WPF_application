@@ -8,7 +8,6 @@
   <ItemGroup>
     <ProjectReference Include="..\MagisterkaApp.Calculator\MagisterkaApp.Calculator.csproj" />
     <ProjectReference Include="..\MagisterkaApp.Domain\MagisterkaApp.Domain.csproj" />
-    <ProjectReference Include="..\MagisterkaApp.Services\MagisterkaApp.Services.csproj" />
   </ItemGroup>
 
 </Project>

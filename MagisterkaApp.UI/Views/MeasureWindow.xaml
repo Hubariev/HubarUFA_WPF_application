@@ -99,16 +99,18 @@
                     <TextBlock Grid.Row="8" Grid.ColumnSpan="2"  Margin="15,0,0,0" Text="{Binding NumberOfPoint, StringFormat= a. Dodaj {0} plików monitorujących.}" 
                                Style="{StaticResource TextBlockMeasureStyle}"/>
 
-                    <Border Grid.Row="9" Grid.Column="0" Margin="15,0,0,0" Style="{StaticResource BorderFormStyle}" Width="280" HorizontalAlignment="Left" >
-                        <TextBox IsEnabled="true" Background="#d2d0d0" Style="{StaticResource TextBoxStyle}" Text="{Binding FilePathForMeasure.MonitoringPath, Mode=TwoWay}"/>
+
+                    <Border Grid.Row="9" Grid.Column="0"  Margin="15,0,0,0" Style="{StaticResource BorderFormStyle}"  >
+                        <TextBox  Background="#d2d0d0" Style="{StaticResource TextBoxStyle}" Text="{Binding FilePathForMeasure.MonitoringPath, Mode=TwoWay}"/>
                     </Border>
+                    
                     <Border Grid.Row="9" Grid.Column="1" Style="{StaticResource BorderButtonStyle}"  Grid.ColumnSpan="2" Margin="5">
                         <Button  Content="Browse"  Command="{Binding BrowseMonFileCommand}" />
                     </Border>
                     <TextBlock Grid.Row="10" Margin="15,0,0,0" Grid.ColumnSpan="2" Text="{Binding NumberOfPoint, StringFormat= b. Dodaj {0} plików kalibracyjnych. }" 
                                Style="{StaticResource TextBlockMeasureStyle}"/>
 
-                    <Border Grid.Row="11" Grid.Column="0" Margin="15,0,0,0" Style="{StaticResource BorderFormStyle}" Width="280" HorizontalAlignment="Left">
+                    <Border Grid.Row="11" Grid.Column="0" Margin="15,0,0,0" Style="{StaticResource BorderFormStyle}">
                         <TextBox Style="{StaticResource TextBoxStyle}" Background="#d2d0d0" Text="{Binding FilePathForMeasure.CalibrationPath, Mode=TwoWay}"/>
                     </Border>
                     <Border Grid.Row="11" Grid.Column="1" Style="{StaticResource BorderButtonStyle}" Margin="5">
@@ -142,12 +144,11 @@
                         </TabItem>
                     </TabControl>
 
-                    <Border Grid.Row="14" Grid.Column="0" Style="{StaticResource BorderButtonStyle}">
+                    <Border Grid.Row="14" Grid.Column="1" Style="{StaticResource BorderButtonStyle}">
                         <Button Content="Add"  Command="{Binding AddMeasureCommand}" />
                     </Border>
-                    <Border Grid.Row="14" Grid.Column="1" Style="{StaticResource BorderButtonStyle}" Grid.ColumnSpan="2">
-                        <Button Padding="10,0,10,0" Content="Clear" Command="{Binding DeleteMeasureCommand}" 
-                        CommandParameter="{Binding ElementName=listViewMeasures, Path=SelectedItem}"/>
+                    <Border Grid.Row="14" Grid.Column="0" Style="{StaticResource BorderButtonStyle}">
+                        <Button  Content="Clear" Command="{Binding CleareMeasureCommand}"/>
                     </Border>
                 </Grid>
             </Border>
@@ -169,6 +170,7 @@
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
+                
                 <Border  Grid.Column="0" Grid.ColumnSpan="3" BorderThickness="3" Margin="15,5,15,0"  CornerRadius="10" BorderBrush="DarkGreen" Grid.RowSpan="1" >
                     <Grid Margin="-0.2,1.8,-0.2,-1.6">
                         <Grid.RowDefinitions>
@@ -184,6 +186,8 @@
                             <ColumnDefinition Width="1.5*"/>
                         </Grid.ColumnDefinitions>
 
+                        
+                        
                         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Wyszukaj pomiar:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
 
                         <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Wpisz nazwę pomiaru:" HorizontalAlignment="Center"/>
@@ -214,15 +218,15 @@
                         </Border>
 
                         <Border HorizontalAlignment="Center"  Grid.Column="1" Margin="5" Grid.Row="5"  Style="{StaticResource BorderButtonStyle}">
-                            <Button  Content="Wyszukaj" Command="{Binding FrequencyStepsOpenCommand}"/>
+                            <Button  Content="Wyszukaj" Command="{Binding SearchMeasuresCommand}"/>
                         </Border>
 
                         <Border HorizontalAlignment="Center" Grid.Column="0" Margin="5" Grid.Row="5"  Style="{StaticResource BorderButtonStyle}">
-                            <Button  Content="Reset Filtra" Command="{Binding FrequencyStepsOpenCommand}"/>
+                            <Button  Content="Reset Filtra" Command="{Binding ResetFilterMeasureCommand}"/>
                         </Border>
                     </Grid>
                 </Border>
-                <ListView Margin="5,10,5,10" ItemsSource="{Binding Measures}" Grid.Row="1" x:Name="listViewMeasures" 
+                <ListView Margin="5,10,5,10" ItemsSource="{Binding FiltredMeasures}" Grid.Row="1" x:Name="listViewMeasures" 
                   Foreground="#d2d0d0" BorderThickness="3" BorderBrush="DarkGreen" Background="#141010" Grid.Column="0" Grid.ColumnSpan="3"
                   SelectedItem="{Binding SelectedMeasure, Mode=TwoWay}" GridViewColumnHeader.Click="GridViewColumnHeaderClickedHandler" >
 

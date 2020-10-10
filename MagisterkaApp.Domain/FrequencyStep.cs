@@ -7,6 +7,7 @@ namespace MagisterkaApp.Domain
     //ToDo: calculateMethod
     public class FrequencyStep
     {
+        public int Id { get; set; }
         public Guid MeasureId { get; set; }
         public double Frequency { get; set; }
         public double PowerLevelResult { get; set; }
