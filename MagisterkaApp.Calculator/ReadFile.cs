@@ -21,7 +21,8 @@ namespace MagisterkaApp.Calculator
             const int columnDifference = 1;
   
 
-            foreach (var pathName in pathMeasuredPoints)
+            foreach (var pathName in 
+                pathMeasuredPoints)
             {               
                 using (StreamReader file = new StreamReader(pathName))
                 {
@@ -29,6 +30,8 @@ namespace MagisterkaApp.Calculator
                     string line;
                     string filtredLine;
                     string[] resultLine = new string[] { };
+
+                    //int frequencyStepIdCounter = 0;
 
                     #region positions
                     int frequencePosition = 0;
@@ -48,6 +51,7 @@ namespace MagisterkaApp.Calculator
                         if(line.ToUpper().Contains("PRIMAR") || line.ToUpper().Contains("VERTICAL") || line.ToUpper().Contains("PIONOWO"))
                         {
                             var primaryLine = line.Replace("\t", " ");
+                            
                             primaryLine = primaryLine.Replace(":", "");
                             string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
                             resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
@@ -58,7 +62,7 @@ namespace MagisterkaApp.Calculator
                         if ((line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("TRANSWERSE") || line.ToUpper().Contains("POPRZECZ")) 
                             && secondaryOnePosition == 0)
                         {
-                            var primaryLine = line.Replace("\t", " ");
+                             var primaryLine = line.Replace("\t", " ");
                             primaryLine = primaryLine.Replace(":", "");
                             string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
                             resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
@@ -66,7 +70,7 @@ namespace MagisterkaApp.Calculator
                             secondaryOneName = resultPrimaryLine[2];
                         }
 
-                        if (line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("LONGITUDINAL") || line.ToUpper().Contains("WZD"))
+                        else if (line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("LONGITUDINAL") || line.ToUpper().Contains("WZD"))
                         {
                             var primaryLine = line.Replace("\t", " ");
                             primaryLine = primaryLine.Replace(":", "");
@@ -77,7 +81,7 @@ namespace MagisterkaApp.Calculator
                         }
 
 
-                        if (counter == 0)
+                        if (counter == 0 && line.Any(x => char.IsLetterOrDigit(x)))
                         {
                             filtredLine = line.Replace("\t", " ");
                             filtredLine = filtredLine.Replace(".", ",");
@@ -142,9 +146,9 @@ namespace MagisterkaApp.Calculator
 
                     int frequencyStepsCounter = 0;
 
-                    while ((line = file.ReadLine()) != null || (line = file.ReadLine()).Length != 0)
+                    while ((line = file.ReadLine()) != null)
                     {                        
-                        if (counter == 0)
+                        if (counter == 0 && line.Any(x => char.IsLetterOrDigit(x)))
                         {
                             filtredLine = line.Replace(".", ",");
                             resultLine = filtredLine.Split(new char[] { ' ' }).ToArray();

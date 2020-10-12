@@ -1,0 +1,18 @@
+DEVICE:   TEM
+TYP:      GTEM1500
+
+# test name:	Punkt_5
+
+# calibration date:	8/18/2020 1:08 PM
+
+FMIN:	80.000000
+FMAX:	1000.000000
+
+HSEPTUM:   1.73 m
+
+REFERENCE: 5.000000 V/m
+
+INPUT:     f[MHz] input[dBm]
+80.000000 38.264012
+80.800000 38.301371
+

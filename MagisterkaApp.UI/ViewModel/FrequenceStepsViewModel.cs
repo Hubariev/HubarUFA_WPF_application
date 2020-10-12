@@ -38,7 +38,10 @@ namespace MagisterkaApp.UI.ViewModel
             var readFrequencies = GetFrequencyStepsMonitoring(monitoringPaathes, measure.Id);
             readFrequencies = GetFrequencyStepsCalibrating(calibraationPathes, readFrequencies, measure.Id);
             this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
-            this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(this.FrequencySteps));
+
+            //var database = new FrequenceStepLiteDbContext();
+
+            //this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(this.FrequencySteps));
             SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged); 
             Check5proc();
         }
@@ -193,6 +196,8 @@ namespace MagisterkaApp.UI.ViewModel
             double verificationfieldStrength)
         {
             var calucatedFrequencySteps = CalculateResult.GetResult(frequencySteps, researchfieldStrength, verificationfieldStrength);
+            //var database = new FrequenceStepLiteDbContext();
+            //database.AddFrequencySteps(new List<FrequencyStep>(calucatedFrequencySteps));
             this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(calucatedFrequencySteps));
             return calucatedFrequencySteps;
         }

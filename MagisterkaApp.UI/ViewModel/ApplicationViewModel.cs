@@ -198,13 +198,6 @@ namespace MagisterkaApp.UI.ViewModel
 
                     AutoClosingMessageBox.Show("Pomiar został dodany", "", 1200);
 
-                    //MessageBoxResult result = MessageBox.Show("Dodaj punkty pomiarowe do pomiaru.",
-                    //                        "Confirmation",
-                    //                        MessageBoxButton.OK,
-                    //                        MessageBoxImage.Information);
-
-
-
 
                     selectedMeasure = measure;
                 })
@@ -283,20 +276,6 @@ namespace MagisterkaApp.UI.ViewModel
                                                MessageBoxImage.Error);
                         }
                     }
-                    
-
-
-
-
-                    //Nullable<bool> result = dlg.ShowDialog();
-
-                    //if (result == true)
-                    //{
-                    //    var monitoringFilePath = dlg.FileName;
-                    //    this.monitoringFilePath = monitoringFilePath;
-                    //    this.filtredMonitoringFilePath = monitoringFilePath.Remove(0, monitoringFilePath.LastIndexOf('\\') + 1);
-                    //    this.FilePathForMeasure = new FilePathForMeasure() { MonitoringPath = this.filtredMonitoringFilePath, CalibrationPath = "No file path" };
-                    //}
                 })
         );
 

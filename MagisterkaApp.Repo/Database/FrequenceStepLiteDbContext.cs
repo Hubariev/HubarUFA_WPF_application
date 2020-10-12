@@ -18,7 +18,8 @@ namespace MagisterkaApp.Repo.Database
         }
         public async Task<List<FrequencyStep>> GetFrequencyStepsByMeasureId(Guid MeasureId)
         {
-            return this.LiteDatabase.GetCollection<FrequencyStep>("FrequencyStep").FindAll().Where(x => x.MeasureId == MeasureId).ToList();
+            var frequencySteps = this.LiteDatabase.GetCollection<FrequencyStep>("FrequencyStep").FindAll().Where(x => x.MeasureId == MeasureId).ToList(); ;
+            return frequencySteps;
         }
 
         public async Task AddFrequencySteps(List<FrequencyStep> frequencySteps)
@@ -29,6 +30,12 @@ namespace MagisterkaApp.Repo.Database
         public async Task DeleteByMeasureId(Guid MeasureId)
         {
             this.LiteDatabase.GetCollection<FrequencyStep>("FrequencyStep").DeleteMany(x => x.MeasureId == MeasureId);
+        }
+
+
+        public async Task<List<FrequencyStep>> GetAllSteps()
+        {
+            return this.LiteDatabase.GetCollection<FrequencyStep>("FrequencyStep").FindAll().ToList();
         }
     }
 }

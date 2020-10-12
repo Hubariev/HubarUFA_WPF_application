@@ -17,9 +17,9 @@ namespace MagisterkaApp.UI.Views
 
         private void GridViewColumnHeaderClickedHandler(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(((GridViewColumnHeader)e.OriginalSource).Column.Header.ToString());
-            var dataContext = DataContext as ApplicationViewModel;
-            
+            //MessageBox.Show(((GridViewColumnHeader)e.OriginalSource).Column.Header.ToString());
+            //var dataContext = DataContext as ApplicationViewModel;
+
         }
     }
 }
