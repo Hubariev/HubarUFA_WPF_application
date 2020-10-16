@@ -23,6 +23,11 @@ namespace MagisterkaApp.Repo.Repositories
             await this.frequenceStepContext.AddFrequencySteps(frequencySteps);
         }
 
+        public async Task<Boolean> CheckExistenceOfFrequencyStep(Guid MeasureId)
+        {
+            return await this.frequenceStepContext.CheckExistenceOfFrequencyStep(MeasureId);
+        }
+
         public async Task DeleteByMeasureId(Guid MeasureId)
         {
             await this.frequenceStepContext.DeleteByMeasureId(MeasureId);

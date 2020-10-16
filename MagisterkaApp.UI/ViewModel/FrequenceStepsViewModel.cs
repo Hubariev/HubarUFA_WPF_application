@@ -17,32 +17,24 @@ namespace MagisterkaApp.UI.ViewModel
         List<string> calibrationPathes = new List<string>();
         public Measure measure { get; set; }
 
-        public FrequencyStep selectedFrequencyStep { get; set; } 
+        public FrequencyStep selectedFrequencyStep { get; set; }
         public FrequencyStep frequencyStepInfo { get; set; } = new FrequencyStep();
 
         public string Result5proc { get; set; }
 
-
-
         public ObservableCollection<FrequencyStep> FrequencySteps { get; set; }// will be going to TEmdom
         public ObservableCollection<FrequencyStep> FiltredFrequencySteps { get; set; }//will be on View
 
-        public FrequenceStepsViewModel(Measure measure, IFrequenceStepsRepository frequenceStepsRepository, 
+        public FrequenceStepsViewModel(Measure measure, IFrequenceStepsRepository frequenceStepsRepository,
                                        List<string> monitoringPaathes, List<string> calibraationPathes)
         {
             this.frequenceStepsRepository = frequenceStepsRepository;
             this.FrequencySteps = new ObservableCollection<FrequencyStep>();
-            //GetData();
             this.measure = measure;
 
-            var readFrequencies = GetFrequencyStepsMonitoring(monitoringPaathes, measure.Id);
-            readFrequencies = GetFrequencyStepsCalibrating(calibraationPathes, readFrequencies, measure.Id);
-            this.FrequencySteps = CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
+            this.FrequencySteps = GetFrequencySteps(measure, monitoringPaathes, calibraationPathes);
 
-            //var database = new FrequenceStepLiteDbContext();
-
-            //this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(this.FrequencySteps));
-            SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged); 
+            SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
             Check5proc();
         }
 
@@ -80,12 +72,12 @@ namespace MagisterkaApp.UI.ViewModel
                    double counter = this.FrequencySteps.Count * 0.05;
                    foreach (var step in this.FrequencySteps)
                    {
-                       if(step.DeviationNotification.backgroundColor.ToString() == "#FFFF8C00" && counter > 0)
+                       if (step.DeviationNotification.backgroundColor.ToString() == "#FFFF8C00" && counter > 0)
                        {
                            filtredFrequencySteps.Add(step);
                            counter--;
                        }
-                       else if(step.DeviationNotification.backgroundColor.ToString() != "#FFFF8C00" && 
+                       else if (step.DeviationNotification.backgroundColor.ToString() != "#FFFF8C00" &&
                                step.DeviationNotification.backgroundColor.ToString() != "#FFFF0000")
                        {
                            filtredFrequencySteps.Add(step);
@@ -123,6 +115,23 @@ namespace MagisterkaApp.UI.ViewModel
             }
         }
 
+        public ObservableCollection<FrequencyStep> GetFrequencySteps(Measure measure,
+               List<string> monitoringPaathes, List<string> calibraationPathes)
+        {
+            if (this.frequenceStepsRepository.CheckExistenceOfFrequencyStep(measure.Id).Result)
+            {
+                return new ObservableCollection<FrequencyStep>
+                    (this.frequenceStepsRepository.GetFrequencyStepsByMeasureId(measure.Id).Result);
+            }
+            else
+            {
+                var readFrequencies = GetFrequencyStepsMonitoring(monitoringPaathes, measure.Id);
+                readFrequencies = GetFrequencyStepsCalibrating(calibraationPathes, readFrequencies, measure.Id);
+                return CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
+
+            }
+        }
+
         public ObservableCollection<FrequencyStep> GetFrequencyStepsMonitoring(List<string> pathMeasuredPoints, Guid measureId)
         {
             var readFrequencySteps = new ObservableCollection<FrequencyStep>();
@@ -140,20 +149,20 @@ namespace MagisterkaApp.UI.ViewModel
             return readFrequencySteps;
         }
 
-        public ObservableCollection<FrequencyStep> GetFrequencyStepsCalibrating(List<string> pathMeasuredPoints, ObservableCollection<FrequencyStep> frequencySteps, 
+        public ObservableCollection<FrequencyStep> GetFrequencyStepsCalibrating(List<string> pathMeasuredPoints, ObservableCollection<FrequencyStep> frequencySteps,
             Guid measureId)
         {
             var readFrequencySteps = new ObservableCollection<FrequencyStep>();
             var frequenceSteps = this.frequenceStepsRepository.GetFrequencyStepsByMeasureId(measureId);
             if (frequenceSteps.Status == System.Threading.Tasks.TaskStatus.Faulted || frequenceSteps.Result.Count == 0)
             {
-                readFrequencySteps = ReadFile.ReadCalibrationFile(pathMeasuredPoints, frequencySteps);              
+                readFrequencySteps = ReadFile.ReadCalibrationFile(pathMeasuredPoints, frequencySteps);
             }
             else
             {
                 readFrequencySteps = frequencySteps;
             }
-            
+
 
             return readFrequencySteps;
         }
@@ -176,7 +185,7 @@ namespace MagisterkaApp.UI.ViewModel
                         FrequencyStepInfo.Points = SelectedFrequencyStep.Points;
                         FrequencyStepInfo.DeviationNotification = SelectedFrequencyStep.DeviationNotification;
                         FrequencyStepInfo.IsHidden = SelectedFrequencyStep.IsHidden;
-                    }                 
+                    }
                     ));
 
         private RelayCommand temDominantOpenCommand;

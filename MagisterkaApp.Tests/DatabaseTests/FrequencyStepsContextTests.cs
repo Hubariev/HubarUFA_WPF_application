@@ -38,7 +38,22 @@ namespace MagisterkaApp.Tests.DatabaseTests
 
             var steps = database.GetAllSteps().Result;
 
-            var concreteStep = database.GetFrequencyStepsByMeasureId(measureId);
+            //var concreteStep = database.GetFrequencyStepsByMeasureId(measureId);
+            Console.WriteLine();
+
+        }
+
+
+        [Fact]
+        public void GetAllFrequencySteps()
+        {
+            var measureId = new Guid("17fca9a0-beb8-44a6-b200-c30eaa8e6bc1");
+
+            var database = new FrequenceStepLiteDbContext();
+
+
+            var steps = database.GetAllSteps().Result;
+
             Console.WriteLine();
 
         }

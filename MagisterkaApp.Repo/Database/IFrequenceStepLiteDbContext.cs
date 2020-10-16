@@ -10,6 +10,8 @@ namespace MagisterkaApp.Repo.Database
     {
         Task<List<FrequencyStep>> GetFrequencyStepsByMeasureId(Guid MeasureId);
 
+        Task<Boolean> CheckExistenceOfFrequencyStep(Guid MeasureId);
+     
         Task AddFrequencySteps(List<FrequencyStep> frequencySteps);
 
         Task DeleteByMeasureId(Guid MeasureId);

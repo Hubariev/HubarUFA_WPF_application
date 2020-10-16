@@ -1,4 +1,6 @@
 ﻿using MagisterkaApp.Calculator;
+using MagisterkaApp.Domain;
+using MagisterkaApp.Repo.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,7 +35,15 @@ namespace MagisterkaApp.Tests.ReadFileTests.ReadCalibrationFileTests
 
             var readPoints = ReadFile.ReadCalibrationFile(pathesCalibrationFiles, readPointsMon);
 
-            var t = "";
+            var calucatedFrequencySteps = CalculateResult.GetResult(readPoints, 5, 5);
+            var database = new FrequenceStepLiteDbContext();
+            database.AddFrequencySteps(new List<FrequencyStep>(calucatedFrequencySteps));
+            Console.WriteLine();
         }
     }
 }
+
+//calucatedFrequencySteps[0].TEMNotification = null;
+//            calucatedFrequencySteps[0].DeviationNotification = null;
+//            calucatedFrequencySteps[1].TEMNotification = null;
+//            calucatedFrequencySteps[1].DeviationNotification = null;

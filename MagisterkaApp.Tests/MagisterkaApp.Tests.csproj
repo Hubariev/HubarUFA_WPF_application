@@ -17,4 +17,8 @@
     <ProjectReference Include="..\MagisterkaApp.UI\MagisterkaApp.UI.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="PresentationCore" />
+  </ItemGroup>
+
 </Project>

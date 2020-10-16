@@ -5,9 +5,9 @@ namespace MagisterkaApp.Domain
     public class Point
     {
         public int Id { get; }
-        public FieldStrength Primary { get; }
-        public FieldStrength SecondaryOne { get; }        
-        public FieldStrength SecondaryTwo { get; }
+        public PrimaryFieldStrength Primary { get; set; }
+        public SecondaryOneFieldStrength SecondaryOne { get; set; }        
+        public SecondaryTwoFieldStrength SecondaryTwo { get; set; }
         public PowerLevel PowerLevel { get; set; }
         public BackgroundColor PointBackgroundColor { get; set; }
         public bool IsConsidered { get; set; }
@@ -18,9 +18,9 @@ namespace MagisterkaApp.Domain
                      string primaryName, string secondaryOneName, string secondaryTwoName)
         {
             this.Id = id;
-            this.Primary = new FieldStrength(primaryInput, primaryName); 
-            this.SecondaryOne = new FieldStrength(secondaryOneInput, secondaryOneName); 
-            this.SecondaryTwo = new FieldStrength(secondaryTwoInput, secondaryTwoName); 
+            this.Primary = new PrimaryFieldStrength(primaryInput, primaryName); 
+            this.SecondaryOne = new SecondaryOneFieldStrength(secondaryOneInput, secondaryOneName); 
+            this.SecondaryTwo = new SecondaryTwoFieldStrength(secondaryTwoInput, secondaryTwoName); 
         }
 
         public void AddPowerLevel(double powerLevel)

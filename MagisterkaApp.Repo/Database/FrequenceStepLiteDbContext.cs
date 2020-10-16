@@ -22,6 +22,17 @@ namespace MagisterkaApp.Repo.Database
             return frequencySteps;
         }
 
+        //public async Task<List<FrequencyStep>> GetFrequencyStepsByMeasureId(Guid MeasureId)
+        //{
+        //    var frequencySteps = this.LiteDatabase.GetCollection<FrequencyStep>("FrequencyStep").FindAll().Where(x => x.MeasureId == MeasureId).ToList(); ;
+        //    return frequencySteps;
+        //}
+
+        public async Task<Boolean> CheckExistenceOfFrequencyStep(Guid MeasureId)
+        {
+            return this.LiteDatabase.GetCollection<FrequencyStep>("FrequencyStep").Exists(x => x.MeasureId == MeasureId);
+        }
+
         public async Task AddFrequencySteps(List<FrequencyStep> frequencySteps)
         {
             this.LiteDatabase.GetCollection<FrequencyStep>("FrequencyStep").InsertBulk(frequencySteps);

@@ -1,5 +1,4 @@
-﻿
-using MagisterkaApp.Domain;
+﻿using MagisterkaApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -10,6 +9,8 @@ namespace MagisterkaApp.Repo.Abstractions
     public interface IFrequenceStepsRepository
     {
         Task<List<FrequencyStep>> GetFrequencyStepsByMeasureId(Guid MeasureId);
+
+        Task<Boolean> CheckExistenceOfFrequencyStep(Guid MeasureId);
 
         Task AddFrequencySteps(List<FrequencyStep> frequencySteps);
 
