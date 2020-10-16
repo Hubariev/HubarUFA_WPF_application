@@ -243,6 +243,7 @@
     <Compile Include="Miscellaneous\AutoClosingMessageBox.cs" />
     <Compile Include="Miscellaneous\EnumToStringConverter.cs" />
     <Compile Include="Miscellaneous\ExtensionMethods.cs" />
+    <Compile Include="Miscellaneous\StringToSolidColorBrushConverter.cs" />
     <Compile Include="Startup\Bootstrapper.cs" />
     <Compile Include="ViewModel\FrequenceStepsViewModel.cs" />
     <Compile Include="ViewModel\TEMdominantViewModel.cs" />

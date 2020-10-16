@@ -96,7 +96,8 @@
                     <GridViewColumn Header="Komunikaty"  Width="600">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>
-                                <Border BorderThickness="1" CornerRadius="10" BorderBrush="Black" Background="{Binding TEMNotification.backgroundColor}">
+                                <Border BorderThickness="1" CornerRadius="10" BorderBrush="Black" Background="{Binding TEMNotification.backgroundColor,
+                                        Converter={StaticResource StringToSolidColorBrushConverter}}">
                                     <TextBlock TextAlignment="Center" Text="{Binding TEMNotification.Text}"  Width="600"/>
                                 </Border>
                             </DataTemplate>

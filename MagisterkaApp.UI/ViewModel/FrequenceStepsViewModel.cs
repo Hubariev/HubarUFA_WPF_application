@@ -205,8 +205,6 @@ namespace MagisterkaApp.UI.ViewModel
             double verificationfieldStrength)
         {
             var calucatedFrequencySteps = CalculateResult.GetResult(frequencySteps, researchfieldStrength, verificationfieldStrength);
-            //var database = new FrequenceStepLiteDbContext();
-            //database.AddFrequencySteps(new List<FrequencyStep>(calucatedFrequencySteps));
             this.frequenceStepsRepository.AddFrequencySteps(new List<FrequencyStep>(calucatedFrequencySteps));
             return calucatedFrequencySteps;
         }

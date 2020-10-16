@@ -151,7 +151,8 @@
                         <GridViewColumn Header="Komunikaty"  Width="600">
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Border BorderThickness="1" CornerRadius="10" BorderBrush="Black" Background="{Binding DeviationNotification.backgroundColor}">
+                                    <Border BorderThickness="1" CornerRadius="10" BorderBrush="Black" Background="{Binding DeviationNotification.backgroundColor,
+                                        Converter={StaticResource StringToSolidColorBrushConverter}}">
                                         <TextBlock TextAlignment="Center" Text="{Binding DeviationNotification.Text}"  Width="600"/>
                                     </Border>
                                 </DataTemplate>
