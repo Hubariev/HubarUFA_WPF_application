@@ -19,6 +19,7 @@ namespace MagisterkaApp.Calculator
             var frequenceSteps = new ObservableCollection<FrequencyStep>();
             int pointId = 1;
             const int columnDifference = 1;
+            int frequencyId = 1;
   
 
             foreach (var pathName in 
@@ -101,13 +102,17 @@ namespace MagisterkaApp.Calculator
                             }
                             else
                             {
-                                step = new FrequencyStep(measureId, frequency);
+                                step = new FrequencyStep(frequencyId, measureId, frequency);
                             }
                             //Names
                             step.AddPoint(pointId, primary, secondaryOne, secondarySecond, primaryName, secondaryOneName ,secondaryTwoName);
                                                        
                             if(pointId == 1)
+                            {
                                 frequenceSteps.Add(step);
+                                frequencyId++;
+                            }
+                                
                         }
                         if (counter < 3 && counter != 0)
                         {
@@ -116,11 +121,14 @@ namespace MagisterkaApp.Calculator
                         if (line.Contains("Ch1"))
                         {
                             counter = 2;
-                        }                       
+                        }
+
+                        
                     }
                     file.Close();
                 }
                 pointId++;
+                frequencyId = 1;
             }
             return frequenceSteps;          
         }

@@ -146,6 +146,17 @@
 
                 <ListView.View>
                     <GridView>
+                        <GridViewColumn Header="Id"  Width="50">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate >
+
+                                    <Border Width="50" CornerRadius="10" Background="LightGray">
+                                        <TextBlock TextAlignment="Center" Text="{Binding Id}"/>
+                                    </Border>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        
                         <GridViewColumn Header="Częstotliwość" DisplayMemberBinding="{Binding Frequency}" Width="100"/>
                         <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevelResult}" Width="150" />
                         <GridViewColumn Header="Komunikaty"  Width="600">

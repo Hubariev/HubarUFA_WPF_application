@@ -24,8 +24,8 @@ namespace MagisterkaApp.Tests.DatabaseTests
         {
             var measureId = Guid.NewGuid();
 
-            var frequencyStep1 = new FrequencyStep(measureId, 80);
-            var frequencyStep2 = new FrequencyStep(measureId, 90);
+            var frequencyStep1 = new FrequencyStep(1,measureId, 80);
+            var frequencyStep2 = new FrequencyStep(1,measureId, 90);
 
             List<FrequencyStep> frequencySteps = new List<FrequencyStep>()
             {
