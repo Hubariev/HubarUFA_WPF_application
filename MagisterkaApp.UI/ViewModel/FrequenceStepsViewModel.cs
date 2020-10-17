@@ -2,9 +2,11 @@
 using MagisterkaApp.Calculator;
 using MagisterkaApp.Domain;
 using MagisterkaApp.Repo.Abstractions;
+using MagisterkaApp.UI.Miscellaneous;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Input;
 
 namespace MagisterkaApp.UI.ViewModel
@@ -25,6 +27,12 @@ namespace MagisterkaApp.UI.ViewModel
         public ObservableCollection<FrequencyStep> FrequencySteps { get; set; }// will be going to TEmdom
         public ObservableCollection<FrequencyStep> FiltredFrequencySteps { get; set; }//will be on View
 
+        public Boolean isCheckedDeviationSmaller { get; set; }
+        public Boolean isCheckedDeviationSmaller75Proc { get; set; }
+        public Boolean isCheckedDeviationBetween { get; set; }
+        public Boolean isCheckedDeviationBigger { get; set; }
+
+
         public FrequenceStepsViewModel(Measure measure, IFrequenceStepsRepository frequenceStepsRepository,
                                        List<string> monitoringPaathes, List<string> calibraationPathes)
         {
@@ -33,6 +41,7 @@ namespace MagisterkaApp.UI.ViewModel
             this.measure = measure;
 
             this.FrequencySteps = GetFrequencySteps(measure, monitoringPaathes, calibraationPathes);
+            this.FiltredFrequencySteps = new ObservableCollection<FrequencyStep>(this.FrequencySteps);
 
             SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
             Check5proc();
@@ -94,6 +103,50 @@ namespace MagisterkaApp.UI.ViewModel
         {
             FrequencyStepInfo = selectedFrequencyStep;
         }
+
+
+        #region checkBoxes
+        public Boolean IsCheckedDeviationSmaller
+        {
+            get { return isCheckedDeviationSmaller; }
+            set
+            {
+                isCheckedDeviationSmaller = value;
+                OnPropertyChanged("IsCheckedDeviationSmaller");
+            }
+        }
+
+        public Boolean IsCheckedDeviationSmaller75Proc
+        {
+            get { return isCheckedDeviationSmaller75Proc; }
+            set
+            {
+                isCheckedDeviationSmaller75Proc = value;
+                OnPropertyChanged("IsCheckedDeviationSmaller75Proc");
+            }
+        }
+
+        public Boolean IsCheckedDeviationBetween
+        {
+            get { return isCheckedDeviationBetween; }
+            set
+            {
+                isCheckedDeviationBetween = value;
+                OnPropertyChanged("IsCheckedDeviationBetween");
+            }
+        }
+
+        public Boolean IsCheckedDeviationBigger
+        {
+            get { return isCheckedDeviationBigger; }
+            set
+            {
+                isCheckedDeviationBigger = value;
+                OnPropertyChanged("IsCheckedDeviationBigger");
+            }
+        }
+
+        #endregion
 
         public FrequencyStep SelectedFrequencyStep
         {
@@ -167,11 +220,32 @@ namespace MagisterkaApp.UI.ViewModel
             return readFrequencySteps;
         }
 
-        public RelayCommand<FrequencyStep> SelectionChangedCommand { get; set; }
 
-
+        public Boolean infoChecked;
 
         #region commands
+        public RelayCommand checkBoxChangedCommand;
+        public ICommand CheckBoxChangedCommand =>
+            checkBoxChangedCommand ??
+            (checkBoxChangedCommand =
+                new RelayCommand(
+                    () =>
+                    {
+
+                        this.FiltredFrequencySteps.Clear();
+                        this.FiltredFrequencySteps.AddRange(
+                            this.FrequencySteps.GetFiltredFrequencySteps(IsCheckedDeviationSmaller,
+                                                                         IsCheckedDeviationSmaller75Proc,
+                                                                         IsCheckedDeviationBetween,
+                                                                         IsCheckedDeviationBigger));
+
+
+                    }
+                    ));
+
+
+        public RelayCommand<FrequencyStep> SelectionChangedCommand { get; set; }
+
         public RelayCommand stepBeenSelectedCommand;
         public ICommand StepBeenSelectedCommand =>
             stepBeenSelectedCommand ??

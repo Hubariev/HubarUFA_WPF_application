@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
-        Title="MainWindow" Height="800" Width="1400" Background="#141010" BorderBrush="DarkGreen" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+        Title="MeasureWindow" Height="800" Width="1400" Background="#141010" BorderBrush="DarkGreen" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
     </Window.Resources>

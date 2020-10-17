@@ -1,25 +1,36 @@
 ﻿using GalaSoft.MvvmLight.Command;
 using MagisterkaApp.Domain;
 using MagisterkaApp.Domain.Enums;
+using MagisterkaApp.UI.Miscellaneous;
 using System;
 using System.Collections.ObjectModel;
+using System.Windows.Input;
 
 namespace MagisterkaApp.UI.ViewModel
 {
     public class TEMdominantViewModel: ViewModelBase
     {
         public ObservableCollection<FrequencyStep> FrequencySteps { get; set; }
+        public ObservableCollection<FrequencyStep> FiltredFrequencySteps { get; set; }//will be on View
         public FrequencyStep selectedFrequencyStep { get; set; }
         public FrequencyStep frequencyStepInfo { get; set; } = new FrequencyStep();
         public string Result5proc { get; set; }
 
+        public Boolean isCheckedTEMiationSmaller { get; set; }
+        public Boolean isCheckedTEMiationSmaller75Proc { get; set; }
+        public Boolean isCheckedTEMiationBetween { get; set; }
+        public Boolean isCheckedTEMiationBigger { get; set; }
+
+        
+       
         //command
         public RelayCommand<FrequencyStep> SelectionChangedCommand { get; set; }
 
 
         public TEMdominantViewModel(ObservableCollection<FrequencyStep> frequencySteps)
         {
-            this.FrequencySteps =frequencySteps;
+            this.FrequencySteps = frequencySteps;
+            this.FiltredFrequencySteps = new ObservableCollection<FrequencyStep>(this.FrequencySteps);
             SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
             Check5proc();
         }
@@ -60,5 +71,66 @@ namespace MagisterkaApp.UI.ViewModel
                 OnPropertyChanged("FrequencyStepInfo");
             }
         }
+
+        #region checkBoxes
+        public Boolean IsCheckedTEMiationSmaller
+        {
+            get { return isCheckedTEMiationSmaller; }
+            set
+            {
+                isCheckedTEMiationSmaller = value;
+                OnPropertyChanged("IsCheckedTEMiationSmaller");
+            }
+        }
+
+        public Boolean IsCheckedTEMiationSmaller75Proc
+        {
+            get { return isCheckedTEMiationSmaller75Proc; }
+            set
+            {
+                isCheckedTEMiationSmaller75Proc = value;
+                OnPropertyChanged("IsCheckedTEMiationSmaller75Proc");
+            }
+        }
+
+        public Boolean IsCheckedTEMiationBetween
+        {
+            get { return isCheckedTEMiationBetween; }
+            set
+            {
+                isCheckedTEMiationBetween = value;
+                OnPropertyChanged("IsCheckedTEMiationBetween");
+            }
+        }
+
+        public Boolean IsCheckedTEMiationBigger
+        {
+            get { return isCheckedTEMiationBigger; }
+            set
+            {
+                isCheckedTEMiationBigger = value;
+                OnPropertyChanged("IsCheckedTEMiationBigger");
+            }
+        }
+        #endregion
+
+        public RelayCommand checkBoxChangedCommand;
+        public ICommand CheckBoxChangedCommand =>
+            checkBoxChangedCommand ??
+            (checkBoxChangedCommand =
+                new RelayCommand(
+                    () =>
+                    {
+
+                        this.FiltredFrequencySteps.Clear();
+                        this.FiltredFrequencySteps.AddRange(
+                            this.FrequencySteps.GetFiltredTEMFrequencySteps(IsCheckedTEMiationSmaller,
+                                                                         IsCheckedTEMiationSmaller75Proc,
+                                                                         IsCheckedTEMiationBetween,
+                                                                         IsCheckedTEMiationBigger));
+
+
+                    }
+                    ));
     }
 }

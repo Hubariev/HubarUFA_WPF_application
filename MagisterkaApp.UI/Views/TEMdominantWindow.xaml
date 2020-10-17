@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1300">
+        Title="TEMdominantWindow" Height="700" Width="1400">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
         <misc:EnumToStringConverter x:Key="DefaultEnumToStringConverter"/>
@@ -17,10 +17,15 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="0.8*" />
-
         </Grid.ColumnDefinitions>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="660"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel x:Name="LeftPart" Grid.Column="1">
+
+        <StackPanel x:Name="LeftPart" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
             <Border BorderThickness="1" Margin="20" CornerRadius="10" BorderBrush="LightBlue">
                 <Grid>
                     <Grid.RowDefinitions>
@@ -72,13 +77,35 @@
 
 
         </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="0" Background="AliceBlue" VerticalAlignment="Center"  >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <CheckBox IsChecked="{Binding IsCheckedTEMiationSmaller}" Command="{Binding CheckBoxChangedCommand}" Content="&lt; -6 [dB]" HorizontalAlignment="Center" Grid.Column="0"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+
+                <CheckBox IsChecked="{Binding IsCheckedTEMiationSmaller75Proc}" Command="{Binding CheckBoxChangedCommand}" Content="&lt; -6 [dB] dla 75%" HorizontalAlignment="Center" Grid.Column="1"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+
+                <CheckBox IsChecked="{Binding IsCheckedTEMiationBetween}" Command="{Binding CheckBoxChangedCommand}" Content=" &lt; -6 [dB] ; -2 [db] &gt; dla 75%" HorizontalAlignment="Center" Grid.Column="2"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+
+                <CheckBox IsChecked="{Binding IsCheckedTEMiationBigger}" Command="{Binding CheckBoxChangedCommand}" Content="&gt; -2 [dB]" HorizontalAlignment="Center" Grid.Column="3"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+
+            </Grid>
+        </StackPanel>
         <!--                          RightPart                               -->
         <!--                          RightPart                               -->
         <!--                          RightPart                               -->
 
 
-        <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencySteps}" Grid.Column="0" x:Name="listViewFrequencySteps"
+        <ListView Margin="10,10,0,27" ItemsSource="{Binding FiltredFrequencySteps}" Grid.Column="0" x:Name="listViewFrequencySteps" Grid.Row="1"
                   Background="LightSeaGreen" SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}">
 
             <i:Interaction.Triggers>

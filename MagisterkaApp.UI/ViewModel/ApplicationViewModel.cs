@@ -342,9 +342,19 @@ namespace MagisterkaApp.UI.ViewModel
             (frequencyStepsOpenCommand = new RelayCommand(
                 () =>
                 {
-                    var catOpts = new Views.FrequenceStepsWindow(selectedMeasure, this.frequenceStepsRepository,
-                                                                 this.MonitoringPathes, this.CalibrationPathes);
-                    catOpts.ShowDialog();
+                    if(selectedMeasure != null)
+                    {
+                        var catOpts = new Views.FrequenceStepsWindow(selectedMeasure, this.frequenceStepsRepository,
+                                                          this.MonitoringPathes, this.CalibrationPathes);
+                        catOpts.ShowDialog();
+                    }
+                    else
+                    {
+                        MessageBoxResult result = MessageBox.Show($"Wybierz pomiar.",
+                                          "Confirmation",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Warning);
+                    }
                 }
                 ));
 

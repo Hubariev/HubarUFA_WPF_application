@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d"
-        Title="MainWindow" Height="700" Width="1400" VerticalAlignment="Center" BorderBrush="DarkGreen" BorderThickness="3">
+        Title="FrequencyStepsWindow" Height="700" Width="1400" VerticalAlignment="Center" BorderBrush="DarkGreen" BorderThickness="3">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
     </Window.Resources>
@@ -17,10 +17,14 @@
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.2*"/>
                 <ColumnDefinition Width="0.6*" />
-
             </Grid.ColumnDefinitions>
 
-            <StackPanel x:Name="LeftPart" Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="660"/>
+            </Grid.RowDefinitions>
+
+            <StackPanel x:Name="LeftPart" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
                 <Border BorderThickness="1" Margin="20" CornerRadius="10" BorderBrush="LightBlue">
                     <Grid>
                         <Grid.RowDefinitions>
@@ -131,10 +135,32 @@
             <!--                          RightPart                               -->
             <!--                          RightPart                               -->
             <!--                          RightPart                               -->
+            <StackPanel Grid.Row="0" Grid.Column="0" Background="AliceBlue" VerticalAlignment="Center"  >
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
 
+                    <CheckBox IsChecked="{Binding IsCheckedDeviationSmaller}" Command="{Binding CheckBoxChangedCommand}" Content="&lt; 6 [dB]" HorizontalAlignment="Center" Grid.Column="0"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
 
-            <ListView Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" ItemsSource="{Binding FrequencySteps}" Grid.Column="0" x:Name="listViewFrequencySteps"
-                  Background="Wheat" SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}" MaxHeight="600">
+                    <CheckBox IsChecked="{Binding IsCheckedDeviationSmaller75Proc}" Command="{Binding CheckBoxChangedCommand}" Content="&lt; 6 [dB] dla 75%" HorizontalAlignment="Center" Grid.Column="1"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+
+                    <CheckBox IsChecked="{Binding IsCheckedDeviationBetween}" Command="{Binding CheckBoxChangedCommand}" Content=" &lt; 6 [dB] ; 10 [db] &gt; dla 75%" HorizontalAlignment="Center" Grid.Column="2"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+
+                    <CheckBox IsChecked="{Binding IsCheckedDeviationBigger}" Command="{Binding CheckBoxChangedCommand}" Content="&gt; 10 [dB]" HorizontalAlignment="Center" Grid.Column="3"
+                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
+                    
+                </Grid>
+            </StackPanel>
+
+            <ListView Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" ItemsSource="{Binding FiltredFrequencySteps}" Grid.Column="0" x:Name="listViewFrequencySteps"
+                 Grid.Row="1" Background="Wheat" SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}" MaxHeight="600">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">

@@ -75,6 +75,119 @@ namespace MagisterkaApp.UI.Miscellaneous
 
             return filtredMeasures;
         }
+
+
+        public static ObservableCollection<FrequencyStep> GetFiltredFrequencySteps(this ObservableCollection<FrequencyStep> frequencySteps,
+                                Boolean smaller, Boolean smaller75, Boolean between, Boolean bigger)
+        {
+            var filtredFrequencySteps = new ObservableCollection<FrequencyStep>();
+
+            var filtredSmaller = new List<FrequencyStep>();
+            var filtredSmaller75 = new List<FrequencyStep>();
+            var filtredBetween = new List<FrequencyStep>();
+            var filtredBigger = new List<FrequencyStep>();
+
+            var filtredOrderById = new List<FrequencyStep>();
+
+            if (!smaller && !smaller75 && !between && !bigger)
+            {
+                filtredFrequencySteps.AddRange(frequencySteps);
+            }
+            else
+            {
+                if (smaller)
+                {
+                    filtredSmaller = frequencySteps.Where(x => x.DeviationNotification.backgroundColor == "#FF98FB98").ToList();
+                }
+
+                if (smaller75)
+                {
+                    filtredSmaller75 = frequencySteps.Where(x => x.DeviationNotification.backgroundColor == "#FFFFFF00").ToList();
+                }
+
+                if (between)
+                {
+                    filtredBetween = frequencySteps.Where(x => x.DeviationNotification.backgroundColor == "#FFFF8C00").ToList();
+                }
+
+                if (bigger)
+                {
+                    filtredBigger = frequencySteps.Where(x => x.DeviationNotification.backgroundColor == "#FFFF0000").ToList();
+                }
+
+
+
+                filtredOrderById.AddRange(filtredSmaller);
+                filtredOrderById.AddRange(filtredSmaller75);
+                filtredOrderById.AddRange(filtredBetween);
+                filtredOrderById.AddRange(filtredBigger);
+
+                filtredOrderById = filtredOrderById.OrderBy(x => x.Id).ToList();
+
+                filtredFrequencySteps.AddRange(filtredOrderById);
+            }
+
+           
+
+            return filtredFrequencySteps;
+        }
+
+
+
+        public static ObservableCollection<FrequencyStep> GetFiltredTEMFrequencySteps(this ObservableCollection<FrequencyStep> frequencySteps,
+                                Boolean smaller, Boolean smaller75, Boolean between, Boolean bigger)
+        {
+            var filtredFrequencySteps = new ObservableCollection<FrequencyStep>();
+
+            var filtredSmaller = new List<FrequencyStep>();
+            var filtredSmaller75 = new List<FrequencyStep>();
+            var filtredBetween = new List<FrequencyStep>();
+            var filtredBigger = new List<FrequencyStep>();
+
+            var filtredOrderById = new List<FrequencyStep>();
+
+            if (!smaller && !smaller75 && !between && !bigger)
+            {
+                filtredFrequencySteps.AddRange(frequencySteps);
+            }
+            else
+            {
+                if (smaller)
+                {
+                    filtredSmaller = frequencySteps.Where(x => x.TEMNotification.backgroundColor == "#FF98FB98").ToList();
+                }
+
+                if (smaller75)
+                {
+                    filtredSmaller75 = frequencySteps.Where(x => x.TEMNotification.backgroundColor == "#FFFFFF00").ToList();
+                }
+
+                if (between)
+                {
+                    filtredBetween = frequencySteps.Where(x => x.TEMNotification.backgroundColor == "#FFFF8C00").ToList();
+                }
+
+                if (bigger)
+                {
+                    filtredBigger = frequencySteps.Where(x => x.TEMNotification.backgroundColor == "#FFFF0000").ToList();
+                }
+
+
+
+                filtredOrderById.AddRange(filtredSmaller);
+                filtredOrderById.AddRange(filtredSmaller75);
+                filtredOrderById.AddRange(filtredBetween);
+                filtredOrderById.AddRange(filtredBigger);
+
+                filtredOrderById = filtredOrderById.OrderBy(x => x.Id).ToList();
+
+                filtredFrequencySteps.AddRange(filtredOrderById);
+            }
+
+
+
+            return filtredFrequencySteps;
+        }
     }
 }
 
