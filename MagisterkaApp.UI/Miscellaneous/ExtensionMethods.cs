@@ -122,7 +122,7 @@ namespace MagisterkaApp.UI.Miscellaneous
                 filtredOrderById.AddRange(filtredBetween);
                 filtredOrderById.AddRange(filtredBigger);
 
-                filtredOrderById = filtredOrderById.OrderBy(x => x.Id).ToList();
+                filtredOrderById = filtredOrderById.OrderBy(x => x.FrequencyNumber).ToList();
 
                 filtredFrequencySteps.AddRange(filtredOrderById);
             }
@@ -179,7 +179,7 @@ namespace MagisterkaApp.UI.Miscellaneous
                 filtredOrderById.AddRange(filtredBetween);
                 filtredOrderById.AddRange(filtredBigger);
 
-                filtredOrderById = filtredOrderById.OrderBy(x => x.Id).ToList();
+                filtredOrderById = filtredOrderById.OrderBy(x => x.FrequencyNumber).ToList();
 
                 filtredFrequencySteps.AddRange(filtredOrderById);
             }

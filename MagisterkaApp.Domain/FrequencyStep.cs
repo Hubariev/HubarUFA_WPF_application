@@ -7,7 +7,7 @@ namespace MagisterkaApp.Domain
     //ToDo: calculateMethod
     public class FrequencyStep
     {
-        public int Id { get; set; }
+        public int FrequencyNumber { get; set; }
         public Guid MeasureId { get; set; }
         public double Frequency { get; set; }
         public double PowerLevelResult { get; set; }
@@ -20,7 +20,7 @@ namespace MagisterkaApp.Domain
         public FrequencyStep() { }
         public FrequencyStep(int id, Guid measureId, double frequence)
         {
-            this.Id = id;
+            this.FrequencyNumber = id;
             this.MeasureId = measureId;
             this.Frequency = frequence;
             this.Points = new List<Point>();

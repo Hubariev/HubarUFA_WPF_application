@@ -3,10 +3,13 @@ using MagisterkaApp.Calculator;
 using MagisterkaApp.Domain;
 using MagisterkaApp.Repo.Abstractions;
 using MagisterkaApp.UI.Miscellaneous;
+using MagisterkaApp.UI.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
+using System.Windows;
 using System.Windows.Input;
 
 namespace MagisterkaApp.UI.ViewModel
@@ -41,10 +44,17 @@ namespace MagisterkaApp.UI.ViewModel
             this.measure = measure;
 
             this.FrequencySteps = GetFrequencySteps(measure, monitoringPaathes, calibraationPathes);
-            this.FiltredFrequencySteps = new ObservableCollection<FrequencyStep>(this.FrequencySteps);
 
-            SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
-            Check5proc();
+            if(this.FrequencySteps != null)
+            {
+            
+                this.FiltredFrequencySteps = new ObservableCollection<FrequencyStep>(this.FrequencySteps);
+                SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
+                Check5proc();
+            }
+            
+
+            
         }
 
 
@@ -93,8 +103,25 @@ namespace MagisterkaApp.UI.ViewModel
                        }
                    }
 
-                   SaveResult.WriteResult(filtredFrequencySteps, measure.NameOfMeasure,
-                       measure.ResearchfieldStrength, nameof(measure.HSeptum));
+                   var saveWindow = new System.Windows.Forms.SaveFileDialog();
+
+                   saveWindow.Title = "Wybierz folder do zapisania pliku.";
+                   saveWindow.FileName = measure.NameOfMeasure;
+                   saveWindow.DefaultExt = ".DAT";
+                   saveWindow.Filter = "DAT files (*.DAT)|*.dat";
+
+                   if (saveWindow.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                   {
+                       string savePath = Path.GetDirectoryName(saveWindow.FileName);
+                       savePath = savePath + $"\\{measure.NameOfMeasure}.DAT";
+
+                       SaveResult.WriteResult(filtredFrequencySteps, savePath, measure);
+                   }
+
+                   MessageBoxResult result = MessageBox.Show($"{measure.NameOfMeasure}.DAT został zapisany.",
+                                          "Confirmation",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Information);
                })
        );
 
@@ -178,9 +205,23 @@ namespace MagisterkaApp.UI.ViewModel
             }
             else
             {
-                var readFrequencies = GetFrequencyStepsMonitoring(monitoringPaathes, measure.Id);
-                readFrequencies = GetFrequencyStepsCalibrating(calibraationPathes, readFrequencies, measure.Id);
-                return CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
+                if(monitoringPaathes == null || calibraationPathes == null)
+                {
+                    MessageBoxResult result = MessageBox.Show($"Kalibracyjny i monitorujący pliki nie istnieją.",
+                                          "Confirmation",
+                                          MessageBoxButton.OK,
+                                          MessageBoxImage.Error);
+                    
+                    return null;
+
+                }
+                else
+                {
+                    var readFrequencies = GetFrequencyStepsMonitoring(monitoringPaathes, measure.Id);
+                    readFrequencies = GetFrequencyStepsCalibrating(calibraationPathes, readFrequencies, measure.Id);
+                    return CalculateFrequencySteps(readFrequencies, measure.ResearchfieldStrength, measure.VerificationfieldStrength);
+                }
+               
 
             }
         }

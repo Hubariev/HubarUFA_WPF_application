@@ -6,8 +6,8 @@
         xmlns:misc="clr-namespace:MagisterkaApp.UI.Miscellaneous"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
-        mc:Ignorable="d"
-        Title="MeasureWindow" Height="800" Width="1400" Background="#141010" BorderBrush="DarkGreen" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
+        mc:Ignorable="d" Icon="/Images/measure.ico"
+        Title="Pomiary" Height="800" Width="1400" Background="#141010" BorderBrush="DarkGreen" BorderThickness="3" HorizontalAlignment="Center" VerticalAlignment="Center">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
     </Window.Resources>

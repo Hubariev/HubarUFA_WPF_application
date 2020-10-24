@@ -34,9 +34,20 @@ namespace MagisterkaApp.Tests.DatabaseTests
 
             var database = new FrequenceStepLiteDbContext();
 
+            var steps = database.GetAllSteps().Result;
+
+
             database.AddFrequencySteps(frequencySteps);
 
-            var steps = database.GetAllSteps().Result;
+            var log = database.LiteDatabase.CheckpointSize;
+            
+
+
+            var steps1 = database.GetAllSteps().Result;
+
+            database.AddFrequencySteps(frequencySteps);
+
+            var steps11 = database.GetAllSteps().Result;
 
             //var concreteStep = database.GetFrequencyStepsByMeasureId(measureId);
             Console.WriteLine();

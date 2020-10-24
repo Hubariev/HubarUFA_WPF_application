@@ -2,6 +2,7 @@
 using MagisterkaApp.Domain;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,7 +15,8 @@ namespace MagisterkaApp.Repo.Database
 
         public FrequenceStepLiteDbContext()
         {
-            LiteDatabase = new LiteDatabase(@"F:\_My_ProgaLibrary\Own-Projects\WPF_UniformityFieldApp\frequenceStepsDatabase.db");
+            var path = System.IO.Path.GetFullPath(@"frequenceStepsDatabase.db");
+            LiteDatabase = new LiteDatabase(path);
         }
         public async Task<List<FrequencyStep>> GetFrequencyStepsByMeasureId(Guid MeasureId)
         {

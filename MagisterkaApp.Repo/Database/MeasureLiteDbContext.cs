@@ -2,6 +2,7 @@
 using MagisterkaApp.Domain;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -13,7 +14,8 @@ namespace MagisterkaApp.Repo.Database
 
         public MeasureLiteDbContext()
         {
-            LiteDatabase = new LiteDatabase(@"F:\_My_ProgaLibrary\Own-Projects\WPF_UniformityFieldApp\measureDatabase.db");
+            var path = System.IO.Path.GetFullPath(@"measureDatabase.db");
+            LiteDatabase = new LiteDatabase(path);
         }
 
         public async Task<List<Measure>> GetMeasures()

@@ -6,8 +6,8 @@
         xmlns:misc="clr-namespace:MagisterkaApp.UI.Miscellaneous"
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
-        mc:Ignorable="d"
-        Title="TEMdominantWindow" Height="700" Width="1400">
+        mc:Ignorable="d" Icon="/Images/measure.ico"
+        Title="TEMdominant" Height="700" Width="1400">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
         <misc:EnumToStringConverter x:Key="DefaultEnumToStringConverter"/>
@@ -123,7 +123,7 @@
                             <DataTemplate >
 
                                 <Border Width="50" CornerRadius="10" Background="LightGray">
-                                    <TextBlock TextAlignment="Center" Text="{Binding Id}"/>
+                                    <TextBlock TextAlignment="Center" Text="{Binding FrequencyNumber}"/>
                                 </Border>
                             </DataTemplate>
                         </GridViewColumn.CellTemplate>
