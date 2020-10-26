@@ -330,10 +330,20 @@ namespace MagisterkaApp.UI.ViewModel
             (deleteMeasureCommand = new RelayCommand<Measure>(
                 (measure) =>
                 {
-                    this.measureRepository.DeleteMeasure(measure.Id);
-                    this.Measures.Remove(measure);
-                    this.FiltredMeasures.Remove(measure);
-                    this.frequenceStepsRepository.DeleteByMeasureId(measure.Id);
+                    if(measure != null)
+                    {
+                        this.measureRepository.DeleteMeasure(measure.Id);
+                        this.Measures.Remove(measure);
+                        this.FiltredMeasures.Remove(measure);
+                        this.frequenceStepsRepository.DeleteByMeasureId(measure.Id);
+                    }
+                    else
+                    {
+                        MessageBoxResult result = MessageBox.Show($"Wybierz pomiar do usunięcia.",
+                                           "Confirmation",
+                                           MessageBoxButton.OK,
+                                           MessageBoxImage.Warning);
+                    }
                 }));
 
         private RelayCommand frequencyStepsOpenCommand;

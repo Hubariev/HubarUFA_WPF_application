@@ -55,7 +55,7 @@
 
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,3,0,3" Text="Dodaj dane pomiar:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="0,3,0,3" Text="Dodaj dane do pomiaru:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
                     <TextBlock Grid.Row="1" Grid.Column="0" Margin="15,0,0,0" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwa pomiaru:" />
                     <TextBlock Grid.Row="2" Grid.Column="0" Margin="15,0,0,0" Style="{StaticResource TextBlockMeasureStyle}" Text="Nazwisko operatora:" />
                     <TextBlock Grid.Row="3" Grid.Column="0" Margin="15,0,15,0" Style="{StaticResource TextBlockMeasureStyle}" Text="Natężenie pola elektrycznego w badaniu (test):" />
@@ -218,11 +218,11 @@
                         </Border>
 
                         <Border HorizontalAlignment="Center"  Grid.Column="1" Margin="5" Grid.Row="5"  Style="{StaticResource BorderButtonStyle}">
-                            <Button  Content="Wyszukaj" Command="{Binding SearchMeasuresCommand}"/>
+                            <Button  Content="Find" Command="{Binding SearchMeasuresCommand}"/>
                         </Border>
 
                         <Border HorizontalAlignment="Center" Grid.Column="0" Margin="5" Grid.Row="5"  Style="{StaticResource BorderButtonStyle}">
-                            <Button  Content="Reset Filtra" Command="{Binding ResetFilterMeasureCommand}"/>
+                            <Button  Content="Clear" Command="{Binding ResetFilterMeasureCommand}"/>
                         </Border>
                     </Grid>
                 </Border>
@@ -243,9 +243,9 @@
                         <GridView>
 
                             <GridViewColumn Header="Name"
-                                            DisplayMemberBinding="{Binding NameOfMeasure}" Width="70"/>
+                                            DisplayMemberBinding="{Binding NameOfMeasure}" Width="150"/>
                             <GridViewColumn Header="Operator"
-                                            DisplayMemberBinding="{Binding NameOfOperator}" Width="100" />
+                                            DisplayMemberBinding="{Binding NameOfOperator}" Width="120" />
                             <GridViewColumn Header="HSeptum"
                                             DisplayMemberBinding="{Binding HSeptum}" Width="100" />
                             <GridViewColumn Header="Field strength"
@@ -254,8 +254,6 @@
                                             DisplayMemberBinding="{Binding NumberOfPoints}" Width="100" />
                             <GridViewColumn Header="Date"
                                             DisplayMemberBinding="{Binding DateOfMeasure}" Width="150" />
-                            <GridViewColumn Header="Id"
-                                            DisplayMemberBinding="{Binding Id}" Width="110" />
                         </GridView>
                     </ListView.View>
                 </ListView>
