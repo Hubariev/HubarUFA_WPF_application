@@ -184,22 +184,31 @@ namespace MagisterkaApp.UI.ViewModel
             (addMeasureCommand = new RelayCommand(
                 () =>
                 {
-                    var measure = new Measure(
-                        MeasureDto.NameOfMeasure,
-                        MeasureDto.NameOfOperator,
-                        Convert.ToDouble(MeasureDto.ResearchfieldStrength),
-                        Convert.ToDouble(MeasureDto.VerificationfieldStrength),
-                        MeasureDto.HSeptum);
+                    var isMeasureNameExist = this.measureRepository.CheckIsMeasureNameExist(MeasureDto.NameOfMeasure).Result;
 
-                    this.measureRepository.AddMeasure(measure);
-                    this.Measures.Add(measure);
-                    this.FiltredMeasures.Add(measure);
+                    if (!isMeasureNameExist)
+                    {
+                        var measure = new Measure(
+                            MeasureDto.NameOfMeasure,
+                            MeasureDto.NameOfOperator,
+                            Convert.ToDouble(MeasureDto.ResearchfieldStrength),
+                            Convert.ToDouble(MeasureDto.VerificationfieldStrength),
+                            MeasureDto.HSeptum);
 
+                        this.measureRepository.AddMeasure(measure);
+                        this.Measures.Add(measure);
+                        this.FiltredMeasures.Add(measure);
 
-                    AutoClosingMessageBox.Show("Pomiar został dodany", "", 1200);
-
-
-                    selectedMeasure = measure;
+                        AutoClosingMessageBox.Show("Pomiar został dodany", "", 1200);
+                        selectedMeasure = measure;
+                    }
+                    else
+                    {
+                        MessageBoxResult result = MessageBox.Show($"Pomiar z nazwą: {MeasureDto.NameOfMeasure} już istnieje!",
+                                                   "Błędna nazwa.",
+                                                   MessageBoxButton.OK,
+                                                   MessageBoxImage.Warning);
+                    }
                 })
         );
 
@@ -264,7 +273,9 @@ namespace MagisterkaApp.UI.ViewModel
                         if (pathesMonFiles.Length == countOfPoint)
                         {
                             this.MonitoringPathes.AddRange(pathesMonFiles);
-                            var calMessage = CalibrationPathes != null ? "Dodano" : "Dodaj punkty";
+
+
+                            var calMessage = CalibrationPathes == null ? "Dodaj punkty" : "Dodano";
                             this.FilePathForMeasure = new FilePathForMeasure() { MonitoringPath = "Dodano", CalibrationPath = calMessage };
                             AutoClosingMessageBox.Show($"Wszystkie punkty Monitorujące zostali dodane.", "", 1200);
                         }
@@ -330,7 +341,7 @@ namespace MagisterkaApp.UI.ViewModel
             (deleteMeasureCommand = new RelayCommand<Measure>(
                 (measure) =>
                 {
-                    if(measure != null)
+                    if (measure != null)
                     {
                         this.measureRepository.DeleteMeasure(measure.Id);
                         this.Measures.Remove(measure);
@@ -352,7 +363,7 @@ namespace MagisterkaApp.UI.ViewModel
             (frequencyStepsOpenCommand = new RelayCommand(
                 () =>
                 {
-                    if(selectedMeasure != null)
+                    if (selectedMeasure != null)
                     {
                         var catOpts = new Views.FrequenceStepsWindow(selectedMeasure, this.frequenceStepsRepository,
                                                           this.MonitoringPathes, this.CalibrationPathes);

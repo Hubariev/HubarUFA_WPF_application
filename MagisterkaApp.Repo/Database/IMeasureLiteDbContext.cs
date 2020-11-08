@@ -12,5 +12,6 @@ namespace MagisterkaApp.Repo.Database
         Task UpdateMeasure(Measure measure);
         Task<Measure> GetMeasureById(Guid id);
         Task DeleteMeasure(Guid id);
+        Task<bool> CheckIsMeasureNameExist(string name);
     }
 }

@@ -73,11 +73,16 @@ namespace MagisterkaApp.UI.ViewModel
             }
 
             if (counter > countOfOrange)
-                this.Result5proc = $"Warunek TEM dominant NIE jest spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
-                    $"-6[dB] do -2[dB]: {countOfOrange}. Faktyczna liczba: {counter}";
+            {   
+                this.Result5proc = $"Warunek jednorodności pola NIE jest spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
+                    $"od 6 [dB] do 10 [dB] jest do: {countOfOrange} kroków. Faktyczna liczba kroków: {counter}";
+            }
             else
-                this.Result5proc = $"Warunek TEM dominant JEST spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
-                 $"-6[dB] do -2[dB]: {countOfOrange}. Faktyczna liczba: {counter}";
+            { 
+                this.Result5proc = $"Warunek jednorodności pola JEST spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
+                 $"od 6[dB] do 10[dB] jest do: {countOfOrange} kroków. Faktyczna liczba kroków: {counter}";
+            }
+              
         }
 
         private RelayCommand saveResultCommand;
@@ -116,12 +121,13 @@ namespace MagisterkaApp.UI.ViewModel
                        savePath = savePath + $"\\{measure.NameOfMeasure}.DAT";
 
                        SaveResult.WriteResult(filtredFrequencySteps, savePath, measure);
+
+                       MessageBoxResult result = MessageBox.Show($"{measure.NameOfMeasure}.DAT został zapisany.",
+                                              "Confirmation",
+                                              MessageBoxButton.OK,
+                                              MessageBoxImage.Information);
                    }
 
-                   MessageBoxResult result = MessageBox.Show($"{measure.NameOfMeasure}.DAT został zapisany.",
-                                          "Confirmation",
-                                          MessageBoxButton.OK,
-                                          MessageBoxImage.Information);
                })
        );
 

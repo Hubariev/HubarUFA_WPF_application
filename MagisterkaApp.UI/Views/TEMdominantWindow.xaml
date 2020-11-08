@@ -43,9 +43,9 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="TEM dominant dane:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
-                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Częstotliwość:" />
-                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="{Binding Result5proc}" />
+                    <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="TEM dominant dane:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyleBlack}" HorizontalAlignment="Center"/>
+                    <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyleBlack}" Text="Częstotliwość:" />
+                    <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource TextBlockMeasureStyleBlack}" Text="{Binding Result5proc}" />
 
 
                     <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.Frequency}"/>
@@ -61,10 +61,10 @@
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}"/>
-                                <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding Primary.Input}" Width="90" />
-                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryOne.Input}" Width="85" />
-                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryTwo.Input}" Width="85" />
-                                <GridViewColumn Header="TemDominant" DisplayMemberBinding="{Binding IsTEMdominant, Converter={StaticResource DefaultEnumToStringConverter}}" Width="150" />
+                                <GridViewColumn Header="Pierwotna" DisplayMemberBinding="{Binding Primary.Input}" Width="90" />
+                                <GridViewColumn Header="Poprzeczna" DisplayMemberBinding="{Binding SecondaryOne.Input}" Width="85" />
+                                <GridViewColumn Header="Wzdłużna" DisplayMemberBinding="{Binding SecondaryTwo.Input}" Width="85" />
+                                <GridViewColumn Header="TEM dominant" DisplayMemberBinding="{Binding IsTEMdominant, Converter={StaticResource DefaultEnumToStringConverter}}" Width="150" />
                             </GridView>
                         </ListView.View>
                     </ListView>

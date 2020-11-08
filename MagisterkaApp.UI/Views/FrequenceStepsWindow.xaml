@@ -44,21 +44,23 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
-                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Dane do kroku częstotliwości:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyle}" HorizontalAlignment="Center"/>
-                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Częstotliwość:" />
-                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Obliczony poziom mocy:" />
-                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="Is hidden" />
-                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource TextBlockMeasureStyle}" Text="{Binding Result5proc}" />
+                        <TextBlock Grid.Row="0" Grid.Column="0" Margin="5" Text="Dane do kroku częstotliwości:" Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyleBlack}" HorizontalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyleBlack}" Text="Częstotliwość:" />
+                        <TextBlock Grid.Row="2" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyleBlack}" Text="Obliczony poziom mocy:" />
+                        <TextBlock Grid.Row="3" Grid.Column="0" Margin="5" Style="{StaticResource TextBlockMeasureStyleBlack}" Text="Is hidden" />
+                        <TextBlock Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" Style="{StaticResource TextBlockMeasureStyleBlack}" Text="{Binding Result5proc}" />
 
 
                         <TextBlock Grid.Row="1" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.Frequency}"/>
                         <TextBlock Grid.Row="2" Grid.Column="1" Margin="3" Text="{Binding FrequencyStepInfo.PowerLevelResult}"/>
                         <CheckBox Grid.Row="3" Grid.Column="1" Margin="3" IsChecked="{Binding FrequencyStepInfo.IsHidden}">Is Hidden</CheckBox>
 
-                        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="3" Background="{Binding FrequencyStepInfo.DeviationNotification.backgroundColor}" Text="{Binding FrequencyStepInfo.DeviationNotification.Text}"></TextBlock>
+                        <TextBlock Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Margin="3" Foreground="Black" 
+                                   Background="{Binding FrequencyStepInfo.DeviationNotification.backgroundColor}" Text="{Binding FrequencyStepInfo.DeviationNotification.Text}"/>
 
                         <ScrollViewer Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" MaxHeight="450">
                             <StackPanel>
+
                                 <Expander Header="DANE WEJŚCIOWE" >
                                     <ListView Margin="10,10,0,27" ItemsSource="{Binding FrequencyStepInfo.Points}" Grid.Column="0" x:Name="PointsViewInput">
                                         <ListView.View>
@@ -72,10 +74,10 @@
                                                         </DataTemplate>
                                                     </GridViewColumn.CellTemplate>
                                                 </GridViewColumn>
-                                                <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding Primary.Input}" Width="90" />
-                                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryOne.Input}" Width="85" />
-                                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryTwo.Input}" Width="85" />
-                                                <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel.Input}" Width="85" />
+                                                <GridViewColumn Header="Pierwotna" DisplayMemberBinding="{Binding Primary.Input}" Width="90" />
+                                                <GridViewColumn Header="Poprzeczna" DisplayMemberBinding="{Binding SecondaryOne.Input}" Width="85" />
+                                                <GridViewColumn Header="Wzdłużna" DisplayMemberBinding="{Binding SecondaryTwo.Input}" Width="85" />
+                                                <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevel.Input}" Width="85" />
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -87,10 +89,10 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}"/>
-                                                <GridViewColumn Header="Primary" DisplayMemberBinding="{Binding Primary.Corrected}" Width="90" />
-                                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryOne.Corrected}" Width="85" />
-                                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryTwo.Corrected}" Width="85" />
-                                                <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel.Corrected}" Width="85" />
+                                                <GridViewColumn Header="Pierwotna" DisplayMemberBinding="{Binding Primary.Corrected}" Width="90" />
+                                                <GridViewColumn Header="Poprzeczna" DisplayMemberBinding="{Binding SecondaryOne.Corrected}" Width="85" />
+                                                <GridViewColumn Header="Wzdłużna" DisplayMemberBinding="{Binding SecondaryTwo.Corrected}" Width="85" />
+                                                <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevel.Corrected}" Width="85" />
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -102,10 +104,10 @@
                                         <ListView.View>
                                             <GridView>
                                                 <GridViewColumn Header="Id" Width="20" DisplayMemberBinding="{Binding Id}"/>
-                                                <GridViewColumn Header="Primary"  DisplayMemberBinding="{Binding Primary.Test}" Width="90" />
-                                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryOne.Test}" Width="85" />
-                                                <GridViewColumn Header="Secondary" DisplayMemberBinding="{Binding SecondaryTwo.Test}" Width="85" />
-                                                <GridViewColumn Header="Power" DisplayMemberBinding="{Binding PowerLevel.Test}" Width="85" />
+                                                <GridViewColumn Header="Pierwotna"  DisplayMemberBinding="{Binding Primary.Test}" Width="90" />
+                                                <GridViewColumn Header="Poprzeczna" DisplayMemberBinding="{Binding SecondaryOne.Test}" Width="85" />
+                                                <GridViewColumn Header="Wzdłużna" DisplayMemberBinding="{Binding SecondaryTwo.Test}" Width="85" />
+                                                <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevel.Test}" Width="85" />
                                             </GridView>
                                         </ListView.View>
                                     </ListView>
@@ -155,12 +157,12 @@
 
                     <CheckBox IsChecked="{Binding IsCheckedDeviationBigger}" Command="{Binding CheckBoxChangedCommand}" Content="&gt; 10 [dB]" HorizontalAlignment="Center" Grid.Column="3"
                           CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
-                    
+
                 </Grid>
             </StackPanel>
 
             <ListView Margin="10,10,10,0" VerticalAlignment="Top" HorizontalAlignment="Left" ItemsSource="{Binding FiltredFrequencySteps}" Grid.Column="0" x:Name="listViewFrequencySteps"
-                 Grid.Row="1" Background="Wheat" SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}" MaxHeight="600">
+                 Grid.Row="1" Background="Wheat" SelectedItem="{Binding SelectedFrequencyStep, Mode=TwoWay}" Height="auto">
 
                 <i:Interaction.Triggers>
                     <i:EventTrigger EventName="SelectionChanged">
@@ -182,7 +184,7 @@
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
-                        
+
                         <GridViewColumn Header="Częstotliwość" DisplayMemberBinding="{Binding Frequency}" Width="100"/>
                         <GridViewColumn Header="Poziom mocy" DisplayMemberBinding="{Binding PowerLevelResult}" Width="150" />
                         <GridViewColumn Header="Komunikaty"  Width="600">

@@ -40,5 +40,9 @@ namespace MagisterkaApp.Repo.Repositories
         {
             throw new NotImplementedException();
         }
+        public async Task<bool> CheckIsMeasureNameExist(string name)
+        {
+            return await this.measureContext.CheckIsMeasureNameExist(name);
+        }
     }
 }
