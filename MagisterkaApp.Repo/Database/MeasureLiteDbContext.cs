@@ -42,5 +42,10 @@ namespace MagisterkaApp.Repo.Database
         {
             this.LiteDatabase.GetCollection<Measure>("Measure").Update(measure);
         }
+
+        public async Task<bool> CheckIsMeasureNameExist(string name)
+        {
+            return  this.LiteDatabase.GetCollection<Measure>("Measure").Exists(x => x.NameOfMeasure == name);
+        }
     }
 }

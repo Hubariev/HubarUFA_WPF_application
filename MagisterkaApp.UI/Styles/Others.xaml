@@ -21,6 +21,17 @@
         <Setter Property="FontSize" Value="14"/>
     </Style>
 
+    <Style x:Key="TextBlockMeasureStyleBlack" TargetType="{x:Type TextBlock}">
+        <Setter Property="HorizontalAlignment" Value="Left"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="Foreground" Value="#53614c"/>
+        <Setter Property="TextWrapping" Value="Wrap"/>
+        <Setter Property="FontFamily" Value="Proxima Nova"/>
+        <Setter Property="Typography.Capitals" Value="AllSmallCaps"/>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="14"/>
+    </Style>
+
     <Style  x:Key="dirtyCustomCheckbox" BasedOn="{StaticResource MaterialDesignCheckBox}" TargetType="{x:Type CheckBox}">
         <Style.Resources>
             <SolidColorBrush x:Key="MaterialDesignCheckBoxOff" Color="Red" />

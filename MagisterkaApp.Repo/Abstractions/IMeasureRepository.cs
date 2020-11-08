@@ -12,5 +12,6 @@ namespace MagisterkaApp.Repo.Abstractions
         Task Update(Measure entity);
         Task DeleteMeasure(Guid type);
         Task<Measure> GetById(Guid type);
+        Task<bool> CheckIsMeasureNameExist(string name);
     }
 }
