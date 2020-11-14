@@ -19,8 +19,6 @@ namespace MagisterkaApp.Calculator
             {
                 var pointsCount = frequencyStep.Points.Count;
 
-                //for (int i = 0; i < pointsCount; i++)
-                //{
                 double averagePower = 0;
                 double squarePower = 0;
 
@@ -54,11 +52,11 @@ namespace MagisterkaApp.Calculator
                     squarePower += squarePowerPoint;
                     squaresOfPowers[z] = squarePowerPoint;
                 }
-                //if (frequencyStep.Frequency == 253.728555)
-                //{
-                //    var a = "b";
-                //}
-                    var deviation = Math.Sqrt(squarePower / (pointsCount * (pointsCount - 1)));
+                if (frequencyStep.Frequency == 253.728555)
+                {
+                    var a = "b";
+                }
+                var deviation = Math.Sqrt(squarePower / (pointsCount * (pointsCount - 1)));
                 #endregion
 
 
@@ -73,68 +71,26 @@ namespace MagisterkaApp.Calculator
                 }
                 else
                 {
-                    //var squaresOfPowersList = (squaresOfPowers.ToList());
-                    //squaresOfPowersList.Sort();
 
-                    //int count75Percent = Convert.ToInt16(squaresOfPowers.Length * 0.75);//squaresOfPower but not pointsCount???
+                    if (deviation <= NormProperties.SecondRequirement)
+                    {
+                        frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
+                        frequencyStep.SetDeviationNotification(NormNotification.ErrorSecondRequirement);
+                    }
+                    else
+                    {
+                        frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
+                        frequencyStep.SetDeviationNotification(NormNotification.ErrorFrequence);
 
-                    //for (int z = 0; z < count75Percent; z++)
-                    //{
-                    //    squarePower += squaresOfPowersList[z];
-                    //}
-
-                    //deviation = Math.Sqrt(squarePower / (count75Percent - 1));
-
-                    //List<int> pointErrorPositions = new List<int>();
-
-                    //if((pointsCount - count75Percent) > 1)
-                    //{
-                    //    pointErrorPositions.Add(Array.IndexOf(squaresOfPowers, squaresOfPowersList[count75Percent]));
-                    //    pointErrorPositions.Add(Array.IndexOf(squaresOfPowers, squaresOfPowersList[count75Percent + 1]));
-                    //}
-                    //else
-                    //    pointErrorPositions.Add(Array.IndexOf(squaresOfPowers, squaresOfPowersList[pointsCount - 1]));
-
-
-
-                    //if (deviation <= NormProperties.FirstRequirement)
-                    //{
-                    //    //write numberOfPoint
-                    //    frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
-                    //    frequencyStep.SetDeviationNotification(NormNotification.ErrorFirstRequirement);
-
-                    //    //foreach(var errorPoint in pointErrorPositions)
-                    //    //{
-                    //    //    frequencyStep.Points[errorPoint + 1].PointBackgroundColor = new BackgroundColor(NormNotification.ErrorFirstRequirement);
-                    //    //}
-                    //}
-                    //if
-                    //{
-                        if (deviation <= NormProperties.SecondRequirement)
+                        for (int position = 0; position < pointsCount; position++)
                         {
-                            frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
-                            frequencyStep.SetDeviationNotification(NormNotification.ErrorSecondRequirement);
-
-                            //foreach (var errorPoint in pointErrorPositions)
-                            //{
-                            //    frequencyStep.Points[errorPoint].PointBackgroundColor = new BackgroundColor(NormNotification.ErrorSecondRequirement);
-                            //}
+                            frequencyStep.Points[position].PointBackgroundColor = new BackgroundColor(NormNotification.ErrorFrequence);
                         }
-                        else
-                        {
-                            frequencyStep.PowerLevelResult = averagePower + (NormProperties.FactorK * deviation);
-                            frequencyStep.SetDeviationNotification(NormNotification.ErrorFrequence);
+                    }
 
-                            for (int position = 0; position < pointsCount; position++)
-                            {
-                                frequencyStep.Points[position].PointBackgroundColor = new BackgroundColor(NormNotification.ErrorFrequence);
-                            }
-                        }
-                    //}
                 }
 
-                //
-                for(int t = 0; t < pointsCount; t++)
+                for (int t = 0; t < pointsCount; t++)
                 {
                     frequencyStep.Points[t].Primary.Test = GetPrimaryTest(verificationfieldStrength, powersAfterCorrection[t],
                         frequencyStep.PowerLevelResult);
@@ -148,7 +104,6 @@ namespace MagisterkaApp.Calculator
                 }
 
                 #endregion
-                //}
                 calculatedFrequencySteps.Add(frequencyStep);
 
                 int count75procent = Convert.ToInt16(pointsCount * 0.75);
@@ -167,7 +122,7 @@ namespace MagisterkaApp.Calculator
                         ThirdCounter++;
                 }
 
-                if(firstCounter > count75procent)
+                if (firstCounter > count75procent)
                 {
                     frequencyStep.SetTEMNotification(TEMdominantNotification.Correct);
                 }
@@ -177,7 +132,7 @@ namespace MagisterkaApp.Calculator
                 }
                 else if ((seconfCounter + firstCounter) >= count75procent)
                     frequencyStep.SetTEMNotification(TEMdominantNotification.ConfirmSecondRequirement);
-                else if(ThirdCounter > (pointsCount - count75procent))
+                else if (ThirdCounter > (pointsCount - count75procent))
                     frequencyStep.SetTEMNotification(TEMdominantNotification.ErrorDominant);
             }
             return calculatedFrequencySteps;
@@ -210,7 +165,7 @@ namespace MagisterkaApp.Calculator
         {
             if ((2 * point.SecondaryOne.Input < point.Primary.Input) && (2 * point.SecondaryTwo.Input < point.Primary.Input))
                 return TEMdominant.TEMdominantSmaller_Minus6dB;
-            else if((0.79 * point.SecondaryOne.Input < point.Primary.Input) && (0.79 * point.SecondaryTwo.Input < point.Primary.Input))
+            else if ((0.79 * point.SecondaryOne.Input < point.Primary.Input) && (0.79 * point.SecondaryTwo.Input < point.Primary.Input))
                 return TEMdominant.TEMdominantSmaller_Minus2dB;
             else
                 return TEMdominant.TEMdominantHigher_Minus2dB;

@@ -118,12 +118,14 @@
                             </StackPanel>
                         </ScrollViewer>
 
-                        <Border  Grid.Row="9" Grid.Column="0"  Style="{StaticResource BorderButtonStyle}">
-                            <Button Padding="10,0,10,0" Content="Open TEM dominant" Command="{Binding TEMdominantOpenCommand}"/>
+                        <Border  Grid.Row="9" Grid.Column="0"  Style="{StaticResource BorderButtonStyleFrequencyWindow}">
+                            <Button Padding="10,0,10,0" Background="Wheat" Foreground="#53614c"
+                                    Content="Open TEM dominant" Command="{Binding TEMdominantOpenCommand}"/>
                         </Border>
 
-                        <Border  Grid.Row="9" Grid.Column="1"  Style="{StaticResource BorderButtonStyle}">
-                            <Button Padding="10,0,10,0" Content="Save Result" Command="{Binding SaveResultCommand}"/>
+                        <Border  Grid.Row="9" Grid.Column="1"  Style="{StaticResource BorderButtonStyleFrequencyWindow}">
+                            <Button Padding="10,0,10,0" Background="Wheat" Foreground="#53614c"
+                                    Content="Save Result" Command="{Binding SaveResultCommand}"/>
                         </Border>
 
 
