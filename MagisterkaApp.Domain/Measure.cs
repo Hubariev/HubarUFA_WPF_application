@@ -1,6 +1,7 @@
 ﻿using MagisterkaApp.Domain.Enums;
 using MagisterkaApp.Domain.SeedWork;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Runtime.CompilerServices;
@@ -18,10 +19,13 @@ namespace MagisterkaApp.Domain
         private double verificationfieldStrength;
         private TypeOfGTEM hSeptum;
         private NumberOfPoints numberOfPoints { get; set; }
+        private List<string> monitoringPath { get; set; }
+        private List<string> calibrationPath { get; set; }
 
 
         public Measure() { } //parametrless constructor for LiteDB
-        public Measure(string nameOfMeasure, string nameOfOperator, double researchfieldStrength, double verificationfieldStrength, TypeOfGTEM hSeptum)
+        public Measure(string nameOfMeasure, string nameOfOperator, double researchfieldStrength, double verificationfieldStrength, 
+            TypeOfGTEM hSeptum, List<string> monitoringPath, List<string> calibrationPath)
         {
             this.Id = Guid.NewGuid();
             this.nameOfMeasure = nameOfMeasure;
@@ -30,7 +34,9 @@ namespace MagisterkaApp.Domain
             this.verificationfieldStrength = verificationfieldStrength;
             this.HSeptum = hSeptum;
             this.dateOfMeasure = GetDateOfMeasure();
-            this.numberOfPoints = MeasureExtensions.GetNumberOfPoints(HSeptum);  
+            this.numberOfPoints = MeasureExtensions.GetNumberOfPoints(HSeptum);
+            this.monitoringPath = monitoringPath;
+            this.calibrationPath = calibrationPath;
         }
 
         public string NameOfMeasure
@@ -99,6 +105,27 @@ namespace MagisterkaApp.Domain
             {
                 numberOfPoints = value;
                 OnPropertyChanged("NumberOfPoints");
+            }
+        }
+
+
+        public List<string> MonitoringPath
+        {
+            get => monitoringPath;
+            set
+            {
+                monitoringPath = value;
+                OnPropertyChanged("MonitoringPath");
+            }
+        }
+
+        public List<string> CalibrationPath
+        {
+            get => calibrationPath;
+            set
+            {
+                calibrationPath = value;
+                OnPropertyChanged("CalibrationPath");
             }
         }
 

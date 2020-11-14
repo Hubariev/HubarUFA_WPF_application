@@ -193,7 +193,9 @@ namespace MagisterkaApp.UI.ViewModel
                             MeasureDto.NameOfOperator,
                             Convert.ToDouble(MeasureDto.ResearchfieldStrength),
                             Convert.ToDouble(MeasureDto.VerificationfieldStrength),
-                            MeasureDto.HSeptum);
+                            MeasureDto.HSeptum,
+                            measureDto.MonitoringPath,
+                            measureDto.CalibrationPath);
 
                         this.measureRepository.AddMeasure(measure);
                         this.Measures.Add(measure);
@@ -201,6 +203,12 @@ namespace MagisterkaApp.UI.ViewModel
 
                         AutoClosingMessageBox.Show("Pomiar został dodany", "", 1200);
                         selectedMeasure = measure;
+
+                        this.MeasureDto = new MeasureDto();
+                        this.CalibrationPathesFiltred = new List<string>();
+                        this.MonitoringPathesFiltred = new List<string>();
+
+                        this.FilePathForMeasure = new FilePathForMeasure();
                     }
                     else
                     {
@@ -272,11 +280,11 @@ namespace MagisterkaApp.UI.ViewModel
 
                         if (pathesMonFiles.Length == countOfPoint)
                         {
-                            this.MonitoringPathes.AddRange(pathesMonFiles);
+                            this.MeasureDto.MonitoringPath = new List<string>(pathesMonFiles);
 
-
-                            var calMessage = CalibrationPathes == null ? "Dodaj punkty" : "Dodano";
+                            var calMessage = this.MeasureDto.CalibrationPath.Count != 0 ? "Dodano" : "Dodaj punkty";
                             this.FilePathForMeasure = new FilePathForMeasure() { MonitoringPath = "Dodano", CalibrationPath = calMessage };
+                            
                             AutoClosingMessageBox.Show($"Wszystkie punkty Monitorujące zostali dodane.", "", 1200);
                         }
                         else
@@ -319,8 +327,9 @@ namespace MagisterkaApp.UI.ViewModel
 
                     if (pathesCalFiles.Length == countOfPoint)
                     {
-                        this.CalibrationPathes.AddRange(pathesCalFiles);
-                        var monMessage = MonitoringPathes != null ? "Dodano" : "Dodaj punkty";
+                        this.MeasureDto.CalibrationPath = new List<string>(pathesCalFiles);
+
+                        var monMessage = this.MeasureDto.MonitoringPath.Count != 0 ? "Dodano" : "Dodaj punkty";
                         this.FilePathForMeasure = new FilePathForMeasure() { MonitoringPath = monMessage, CalibrationPath = "Dodano" };
                         AutoClosingMessageBox.Show($"Wszystkie punkty Calibracyjne zostali dodane.", "", 1200);
                     }
@@ -366,7 +375,7 @@ namespace MagisterkaApp.UI.ViewModel
                     if (selectedMeasure != null)
                     {
                         var catOpts = new Views.FrequenceStepsWindow(selectedMeasure, this.frequenceStepsRepository,
-                                                          this.MonitoringPathes, this.CalibrationPathes);
+                                                          selectedMeasure.MonitoringPath, selectedMeasure.CalibrationPath);
                         catOpts.ShowDialog();
                     }
                     else
@@ -469,18 +478,17 @@ namespace MagisterkaApp.UI.ViewModel
         public string ResearchfieldStrength { get; set; }
         public string VerificationfieldStrength { get; set; }
         public TypeOfGTEM HSeptum { get; set; }
-        //public int numberOfPoints;
+        public List<string> MonitoringPath { get; set; }
+        public List<string> CalibrationPath { get; set; }
 
-
-        //public int NumberOfPoints
-        //{
-        //    get { return numberOfPoints; }
-        //    set
-        //    {
-        //        filePathForMeasure = value;
-        //        OnPropertyChanged("FilePathForMeasure");
-        //    }
-        //}
+        public MeasureDto()
+        {
+            this.NameOfMeasure = "";
+            this.NameOfOperator = "";
+            this.HSeptum = TypeOfGTEM.None;
+            this.MonitoringPath = new List<string>();
+            this.CalibrationPath = new List<string>();
+        }
     }
 
     public class FilePathForMeasure
@@ -488,6 +496,11 @@ namespace MagisterkaApp.UI.ViewModel
         public string MonitoringPath { get; set; }
         public string CalibrationPath { get; set; }
 
+        public FilePathForMeasure()
+        {
+            this.MonitoringPath = "Dodaj pomiar";
+            this.CalibrationPath = "Dodaj pomiar";
+        }
         public void AddMonFile(string monPath)
         {
             this.MonitoringPath = monPath;
