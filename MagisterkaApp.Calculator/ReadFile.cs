@@ -2,10 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace MagisterkaApp.Calculator
 {
@@ -18,7 +16,6 @@ namespace MagisterkaApp.Calculator
              */
         public static ObservableCollection<FrequencyStep> ReadMonitoringFile(List<string> pathMeasuredPoints, Guid measureId)
         {
-
             var frequenceSteps = new ObservableCollection<FrequencyStep>();
             int pointId = 1;
             const int columnDifference = 1;
@@ -92,18 +89,10 @@ namespace MagisterkaApp.Calculator
                             resultLine = filtredLine.Split(new char[] { ' ' }).ToArray();
                             resultLine = resultLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
 
-                            var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-
-
-                            var frequency = double.Parse(Regex.Replace(resultLine[frequencePosition], "[.,]", separator));
-                            var primary = double.Parse(Regex.Replace(resultLine[primaryPosition], "[.,]", separator));
-                            var secondaryOne = double.Parse(Regex.Replace(resultLine[secondaryOnePosition], "[.,]", separator));
-                            var secondarySecond = double.Parse(Regex.Replace(resultLine[secondaryTwoPosition], "[.,]", separator));
-
-                            //var frequency = double.Parse(resultLine[frequencePosition]);
-                            //var primary = double.Parse(resultLine[primaryPosition]);
-                            //var secondaryOne = double.Parse(resultLine[secondaryOnePosition]);
-                            //var secondarySecond = double.Parse(resultLine[secondaryTwoPosition]);
+                            var frequency = double.Parse(resultLine[frequencePosition]);
+                            var primary = double.Parse(resultLine[primaryPosition]);
+                            var secondaryOne = double.Parse(resultLine[secondaryOnePosition]);
+                            var secondarySecond = double.Parse(resultLine[secondaryTwoPosition]);
 
                             FrequencyStep step;
 
@@ -147,7 +136,6 @@ namespace MagisterkaApp.Calculator
         public static ObservableCollection<FrequencyStep> ReadCalibrationFile(List<string> calibrationPathes,
             ObservableCollection<FrequencyStep> frequencySteps)
         {
-
             int pointId = 1;
 
             #region positions
@@ -176,15 +164,8 @@ namespace MagisterkaApp.Calculator
                             if (resultLine.Length < 2)
                                 break;
 
-                            var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
-                            // Replace any periods or commas with the current culture separator and parse
-
-
-                            var frequency = double.Parse(Regex.Replace(resultLine[frequencePosition], "[.,]", separator));
-                            var power = double.Parse(Regex.Replace(resultLine[powerPosition], "[.,]", separator));
-
-                            //var frequency = double.Parse(resultLine[frequencePosition]);
-                            //var power = double.Parse(resultLine[powerPosition]);
+                            var frequency = double.Parse(resultLine[frequencePosition]);
+                            var power = double.Parse(resultLine[powerPosition]);
 
                             if (frequencySteps[frequencyStepsCounter].Frequency == frequency)
                                 frequencySteps[frequencyStepsCounter].Points[i].AddPowerLevel(power);

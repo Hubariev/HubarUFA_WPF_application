@@ -119,7 +119,7 @@ namespace MagisterkaApp.UI.ViewModel
                     
 
                        SaveResult.WriteResult(filtredFrequencySteps, savePath, measure);
-                       SaveResult.WriteTestValues(new List<FrequencyStep>(this.FrequencySteps), savePathTest);
+                       //SaveResult.WriteTestValues(new List<FrequencyStep>(this.FrequencySteps), savePathTest);
 
                        MessageBoxResult result = MessageBox.Show($"{measure.NameOfMeasure}.DAT został zapisany.",
                                               "Confirmation",
