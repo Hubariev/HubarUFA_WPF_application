@@ -48,7 +48,7 @@ namespace MagisterkaApp.UI.ViewModel
 
             for (int t = 0; t < this.FrequencySteps.Count; t++)
             {
-                if(this.FrequencySteps[t].TEMNotification.backgroundColor.ToString() == "#FFFF8C00")
+                if(this.FrequencySteps[t].TEMNotification.backgroundColor.ToString() == "#FFFFA500")
                 {
                     counter++;
                 }

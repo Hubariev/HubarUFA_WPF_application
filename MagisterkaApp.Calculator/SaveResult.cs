@@ -13,7 +13,7 @@ namespace MagisterkaApp.Calculator
     {
         public static void WriteResult(List<FrequencyStep> frequencySteps, string pathForSave, Measure measure)
         {
-           
+
             using (StreamWriter file = new StreamWriter(pathForSave))
             {
                 file.WriteLine("DEVICE:  TEM");
@@ -35,6 +35,27 @@ namespace MagisterkaApp.Calculator
                 {
                     file.WriteLine($"{frequencySteps[i].Frequency.ToString(".000000").Replace(',', '.')} " +
                         $"{frequencySteps[i].PowerLevelResult.ToString(".000000").Replace(',', '.')}");
+                }
+
+            }
+
+        }
+
+        public static void WriteTestValues(List<FrequencyStep> frequencySteps, string pathForSave)
+        {
+
+            using (StreamWriter file = new StreamWriter(pathForSave))
+            {
+                for (int i = 0; i < frequencySteps.Count; i++)
+                {
+                    
+                    file.WriteLine($"{frequencySteps[i].Frequency.ToString(".000000").Replace(',', '.')} " +
+                        $"{frequencySteps[i].Points[0].Primary.Test.ToString(".000000").Replace(',', '.')} " +
+                        $"{frequencySteps[i].Points[1].Primary.Test.ToString(".000000").Replace(',', '.')} " +
+                        $"{frequencySteps[i].Points[2].Primary.Test.ToString(".000000").Replace(',', '.')} " +
+                        $"{frequencySteps[i].Points[3].Primary.Test.ToString(".000000").Replace(',', '.')} " +
+                        $"{frequencySteps[i].Points[4].Primary.Test.ToString(".000000").Replace(',', '.')} " +
+                        $"{frequencySteps[i].Points[5].Primary.Test.ToString(".000000").Replace(',', '.')} ");
                 }
 
             }

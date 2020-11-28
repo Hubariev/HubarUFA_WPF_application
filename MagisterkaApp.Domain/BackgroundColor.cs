@@ -20,10 +20,8 @@ namespace MagisterkaApp.Domain
             {
                 case NormNotification.Correct:
                     return Brushes.PaleGreen;
-                case NormNotification.ErrorFirstRequirement:
-                    return Brushes.Yellow;
                 case NormNotification.ErrorSecondRequirement:
-                    return Brushes.DarkOrange;
+                    return Brushes.Orange;
                 case NormNotification.ErrorFrequence:
                     return Brushes.Red;
 
@@ -46,7 +44,7 @@ namespace MagisterkaApp.Domain
                 case TEMdominantNotification.ConfirmFirstRequirement:
                     return Brushes.Yellow;
                 case TEMdominantNotification.ConfirmSecondRequirement:
-                    return Brushes.DarkOrange;
+                    return Brushes.Orange;
                 case TEMdominantNotification.ErrorDominant:
                     return Brushes.Red;
 

@@ -7,7 +7,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         xmlns:cmd="http://www.galasoft.ch/mvvmlight"
         mc:Ignorable="d" Icon="/Images/measure.ico"
-        Title="Kroki częstotliwości" Height="700" Width="1400" VerticalAlignment="Center" BorderBrush="DarkGreen" BorderThickness="3">
+        Title="Kroki częstotliwości" Height="800" Width="1400" VerticalAlignment="Center" BorderBrush="DarkGreen" BorderThickness="3">
     <Window.Resources>
         <misc:EnumToCollectionConverter x:Key="EnumToCollectionConverter"/>
     </Window.Resources>
@@ -21,7 +21,7 @@
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="660"/>
+                <RowDefinition Height="700"/>
             </Grid.RowDefinitions>
 
             <StackPanel x:Name="LeftPart" Grid.Column="1" Grid.Row="0" Grid.RowSpan="2">
@@ -145,19 +145,15 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                         <ColumnDefinition/>
-                        <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
 
                     <CheckBox IsChecked="{Binding IsCheckedDeviationSmaller}" Command="{Binding CheckBoxChangedCommand}" Content="&lt; 6 [dB]" HorizontalAlignment="Center" Grid.Column="0"
                           CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
 
-                    <CheckBox IsChecked="{Binding IsCheckedDeviationSmaller75Proc}" Command="{Binding CheckBoxChangedCommand}" Content="&lt; 6 [dB] dla 75%" HorizontalAlignment="Center" Grid.Column="1"
+                    <CheckBox IsChecked="{Binding IsCheckedDeviationBetween}" Command="{Binding CheckBoxChangedCommand}" Content=" &lt; 6 [dB] ; 10 [db] &gt; dla 75%" HorizontalAlignment="Center" Grid.Column="1"
                           CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
 
-                    <CheckBox IsChecked="{Binding IsCheckedDeviationBetween}" Command="{Binding CheckBoxChangedCommand}" Content=" &lt; 6 [dB] ; 10 [db] &gt; dla 75%" HorizontalAlignment="Center" Grid.Column="2"
-                          CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
-
-                    <CheckBox IsChecked="{Binding IsCheckedDeviationBigger}" Command="{Binding CheckBoxChangedCommand}" Content="&gt; 10 [dB]" HorizontalAlignment="Center" Grid.Column="3"
+                    <CheckBox IsChecked="{Binding IsCheckedDeviationBigger}" Command="{Binding CheckBoxChangedCommand}" Content="&gt; 10 [dB]" HorizontalAlignment="Center" Grid.Column="2"
                           CommandParameter="{Binding IsChecked, RelativeSource={RelativeSource Self}}" />
 
                 </Grid>

@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MagisterkaApp.Calculator
 {
@@ -16,15 +18,16 @@ namespace MagisterkaApp.Calculator
              */
         public static ObservableCollection<FrequencyStep> ReadMonitoringFile(List<string> pathMeasuredPoints, Guid measureId)
         {
+
             var frequenceSteps = new ObservableCollection<FrequencyStep>();
             int pointId = 1;
             const int columnDifference = 1;
             int frequencyId = 1;
-  
 
-            foreach (var pathName in 
+
+            foreach (var pathName in
                 pathMeasuredPoints)
-            {               
+            {
                 using (StreamReader file = new StreamReader(pathName))
                 {
                     int counter = 3;
@@ -49,10 +52,10 @@ namespace MagisterkaApp.Calculator
 
                     while ((line = file.ReadLine()) != null)
                     {
-                        if(line.ToUpper().Contains("PRIMAR") || line.ToUpper().Contains("VERTICAL") || line.ToUpper().Contains("PIONOWO"))
+                        if (line.ToUpper().Contains("PRIMAR") || line.ToUpper().Contains("VERTICAL") || line.ToUpper().Contains("PIONOWO"))
                         {
                             var primaryLine = line.Replace("\t", " ");
-                            
+
                             primaryLine = primaryLine.Replace(":", "");
                             string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
                             resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
@@ -60,10 +63,10 @@ namespace MagisterkaApp.Calculator
                             primaryName = resultPrimaryLine[2];
                         }
 
-                        if ((line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("TRANSWERSE") || line.ToUpper().Contains("POPRZECZ")) 
+                        if ((line.ToUpper().Contains("SECOND") || line.ToUpper().Contains("TRANSWERSE") || line.ToUpper().Contains("POPRZECZ"))
                             && secondaryOnePosition == 0)
                         {
-                             var primaryLine = line.Replace("\t", " ");
+                            var primaryLine = line.Replace("\t", " ");
                             primaryLine = primaryLine.Replace(":", "");
                             string[] resultPrimaryLine = primaryLine.Split(new char[] { ' ' }).ToArray();
                             resultPrimaryLine = resultPrimaryLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
@@ -89,10 +92,18 @@ namespace MagisterkaApp.Calculator
                             resultLine = filtredLine.Split(new char[] { ' ' }).ToArray();
                             resultLine = resultLine.Where(element => !string.IsNullOrWhiteSpace(element)).ToArray();
 
-                            var frequency = double.Parse(resultLine[frequencePosition]);
-                            var primary = double.Parse(resultLine[primaryPosition]);
-                            var secondaryOne = double.Parse(resultLine[secondaryOnePosition]);
-                            var secondarySecond = double.Parse(resultLine[secondaryTwoPosition]);
+                            var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+
+
+                            var frequency = double.Parse(Regex.Replace(resultLine[frequencePosition], "[.,]", separator));
+                            var primary = double.Parse(Regex.Replace(resultLine[primaryPosition], "[.,]", separator));
+                            var secondaryOne = double.Parse(Regex.Replace(resultLine[secondaryOnePosition], "[.,]", separator));
+                            var secondarySecond = double.Parse(Regex.Replace(resultLine[secondaryTwoPosition], "[.,]", separator));
+
+                            //var frequency = double.Parse(resultLine[frequencePosition]);
+                            //var primary = double.Parse(resultLine[primaryPosition]);
+                            //var secondaryOne = double.Parse(resultLine[secondaryOnePosition]);
+                            //var secondarySecond = double.Parse(resultLine[secondaryTwoPosition]);
 
                             FrequencyStep step;
 
@@ -105,14 +116,14 @@ namespace MagisterkaApp.Calculator
                                 step = new FrequencyStep(frequencyId, measureId, frequency);
                             }
                             //Names
-                            step.AddPoint(pointId, primary, secondaryOne, secondarySecond, primaryName, secondaryOneName ,secondaryTwoName);
-                                                       
-                            if(pointId == 1)
+                            step.AddPoint(pointId, primary, secondaryOne, secondarySecond, primaryName, secondaryOneName, secondaryTwoName);
+
+                            if (pointId == 1)
                             {
                                 frequenceSteps.Add(step);
                                 frequencyId++;
                             }
-                                
+
                         }
                         if (counter < 3 && counter != 0)
                         {
@@ -123,19 +134,20 @@ namespace MagisterkaApp.Calculator
                             counter = 2;
                         }
 
-                        
+
                     }
                     file.Close();
                 }
                 pointId++;
                 frequencyId = 1;
             }
-            return frequenceSteps;          
+            return frequenceSteps;
         }
 
         public static ObservableCollection<FrequencyStep> ReadCalibrationFile(List<string> calibrationPathes,
             ObservableCollection<FrequencyStep> frequencySteps)
         {
+
             int pointId = 1;
 
             #region positions
@@ -143,7 +155,7 @@ namespace MagisterkaApp.Calculator
             int powerPosition = 1;
             #endregion
 
-            for(int i = 0; i < calibrationPathes.Count; i++)
+            for (int i = 0; i < calibrationPathes.Count; i++)
             {
                 using (StreamReader file = new StreamReader(calibrationPathes[i]))
                 {
@@ -155,17 +167,24 @@ namespace MagisterkaApp.Calculator
                     int frequencyStepsCounter = 0;
 
                     while ((line = file.ReadLine()) != null)
-                    {                        
+                    {
                         if (counter == 0 && line.Any(x => char.IsLetterOrDigit(x)))
                         {
                             filtredLine = line.Replace(".", ",");
                             resultLine = filtredLine.Split(new char[] { ' ' }).ToArray();
 
                             if (resultLine.Length < 2)
-                                break ;
+                                break;
 
-                            var frequency = double.Parse(resultLine[frequencePosition]);
-                            var power = double.Parse(resultLine[powerPosition]);
+                            var separator = CultureInfo.CurrentCulture.NumberFormat.NumberDecimalSeparator;
+                            // Replace any periods or commas with the current culture separator and parse
+
+
+                            var frequency = double.Parse(Regex.Replace(resultLine[frequencePosition], "[.,]", separator));
+                            var power = double.Parse(Regex.Replace(resultLine[powerPosition], "[.,]", separator));
+
+                            //var frequency = double.Parse(resultLine[frequencePosition]);
+                            //var power = double.Parse(resultLine[powerPosition]);
 
                             if (frequencySteps[frequencyStepsCounter].Frequency == frequency)
                                 frequencySteps[frequencyStepsCounter].Points[i].AddPowerLevel(power);
@@ -178,7 +197,7 @@ namespace MagisterkaApp.Calculator
                         {
                             counter = 0;
                         }
-                        
+
                     }
                     file.Close();
                 }
