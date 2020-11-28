@@ -14,19 +14,19 @@ Monitoring system
    Data file       : 
    Limits          : no evaluation
 
-   Channel 2       : Ey_pionowo
+   Channel 2       : Ey_Primary
    Unit            : V/m
    Instrument      : LSProbe 1.2
    Data file       : 
    Limits          : no evaluation
 
-   Channel 3       : Ez_wzduz
+   Channel 3       : Ez_Longitudinal
    Unit            : V/m
    Instrument      : LSProbe 1.2
    Data file       : 
    Limits          : no evaluation
 
-   Channel 4       : Ex_poprzecznie
+   Channel 4       : Ex_Transwerse
    Unit            : V/m
    Instrument      : LSProbe 1.2
    Data file       : 

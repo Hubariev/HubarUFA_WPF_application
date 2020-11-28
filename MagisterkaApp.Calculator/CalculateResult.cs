@@ -40,7 +40,6 @@ namespace MagisterkaApp.Calculator
                     frequencyStep.Points[j].SecondaryTwo.Corrected = GetCorrectedSecondary(verificationfieldStrength, frequencyStep.Points[j].Primary.Input,
                                                                                            frequencyStep.Points[j].SecondaryTwo.Input);
                     frequencyStep.Points[j].PowerLevel.Corrected = correctedPower;
-
                 }
                 averagePower = averagePower / pointsCount;
                 #endregion
@@ -52,11 +51,7 @@ namespace MagisterkaApp.Calculator
                     squarePower += squarePowerPoint;
                     squaresOfPowers[z] = squarePowerPoint;
                 }
-                if (frequencyStep.Frequency == 253.728555)
-                {
-                    var a = "b";
-                }
-                var deviation = Math.Sqrt(squarePower / (pointsCount * (pointsCount - 1)));
+                var deviation = Math.Sqrt(4 * squarePower / (pointsCount * (pointsCount - 1)));
                 #endregion
 
 

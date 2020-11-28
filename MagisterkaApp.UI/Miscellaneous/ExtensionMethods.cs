@@ -107,7 +107,7 @@ namespace MagisterkaApp.UI.Miscellaneous
 
                 if (between)
                 {
-                    filtredBetween = frequencySteps.Where(x => x.DeviationNotification.backgroundColor == "#FFFF8C00").ToList();
+                    filtredBetween = frequencySteps.Where(x => x.DeviationNotification.backgroundColor == "#FFFFA500").ToList();
                 }
 
                 if (bigger)
@@ -164,7 +164,7 @@ namespace MagisterkaApp.UI.Miscellaneous
 
                 if (between)
                 {
-                    filtredBetween = frequencySteps.Where(x => x.TEMNotification.backgroundColor == "#FFFF8C00").ToList();
+                    filtredBetween = frequencySteps.Where(x => x.TEMNotification.backgroundColor == "#FFFFA500").ToList();
                 }
 
                 if (bigger)

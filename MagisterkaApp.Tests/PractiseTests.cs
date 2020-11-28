@@ -13,7 +13,7 @@ namespace MagisterkaApp.Tests
         [Fact]
         public void Test()
         {
-            var foreground = new BrushConverter().ConvertFromString("#FFFF8C00") as Brush;
+            var foreground = new BrushConverter().ConvertFromString("#FFFFA500") as Brush;
             Console.WriteLine();
         }
     }

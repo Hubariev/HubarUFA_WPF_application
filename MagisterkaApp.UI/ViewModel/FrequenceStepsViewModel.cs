@@ -51,12 +51,8 @@ namespace MagisterkaApp.UI.ViewModel
                 this.FiltredFrequencySteps = new ObservableCollection<FrequencyStep>(this.FrequencySteps);
                 SelectionChangedCommand = new RelayCommand<FrequencyStep>(SelectionChanged);
                 Check5proc();
-            }
-            
-
-            
+            }       
         }
-
 
         public void Check5proc()
         {
@@ -66,7 +62,7 @@ namespace MagisterkaApp.UI.ViewModel
 
             for (int t = 0; t < this.FrequencySteps.Count; t++)
             {
-                if (this.FrequencySteps[t].DeviationNotification.backgroundColor.ToString() == "#FFFF8C00")
+                if (this.FrequencySteps[t].DeviationNotification.backgroundColor.ToString() == "#FFFFA500")
                 {
                     counter++;
                 }
@@ -96,12 +92,12 @@ namespace MagisterkaApp.UI.ViewModel
                    double counter = this.FrequencySteps.Count * 0.05;
                    foreach (var step in this.FrequencySteps)
                    {
-                       if (step.DeviationNotification.backgroundColor.ToString() == "#FFFF8C00" && counter > 0)
+                       if (step.DeviationNotification.backgroundColor.ToString() == "#FFFFA500" && counter > 0)
                        {
                            filtredFrequencySteps.Add(step);
                            counter--;
                        }
-                       else if (step.DeviationNotification.backgroundColor.ToString() != "#FFFF8C00" &&
+                       else if (step.DeviationNotification.backgroundColor.ToString() != "#FFFFA500" &&
                                step.DeviationNotification.backgroundColor.ToString() != "#FFFF0000")
                        {
                            filtredFrequencySteps.Add(step);
@@ -118,9 +114,12 @@ namespace MagisterkaApp.UI.ViewModel
                    if (saveWindow.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                    {
                        string savePath = Path.GetDirectoryName(saveWindow.FileName);
+                       var savePathTest = savePath + $"\\{measure.NameOfMeasure}Test.txt";
                        savePath = savePath + $"\\{measure.NameOfMeasure}.DAT";
+                    
 
                        SaveResult.WriteResult(filtredFrequencySteps, savePath, measure);
+                       //SaveResult.WriteTestValues(new List<FrequencyStep>(this.FrequencySteps), savePathTest);
 
                        MessageBoxResult result = MessageBox.Show($"{measure.NameOfMeasure}.DAT został zapisany.",
                                               "Confirmation",
