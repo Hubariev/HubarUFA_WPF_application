@@ -243,17 +243,17 @@
                         <GridView>
 
                             <GridViewColumn Header="Nazwa Pomiaru"
-                                            DisplayMemberBinding="{Binding NameOfMeasure}" Width="135"/>
+                                            DisplayMemberBinding="{Binding NameOfMeasure}" Width="110"/>
                             <GridViewColumn Header="Operator"
-                                            DisplayMemberBinding="{Binding NameOfOperator}" Width="105" />
+                                            DisplayMemberBinding="{Binding NameOfOperator}" Width="90" />
                             <GridViewColumn Header="Komora"
                                             DisplayMemberBinding="{Binding HSeptum}" Width="80" />
-                            <GridViewColumn Header="Poziom Test"
-                                            DisplayMemberBinding="{Binding ResearchfieldStrength}" Width="70" />
-                            <GridViewColumn Header="Poziom Kal"
-                                            DisplayMemberBinding="{Binding VerificationfieldStrength}" Width="70" />
+                            <GridViewColumn Header="Poziom Test [V/m]"
+                                            DisplayMemberBinding="{Binding ResearchfieldStrength}" Width="100" />
+                            <GridViewColumn Header="Poziom Kal [V/m]"
+                                            DisplayMemberBinding="{Binding VerificationfieldStrength}" Width="100" />
                             <GridViewColumn Header="Liczba punktów"
-                                            DisplayMemberBinding="{Binding NumberOfPoints}" Width="100" />
+                                            DisplayMemberBinding="{Binding NumberOfPoints}" Width="90" />
                             <GridViewColumn Header="Data"
                                             DisplayMemberBinding="{Binding DateOfMeasure}" Width="150" />
                         </GridView>

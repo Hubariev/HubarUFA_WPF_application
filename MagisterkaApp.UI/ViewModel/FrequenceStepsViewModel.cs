@@ -71,12 +71,12 @@ namespace MagisterkaApp.UI.ViewModel
             if (counter > countOfOrange)
             {   
                 this.Result5proc = $"Warunek jednorodności pola NIE jest spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
-                    $"od 6 [dB] do 10 [dB] jest do: {countOfOrange} kroków. Faktyczna liczba kroków: {counter}";
+                    $"od 0[dB] do 10[dB] jest do: {countOfOrange} kroków. Faktyczna liczba kroków: {counter}";
             }
             else
             { 
                 this.Result5proc = $"Warunek jednorodności pola JEST spełniony. Dopuszczalna liczba kroków częstotliwości z warunkiem " +
-                 $"od 6[dB] do 10[dB] jest do: {countOfOrange} kroków. Faktyczna liczba kroków: {counter}";
+                 $"od 0[dB] do 10[dB] jest do: {countOfOrange} kroków. Faktyczna liczba kroków: {counter}";
             }
               
         }

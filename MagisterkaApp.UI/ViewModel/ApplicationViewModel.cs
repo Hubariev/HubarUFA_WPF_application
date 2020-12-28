@@ -258,6 +258,8 @@ namespace MagisterkaApp.UI.ViewModel
                     }
                     else
                     {
+                        var filesColumnWindow = new Views.FilesColumnNotificationWindow();
+                        filesColumnWindow.ShowDialog();
                         Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
 
                         dlg.Multiselect = true;
