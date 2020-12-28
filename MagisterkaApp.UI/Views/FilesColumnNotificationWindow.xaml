@@ -16,7 +16,7 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Margin="5"  Grid.ColumnSpan="2" Style="{StaticResource TextBlockMeasureStyleBlack}" HorizontalAlignment="Center">
             Dozwolone nazwy kolumn w pliku monitorującym:<LineBreak/>
             1) Dla składowej głównej: <Underline>Pionowo </Underline>, <Underline>Primary</Underline>.<LineBreak/>
-            2) Dla składowej wzdłużnej: <Underline>Wzdluzna </Underline>, <Underline>Transwerse</Underline>.<LineBreak/>
+            2) Dla składowej wzdłużnej: <Underline>Wzdluznie </Underline>, <Underline>Transverse</Underline>.<LineBreak/>
             3) Dla składowej poprzecznej: <Underline>Poprzecznie </Underline>, <Underline>Longitudinal</Underline>.
         </TextBlock>
 
